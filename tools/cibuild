@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# tools/cibuild: Setup environment for CI to run tests.
+
+set -e
+cd "$(dirname "$0")/.."
+echo "==> Running tools/cibuild…"
+
+# Setup any CI customization here
+npm ci
+
+# Run tests
+echo "Tests started at…"
+date "+%H:%M:%S"
+tools/test
+
+# Done
+echo "==> tools/cibuild done."

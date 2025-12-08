@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# tools/clean: Remove generated directories and
+#               clear caches
+
+set -e
+cd "$(dirname "$0")/.."
+echo "==> Running tools/clean…"
+
+# Remove generated files and directories
+echo "==> Removing generated files and directories…"
+rm -rf node_modules/
+rm -rf playwright-report/
+rm -rf public/
+rm -rf test-results/
+rm -rf .hugo_build.lock
+
+# Remove cached files
+echo "==> Running npm cache clean --force…"
+if command -v npm >/dev/null 2>&1; then
+  npm cache clean --force
+else
+    echo "==> npm does not exist, skipping..."
+fi
+
+# Done
+echo "==> tools/clean done."

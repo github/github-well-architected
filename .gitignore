@@ -1,0 +1,39 @@
+# Generated files by hugo
+public/
+resources/
+assets/jsconfig.json
+hugo_stats.json
+
+# Executable may be added to repository
+hugo.exe
+hugo.darwin
+hugo.linux
+
+# Temporary lock file while building
+.hugo_build.lock
+.DS_Store
+site
+node_modules/
+
+# Playwright tests
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Python
+*.cpython-*
+*.egg-info
+
+# Editor and Other
+.vscode/
+.frontmatter/
+
+# React build output
+static/js/bundle.js
+static/js/bundle.js.LICENSE.txt
+
+# Environment files
+.env
+
+vendor/

@@ -1,0 +1,23 @@
+.copilotChatHeader {
+  padding-bottom: 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.copilotChatHeaderSeparator {
+  margin: 0 8px;
+  border-left: 1px solid var(--borderColor-default);
+  height: 1.25rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+.copilotChatHeaderButton {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  vertical-align: middle;
+  box-shadow: none;
+}

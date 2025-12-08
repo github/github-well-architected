@@ -1,0 +1,50 @@
+{{- $updated := (T "updated") | default "Updated" -}}
+{{- $publishDate := partial "utils/format-date" .PublishDate -}}
+
+{{- if and site.Params.displayAuthorInfo .Params.authors -}}
+  <div class="hx-flex hx-flex-col hx-subpixel-antialiased hx-gap-1">
+    <div class="hx-mt-2 hx-text-sm hx-text-gray-700 dark:hx-text-gray-300 ltr:hx-text-left rtl:hx-text-right hx-flex hx-gap-1 hx-font-sans hx-font-semibold hx-tracking-tight not-prose">
+      {{- $authorCount := len .Params.authors -}}
+      {{- if eq $authorCount 1 -}}
+        {{- $author := index .Params.authors 0 -}}
+        {{- with $author.name -}}
+        <span>{{ . }}</span>
+        {{- end -}}
+        {{- if and $author.name $author.handle -}}
+        <span>&middot;</span>
+        {{- end -}}
+        {{- with $author.handle -}}
+        <a href="https://github.com/{{.}}">@{{ . }}</a>
+        {{- end -}}
+      {{- else -}}
+        {{- range $index, $author := .Params.authors -}}
+          {{- if gt $index 0 -}}
+            {{- if eq $index (sub $authorCount 1) -}}
+              <span>&nbsp;&amp;&nbsp;</span>
+            {{- else -}}
+              <span>,&nbsp;</span>
+            {{- end -}}
+          {{- end -}}
+          {{- with $author.name -}}
+            {{- if $author.handle -}}
+              <a href="https://github.com/{{ $author.handle }}">{{ . }}</a>
+            {{- else -}}
+              <span>{{ . }}</span>
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    </div>
+    <div class="hx-text-sm hx-text-gray-500 ltr:hx-text-left rtl:hx-text-right dark:hx-text-gray-400 hx-flex hx-gap-4 hx-font-mono hx-tracking-tight hx-whitespace-nowrap">
+      <div>{{ $publishDate }}</div>
+      {{- with .Lastmod -}}
+      {{  $updateDate := partial "utils/format-date" . }}
+      {{- if not (eq $publishDate $updateDate) -}}
+        {{ $datetime := (time.Format "2006-01-02T15:04:05.000Z" .) }}
+        <div>|</div>
+        <div>{{ $updated }} <time datetime="{{ $datetime }}">{{ $updateDate }}</time></div>
+      {{- end -}}
+      {{- end -}}
+    </div>
+  </div>
+{{- end -}}

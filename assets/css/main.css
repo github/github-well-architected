@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-home: #0d1117;
+  --color-brand-pink: rgb(210, 168, 255);
+  --color-accent: rgb(121, 192, 255);
+  --color-muted: rgb(139, 148, 158);
+
+  --font-mona: 'Mona Sans', sans-serif;
+  --spacing: 0.20rem;
+}
+
+.home-subtext {
+  @apply antialiased;
+  @apply tracking-normal;
+  font-wieght: 450;
+  color: var(--color-muted);
+}
+
+body {
+  @apply antialiased;
+}

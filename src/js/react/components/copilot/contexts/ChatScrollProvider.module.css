@@ -1,0 +1,11 @@
+.container {
+    container-type: size;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: 0 !important;
+    scrollbar-color: var(--borderColor-muted) #0000;
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+    flex: 1 1 auto;
+    padding-right: .75rem;
+}

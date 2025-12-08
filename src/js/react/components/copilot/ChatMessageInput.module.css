@@ -1,0 +1,46 @@
+.inputWrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 6px;
+  border: 1px solid var(--borderColor-default);
+  background: none;
+  box-sizing: border-box;
+}
+
+
+.inputWrapper[data-focus="true"] {
+  border: 1.5px solid var(--bgColor-accent-emphasis);
+}
+
+
+.formControl {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.textInput {
+  width: 100%;
+  font-size: var(--text-body-size-medium);
+  line-height: 20px;
+  resize: none;
+  min-height: 27px;
+  max-height: 200px;
+  padding-inline-start: 12px;
+  margin-inline-end: 8px;
+  margin-block-start: 5px;
+  background: none;
+  border: none;
+  box-sizing: border-box;
+}
+
+
+.textInput:focus {
+  outline: none;
+}
+
+.sendButton {
+  margin-inline-end: 8px;
+}

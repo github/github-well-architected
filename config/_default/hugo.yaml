@@ -1,0 +1,140 @@
+# Hugo configuration file
+baseURL: /
+languageCode: en-us
+title: GitHub Well-Architected
+enableInlineShortcodes: true   # https://imfing.github.io/hextra/docs/guide/shortcodes/icon
+enableGitInfo: true
+
+# import hextra as module
+module:
+  imports:
+  - path: github.com/imfing/hextra
+    version: v0.8.6
+  
+
+build:
+  # cache busting for css changes
+  cachebusters:
+  - source: layouts/.*
+    target: css
+
+markup:
+  # allow raw html
+  goldmark:
+    renderer:
+      unsafe: true  # If true, render raw HTML content inside Markdown files
+
+  # enable hextra syntax highlight
+  highlight:
+    noClasses: false
+
+# Menu: https://imfing.github.io/hextra/docs/guide/configuration/#menu
+menu:
+  main:
+    - name: Overview
+      pageRef: /library/overview
+      weight: 1
+    - name: Resources
+      url: "https://resources.github.com"
+      weight: 2
+    - name: Services
+      url: "https://services.github.com"
+      weight: 3
+    - name: Partners
+      url: "https://partner.github.com"
+      weight: 4
+    - name: Support
+      url: "https://support.github.com"
+      weight: 5
+    - name: Search
+      weight: 6
+      params:
+        type: search
+    - name: Sign in
+      url: "https://github.com/login"
+      weight: 7
+    - name: GitHub
+      weight: 8
+      url: "https://github.com"
+      params:
+        icon: github
+
+  # Extra links: https://imfing.github.io/hextra/docs/guide/configuration/#extra-links
+  sidebar:
+    - name: More
+      params:
+        type: separator
+      weight: 1
+    - name: GitHub Docs
+      url: "https://docs.github.com"
+      weight: 2
+    - name: GitHub Resources
+      url: "https://resources.github.com"
+      weight: 3
+    - name: GitHub Certifications
+      url: "https://resources.github.com/learn/certifications"
+      weight: 4
+    - name: GitHub Community
+      url: "https://github.community"
+      weight: 5
+    - name: GitHub Blog
+      url: "https://github.blog"
+      weight: 6
+    - name: Partner Portal
+      url: "https://portal.github.partners"
+      weight: 7
+
+params:
+  production: false
+  displayUpdatedDate: true
+  displayAuthorInfo: true
+
+frontmatter:
+  publishDate: 
+      - publishDate
+      - :filename
+      - date
+      - :fileModTime
+
+  # Logo and Title: https://imfing.github.io/hextra/docs/guide/configuration/#logo-and-title
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo: 
+      path: media/github-mark.svg
+      dark: media/github-mark-white.svg
+      link: /
+      width: 30
+      height: 30
+
+  footer:
+    displayCopyright: true
+    displayPoweredBy: true
+
+  editURL:
+    enable: false
+    base: "https://github.com/github/github-well-architected-internal/tree/main/content"
+
+  # Theme Config: https://imfing.github.io/hextra/docs/guide/configuration/#theme-configuration
+  theme:
+    default: system
+    displayToggle: true
+
+  # Search Index: https://imfing.github.io/hextra/docs/guide/configuration/#search-index
+  search:
+    enable: true
+    type: flexsearch
+
+    flexsearch:
+      index: content
+
+# See "Taxonomies" in our README
+taxonomies:
+  pillars: "pillars"
+  areas: "areas"
+  verticals: "verticals"
+  personas: "personas"
+  platform: "platform"
+  features: "features"
+  components: "components"
+  github: "github"

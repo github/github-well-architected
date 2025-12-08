@@ -1,0 +1,151 @@
+name: CI for PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'public/**'  # Ignore changes to the public directory
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  CI: development
+  SITE_DIR: public
+  HUGO_VERSION: 0.151.0
+
+jobs:
+  lint:
+    permissions:
+      contents: read
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: super-linter/super-linter/slim@502f4fe48a81a392756e173e39a861f8c8efe056 # v8.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: docs/tool/.*
+          VALIDATE_MARKDOWN: true
+          VALIDATE_YAML: true
+          MARKDOWN_CONFIG_FILE: .markdownlint.json
+
+  test:
+    permissions:
+      actions: write
+      checks: write
+      contents: read
+      id-token: write
+      pages: write
+      pull-requests: write
+      security-events: write
+
+    environment:
+      name: development
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          config-file: >-
+            ./.github/dependency-review-config.yml
+
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+          sudo dpkg -i ${{ runner.temp }}/hugo.deb
+          hugo version
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
+      - name: Install test dependencies
+        run: |
+          # Clean install of the node modules
+
+          # Note: The -o flag is required to install optional
+          # dependencies that include pre-built binaries for tailwindcss
+          # when running in a CI environment.
+          # 
+          # See: https://github.com/tailwindlabs/tailwindcss/issues/15806
+
+          npm ci -o
+
+          # Install browsers for running functional tests
+          npx playwright install --with-deps
+
+      - name: Unit tests
+        run: |
+          npm run test:unit
+
+      - name: Build JS bundle
+        run: |
+          # Build the JavaScript bundle using webpack
+          npm run build
+
+          # Make sure the bundle.js exists and has content
+          if [ ! -s static/js/bundle.js ]; then
+            echo "::error::bundle.js was not created or is empty"
+            exit 1
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        id: setup-pages
+
+      - name: Build site
+        run: |
+          hugo --gc --minify --baseURL "/"
+
+      - name: Fix site file permissions
+        run: |
+          chmod -c -R +rX "${{ env.SITE_DIR }}/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "./${{ env.SITE_DIR }}"
+          retention-days: "7"
+
+      - name: Deploy site to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          preview: true
+
+      - name: HTML Proofer
+        uses: chabad360/htmlproofer@c2750eb7eb937599ac859517e7dd23a29f1b3ed7 # v2
+        with:
+          directory: ${{ github.workspace }}/${{ env.SITE_DIR }}
+          arguments: --disable-external --allow-missing-href
+
+      - name: Functional tests
+        run: |
+          npm run test:functional
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

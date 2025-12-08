@@ -1,0 +1,131 @@
+.container {
+  padding: 0;
+}
+
+.streamingContainer {
+  translate: none;
+}
+
+.userContainer {
+  align-items: flex-end;
+  flex-direction: column;
+  margin-left: auto;
+  max-width: 80%;
+}
+
+.messageHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copilotAvatar {
+  border-radius: 100%;
+  position: relative;
+  background-color: var(--bgColor-muted);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--borderColor-default);
+  color: var(--fgColor-default);
+}
+
+.copilotErrorAvatar {
+  background-color: var(--bgColor-attention-muted);
+  border-color: var(--borderColor-attention-muted);
+}
+
+.copilotLoadingAvatar {
+  color: var(--fgColor-accent);
+}
+
+.spinnerWrapper {
+  position: absolute;
+  display: flex;
+}
+
+.spinnerHidden {
+  display: none;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  color: var(--fgColor-accent);
+}
+
+.errorIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(4px, 4px);
+  color: var(--fgColor-attention);
+}
+
+.userAvatar {
+  border-radius: 100%;
+  background-color: var(--bgColor-muted);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--borderColor-default);
+}
+
+.personaInfo {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-grow: 1;
+}
+
+.personaName {
+  font-weight: bold;
+}
+
+.messageTime {
+  color: var(--fgColor-muted);
+}
+
+.messageContent pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.messageContent {
+  display: flex;
+  gap: var(--stack-gap-condensed);
+  margin-top: var(--base-size-8);
+}
+
+.userMessageContent {
+  background-color: var(--bgColor-neutral-muted);
+  border-radius: var(--borderRadius-large);
+  margin-top: 0;
+  padding: var(--base-size-12) var(--base-size-16);
+}
+
+.feedbackButtons {
+  margin-top: var(--base-size-8);
+}
+
+/* Media query for responsive layout */
+@media (min-width: 768px) {
+  .messageContent {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 767px) {
+  .messageContent {
+    flex-direction: column;
+  }
+}
+
+.relativeTime {
+  color: var(--fgColor-muted);
+}

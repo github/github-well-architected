@@ -1,0 +1,66 @@
+.container {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.messagesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-32);
+  font-size: 12px;
+}
+
+.messageGroup {
+  gap: var(--base-size-32);
+  display: flex;
+  flex-direction: column;
+}
+
+.lastMessageGroup {
+  padding-bottom: var(--base-size-32);
+}
+
+.messageContainer {
+  font-size: 12px;
+  row-gap: var(--base-size-16);
+  display: flex;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.scrollToBottomButtonContainer {
+  position: sticky;
+  bottom: 0;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* This ensures clicks pass through the container */
+  z-index: 100;
+}
+
+.scrollToBottomButton {
+  border: none;
+  border-radius: var(--borderRadius-full);
+  box-shadow: var(--shadow-floating-medium) !important;
+  transition:
+    opacity 0.125s ease-in-out,
+    scale 0.125s ease-in-out !important;
+  pointer-events: auto; /* Restore pointer events for the button itself */
+  margin-top: -50px;
+}
+
+.scrollToBottomButtonHidden {
+  scale: 0.8;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.systemMessageContent {
+  font-style: italic;
+  font-size: var(--text-body-size-medium);
+  padding: 0 var(--base-size-16) var(--base-size-16) ;
+  text-align: center;
+}

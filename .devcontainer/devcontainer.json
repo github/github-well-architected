@@ -1,0 +1,97 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/go:1": {
+			"version": "1.24"
+		},
+		"ghcr.io/github/features/goproxy:1": {},
+		"ghcr.io/github/features/go-linter:2": {},
+		"ghcr.io/devcontainers/features/sshd:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "lts",
+			"nvmVersion": "latest"
+		},
+		"ghcr.io/devcontainers/features/hugo:1": {
+			"extended": true,
+			"version": "latest"
+		}
+	},
+	"onCreateCommand": ".devcontainer/on-create-command.sh",
+	"postCreateCommand": "./tools/setup",
+	"containerEnv": {
+		"GOPROXY": "https://goproxy.githubapp.com/mod,https://proxy.golang.org/,direct",
+		"GOPRIVATE": "",
+		"GONOPROXY": "",
+		"GONOSUMDB": "github.com/github/*"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"golang.go",
+				// Recommended for Hextra theme
+				"mhutchie.git-graph",
+				"esbenp.prettier-vscode",
+				"tamasfe.even-better-toml",
+				"budparr.language-hugo-vscode",
+
+				// Recommended extensions from https://gohugo.io/tools/editors/#visual-studio-code
+				// Front Matter CMS: https://marketplace.visualstudio.com/items?itemName=eliostruyf.vscode-front-matter
+				"eliostruyf.vscode-front-matter",
+
+				// Hugo Helper: https://marketplace.visualstudio.com/items?itemName=rusnasonov.vscode-hugo
+				"rusnasonov.vscode-hugo",
+
+				// Hugo Language and Syntax Support: https://marketplace.visualstudio.com/items?itemName=budparr.language-hugo-vscode
+				"budparr.language-hugo-vscode",
+
+				// Hugo Themer: https://marketplace.visualstudio.com/items?itemName=eliostruyf.vscode-hugo-themer
+				"eliostruyf.vscode-hugo-themer",
+
+				// hugofy: https://marketplace.visualstudio.com/items?itemName=akmittal.hugofy
+				"akmittal.hugofy",
+
+				// Hugo Shortcode Syntax Highlighting: https://marketplace.visualstudio.com/items?itemName=kaellarkin.hugo-shortcode-syntax
+				"kaellarkin.hugo-shortcode-syntax"
+			],
+			"settings": {
+				"go.lintFlags": [
+					"--config=/workspaces/.golangci.toml",
+					"--whole-files",
+					"--new-from-rev=origin/main"
+				]
+			}
+		},
+		"codespaces": {
+			"repositories": {
+				"github/go-linter": {
+					"permissions": {
+						"contents": "read",
+						"packages": "read"
+					}
+				},
+				"github/features": {
+					"permissions": {
+						"contents": "read",
+						"packages": "read"
+					}
+				},
+				"github/*": {
+					"permissions": {
+						"contents": "read",
+						"packages": "read"
+					}
+				}
+			}
+		}
+	},
+	"forwardPorts": [1313],
+	"portsAttributes": {
+		"8080": {
+			"label": "dev-server"
+		}
+	}
+}

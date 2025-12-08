@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# tools/test: Run tests for the app. Optionally pass in a path to an
+#              individual test file to run a single test.
+
+set -e
+cd "$(dirname "$0")/.."
+echo "==> Running tools/test…"
+
+[ -z "$DEBUG" ] || set -x
+
+if [ "$1" = "--functional" ] || [ "$1" = "-f" ]; then
+  # Run Playwright functional test
+  echo "==> Running functional test…"
+  npm run test:functional
+elif [ "$1" = "--unit" ] || [ "$1" = "-u" ]; then
+  # Run Unit tests
+  echo "==> Running unit test…"
+  npm run test:unit
+elif [ "$1" = "--all" ] || [ "$1" = "-a" ] || [ -z "$1" ]; then
+  # Run all tests
+  echo "==> Running all tests…"
+  npm run test:functional
+  npm run test:unit
+  # Insert other tests here
+fi
+
+# Done
+echo "==> tools/test done."

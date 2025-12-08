@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# tools/server: Launch the app
+
+set -e
+cd "$(dirname "$0")/.."
+echo "==> Running tools/server…"
+
+# Start the server
+echo "==> Starting the development server…"
+if [ "$1" = "--ignoreCache" ]; then
+    npm run dev:ignore-cache
+else
+    npm run dev
+fi
+
+# Done
+echo "==> tools/server done."

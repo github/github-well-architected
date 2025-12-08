@@ -1,0 +1,67 @@
+.inputContainer {
+  display: contents;
+}
+
+.copilotChatPanel {
+  padding: 1.5rem;
+  position: fixed;
+  bottom: var(--base-size-16);
+  right: var(--base-size-16);
+  width: 38rem;
+  max-width: 98vw;
+  height: 60rem;
+  max-height: 95vh;
+  background: var(--bgColor-default);
+  border: 1px solid var(--borderColor-default);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-floating-medium) !important;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  .copilotChatPanel {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    padding: 0.75rem;
+  }
+}
+
+/* Copilot Chat Widget Styles */
+.copilotChatFloatingBtn {
+  position: fixed;
+  bottom: var(--base-size-16);
+  right: var(--base-size-16);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--bgColor-accent-emphasis);
+  color: var(--fgColor-accent-emphasis);
+  box-shadow: 0 4px 16px var(--shadow-floating-small);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  cursor: pointer;
+  outline: 2px solid transparent;
+}
+.copilotChatFloatingBtn:focus {
+  outline: 2px solid var(--color-brand-pink);
+  outline-offset: 2px;
+}
+.copilotChatFloatingBtn:hover {
+  transform: scale(1.05);
+}
+.copilotChatFloatingBtn:active {
+  transform: scale(0.95);
+}

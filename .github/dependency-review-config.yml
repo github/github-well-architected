@@ -1,0 +1,11 @@
+fail-on-severity: moderate
+
+comment-summary-in-pr: always
+
+# allow-licenses:
+#   - MIT
+
+fail-on-scopes:
+  - development
+  - runtime
+  - unknown

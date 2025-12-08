@@ -1,0 +1,333 @@
+{{ define "main" }}
+<div class="bg-home font-mona antialiased">
+  <main>
+    <!-- Hero section -->
+    <div class="relative isolate overflow-hidden">
+      <svg class="absolute inset-0 -z-10 size-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" aria-hidden="true">
+        <defs>
+          <pattern id="hero-background-svg" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+            <path d="M.5 200V.5H200" fill="none" />
+          </pattern>
+        </defs>
+        <svg x="50%" y="-1" class="overflow-visible fill-gray-800/20">
+          <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0" />
+        </svg>
+        <rect width="100%" height="100%" stroke-width="0" fill="url(#hero-background-svg)" />
+      </svg>
+      <div class="absolute top-10 left-[calc(50%-4rem)] -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:top-[calc(50%-30rem)] lg:left-48 xl:left-[calc(50%-24rem)]" aria-hidden="true">
+        <div class="aspect-1108/632 w-[69.25rem] bg-linear-to-r from-[#80caff] to-[#4f46e5] opacity-20" style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"></div>
+      </div>
+      <div class="mx-auto max-w-7xl px-6 pt-8 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-24">
+        <div class="mx-auto max-w-2xl shrink-0 lg:mx-0 lg:pt-8">
+          
+          <img class="h-44" src="/media/github-mark-white.png" alt="GitHub">
+          
+          <div class="mt-16 sm:mt-32 lg:mt-16">
+            <a href="/library/overview/release-notes" class="inline-flex space-x-6">
+              <span class="rounded-full bg-accent/10 px-3 py-1 text-sm/6 font-semibold text-accent ring-1 ring-accent/50 ring-inset tracking-wide">GitHub Well-Architected</span>
+              <span class="inline-flex items-center space-x-2 text-sm/6 font-medium text-muted">
+                <span>What's new</span>
+                <svg class="size-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                  <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </a>
+          </div>
+          <h1 class="mt-10 text-5xl font-semibold tracking-tight text-pretty text-white sm:text-7xl">Apply design thinking to build and ship your software securely and at scale with GitHub</h1>
+          <p class="mt-8 text-lg font-medium text-pretty home-subtext sm:text-xl/8">Opinionated resources for designing, deploying, and optimizing resilient GitHub solutions. Curated by GitHub's customer-facing engineers, partner community, and key customer contributors.</p>
+          <div class="mt-10 flex items-center gap-x-6">
+            <a href="/library/overview" class="rounded-md text-home bg-accent border-2 px-3.5 py-2.5 text-sm font-semibold shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Explore the Framework</a>
+            <a href="/library/overview/layers" class="text-sm/6 font-semibold text-white">Learn more <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none xl:ml-72">
+          <div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none mt-[230px] hidden lg:block">
+            <img src="/media/hero.png" width="226" height="600" alt="GitHub Well-Architected hero illustration">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{- if .Params.logosBlock }}
+    <!-- Logo cloud -->
+    <div class="mx-auto mt-8 max-w-7xl px-6 sm:mt-16 lg:px-8">
+      <h2 class="text-center text-lg/8 font-semibold text-white">The world's most innovative companies use our app</h2>
+      <div class="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+        <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/transistor-logo-white.svg" alt="Transistor" width="158" height="48">
+        <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/reform-logo-white.svg" alt="Reform" width="158" height="48">
+        <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/tuple-logo-white.svg" alt="Tuple" width="158" height="48">
+        <img class="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/savvycal-logo-white.svg" alt="SavvyCal" width="158" height="48">
+        <img class="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1" src="https://tailwindui.com/plus/img/logos/158x48/statamic-logo-white.svg" alt="Statamic" width="158" height="48">
+      </div>
+    </div>
+    {{- end }}
+
+    <!-- Feature section -->
+    <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:text-center">
+        <h2 class="text-base/7 font-semibold text-accent">Deploy GitHub with confidence</h2>
+        <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl lg:text-balance">Best Practices for Designing, Implementing, and Optimizing Your GitHub Environment</p>
+        <p class="mt-6 text-lg/8 home-subtext">A Community-Driven Framework Structured Around Key Pillars</p>
+      </div>
+      <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+        <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+          <div class="flex flex-col">
+            <dt class="text-base/7 font-semibold text-white">
+              <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-accent">
+                <svg class="size-6 text-white stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+                </svg>
+              </div>
+              Productivity
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base/7 home-subtext">
+              <p class="flex-auto">Proven strategies and tools to streamline workflows, automate processes, and accelerate team velocity.</p>
+              <p class="mt-6">
+                <a href="/library/productivity" class="text-sm/6 font-semibold text-accent">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-base/7 font-semibold text-white">
+              <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-accent">
+                <svg class="size-6 text-white stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                </svg>
+              </div>
+              Collaboration
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base/7 home-subtext">
+              <p class="flex-auto">Inclusive practices and transparent project management to foster open knowledge sharing, enhance teamwork, and boost overall productivity.</p>
+              <p class="mt-6">
+                <a href="/library/collaboration" class="text-sm/6 font-semibold text-accent">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-base/7 font-semibold text-white">
+              <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-accent">
+                <svg class="size-6 text-white stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-slot="icon" ><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+                
+              </div>
+              Application Security
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base/7 home-subtext">
+              <p class="flex-auto">Proactive guidelines for embedding security into every stage of development, from code scanning to compliance.</p>
+              <p class="mt-6">
+                <a href="/library/application-security" class="text-sm/6 font-semibold text-accent">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-base/7 font-semibold text-white">
+              <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-accent">
+                <svg class="size-6 text-white stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-slot="icon"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+              </div>
+              Governance
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base/7 home-subtext">
+              <p class="flex-auto">Clear policies and controls that balance innovation with oversight, ensuring compliance, access management, and accountability at scale.</p>
+              <p class="mt-6">
+                <a href="/library/governance" class="text-sm/6 font-semibold text-accent">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="text-base/7 font-semibold text-white">
+              <div class="mb-6 flex size-10 items-center justify-center rounded-lg bg-accent">
+                <svg class="size-6 text-white stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-slot="icon"><circle cx="12" cy="12" r="3"/><path d="M4.5 10H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-.5"/><path d="M4.5 14H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-.5"/><path d="M6 6h.01"/><path d="M6 18h.01"/><path d="m15.7 13.4-.9-.3"/><path d="m9.2 10.9-.9-.3"/><path d="m10.6 15.7.3-.9"/><path d="m13.6 15.7-.4-1"/><path d="m10.8 9.3-.4-1"/><path d="m8.3 13.6 1-.4"/><path d="m14.7 10.8 1-.4"/><path d="m13.4 8.3-.3.9"/></svg>
+              </div>
+              Architecture
+            </dt>
+            <dd class="mt-1 flex flex-auto flex-col text-base/7 home-subtext">
+              <p class="flex-auto">Approaches for designing scalable, resilient, and efficient GitHub environments, including enterprise-level solutions (e.g., GHES), tailored to your organization's needs.</p>
+              <p class="mt-6">
+                <a href="/library/architecture" class="text-sm/6 font-semibold text-accent">Learn more <span aria-hidden="true">→</span></a>
+              </p>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    {{/* <!-- Feature section -->
+    <div class="mt-32 sm:mt-56">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl sm:text-center">
+          <h2 class="text-base/7 font-semibold text-accent">Everything you need</h2>
+          <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl sm:text-balance">No server? No problem.</p>
+          <p class="mt-6 text-lg/8 text-muted">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis.</p>
+        </div>
+      </div>
+      <div class="relative overflow-hidden pt-16">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <img src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png" alt="App screenshot" class="mb-[-12%] rounded-xl ring-1 shadow-2xl ring-white/10" width="2432" height="1442">
+          <div class="relative" aria-hidden="true">
+            <div class="absolute -inset-x-20 bottom-0 bg-linear-to-t from-gray-900 pt-[7%]"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto mt-16 max-w-7xl px-6 sm:mt-20 md:mt-24 lg:px-8">
+        <dl class="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 text-base/7 text-muted sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <svg class="absolute top-1 left-1 size-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm3.75-2.75a.75.75 0 0 0 1.5 0V9.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0l-3.25 3.5a.75.75 0 1 0 1.1 1.02l1.95-2.1v4.59Z" clip-rule="evenodd" />
+              </svg>
+              Push to deploy.
+            </dt>
+            <dd class="inline">Lorem ipsum, dolor sit amet consectetur adipisicing elit aute id magna.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <svg class="absolute top-1 left-1 size-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clip-rule="evenodd" />
+              </svg>
+              SSL certificates.
+            </dt>
+            <dd class="inline">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <svg class="absolute top-1 left-1 size-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z" clip-rule="evenodd" />
+              </svg>
+              Simple queues.
+            </dt>
+            <dd class="inline">Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <svg class="absolute top-1 left-1 size-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M10 2.5c-1.31 0-2.526.386-3.546 1.051a.75.75 0 0 1-.82-1.256A8 8 0 0 1 18 9a22.47 22.47 0 0 1-1.228 7.351.75.75 0 1 1-1.417-.49A20.97 20.97 0 0 0 16.5 9 6.5 6.5 0 0 0 10 2.5ZM4.333 4.416a.75.75 0 0 1 .218 1.038A6.466 6.466 0 0 0 3.5 9a7.966 7.966 0 0 1-1.293 4.362.75.75 0 0 1-1.257-.819A6.466 6.466 0 0 0 2 9c0-1.61.476-3.11 1.295-4.365a.75.75 0 0 1 1.038-.219ZM10 6.12a3 3 0 0 0-3.001 3.041 11.455 11.455 0 0 1-2.697 7.24.75.75 0 0 1-1.148-.965A9.957 9.957 0 0 0 5.5 9c0-.028.002-.055.004-.082a4.5 4.5 0 0 1 8.996.084V9.15l-.005.297a.75.75 0 1 1-1.5-.034c.003-.11.004-.219.005-.328a3 3 0 0 0-3-2.965Zm0 2.13a.75.75 0 0 1 .75.75c0 3.51-1.187 6.745-3.181 9.323a.75.75 0 1 1-1.186-.918A13.687 13.687 0 0 0 9.25 9a.75.75 0 0 1 .75-.75Zm3.529 3.698a.75.75 0 0 1 .584.885 18.883 18.883 0 0 1-2.257 5.84.75.75 0 1 1-1.29-.764 17.386 17.386 0 0 0 2.078-5.377.75.75 0 0 1 .885-.584Z" clip-rule="evenodd" />
+              </svg>
+              Advanced security.
+            </dt>
+            <dd class="inline">Lorem ipsum, dolor sit amet consectetur adipisicing elit aute id magna.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <svg class="absolute top-1 left-1 size-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M7.84 1.804A1 1 0 0 1 8.82 1h2.36a1 1 0 0 1 .98.804l.331 1.652a6.993 6.993 0 0 1 1.929 1.115l1.598-.54a1 1 0 0 1 1.186.447l1.18 2.044a1 1 0 0 1-.205 1.251l-1.267 1.113a7.047 7.047 0 0 1 0 2.228l1.267 1.113a1 1 0 0 1 .206 1.25l-1.18 2.045a1 1 0 0 1-1.187.447l-1.598-.54a6.993 6.993 0 0 1-1.929 1.115l-.33 1.652a1 1 0 0 1-.98.804H8.82a1 1 0 0 1-.98-.804l-.331-1.652a6.993 6.993 0 0 1-1.929-1.115l-1.598.54a1 1 0 0 1-1.186-.447l-1.18-2.044a1 1 0 0 1 .205-1.251l1.267-1.114a7.05 7.05 0 0 1 0-2.227L1.821 7.773a1 1 0 0 1-.206-1.25l1.18-2.045a1 1 0 0 1 1.187-.447l1.598.54A6.992 6.992 0 0 1 7.51 3.456l.33-1.652ZM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
+              </svg>
+              Powerful API.
+            </dt>
+            <dd class="inline">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.</dd>
+          </div>
+          <div class="relative pl-9">
+            <dt class="inline font-semibold text-white">
+              <svg class="absolute top-1 left-1 size-5 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path d="M4.632 3.533A2 2 0 0 1 6.577 2h6.846a2 2 0 0 1 1.945 1.533l1.976 8.234A3.489 3.489 0 0 0 16 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234Z" />
+                <path fill-rule="evenodd" d="M4 13a2 2 0 1 0 0 4h12a2 2 0 1 0 0-4H4Zm11.24 2a.75.75 0 0 1 .75-.75H16a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75h-.01a.75.75 0 0 1-.75-.75V15Zm-2.25-.75a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 0 0 .75-.75V15a.75.75 0 0 0-.75-.75h-.01Z" clip-rule="evenodd" />
+              </svg>
+              Database backups.
+            </dt>
+            <dd class="inline">Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
+        <h2 class="text-base/8 font-semibold text-accent">Our track record</h2>
+        <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl">Trusted by thousands of creators&nbsp;worldwide</p>
+        <p class="mt-6 text-lg/8 text-muted">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis.</p>
+      </div>
+      <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 text-white sm:mt-20 sm:grid-cols-2 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4">
+        <div class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
+          <dt class="text-sm/6">Developers on the platform</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight">8,000+</dd>
+        </div>
+        <div class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
+          <dt class="text-sm/6">Daily requests</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight">900m+</dd>
+        </div>
+        <div class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
+          <dt class="text-sm/6">Uptime guarantee</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight">99.9%</dd>
+        </div>
+        <div class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
+          <dt class="text-sm/6">Projects deployed</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight">12m</dd>
+        </div>
+      </dl>
+    </div> */}}
+
+    <!-- CTA section -->
+    <div class="relative isolate mt-32 px-6 py-32 sm:mt-56 sm:py-40 lg:px-8">
+      <svg class="absolute inset-0 -z-10 size-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" aria-hidden="true">
+        <defs>
+          <pattern id="1d4240dd-898f-445f-932d-e2872fd12de3" width="200" height="200" x="50%" y="0" patternUnits="userSpaceOnUse">
+            <path d="M.5 200V.5H200" fill="none" />
+          </pattern>
+        </defs>
+        <svg x="50%" y="0" class="overflow-visible fill-gray-800/20">
+          <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0" />
+        </svg>
+        <rect width="100%" height="100%" stroke-width="0" fill="url(#1d4240dd-898f-445f-932d-e2872fd12de3)" />
+      </svg>
+      <div class="absolute inset-x-0 bottom-10 -z-20 flex transform-gpu justify-center overflow-clip blur-3xl" aria-hidden="true">
+        <div class="aspect-1108/632 w-[69.25rem] flex-none bg-linear-to-r from-[#80caff] to-[#4f46e5] opacity-20" style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"></div>
+      </div>
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">Design, Deploy, and Scale to Confidently Achieve Your Business Objectives</h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg/8 text-muted">
+          Embrace design thinking to deliver solutions aligned with your strategic objectives. Explore our self-guided Well-Architected assessment checklists or collaborate with experts GitHub, Microsoft, and our Partners for tailored guidance
+        </p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a href="/library/overview/getting-started-checklist/" class="rounded-md text-home bg-accent border-2  px-3.5 py-2.5 text-sm font-semibold shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Get started</a>
+          <a href="/library/overview/about-the-assessment" class="text-sm/6 font-semibold text-white">Learn about the assessment <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mx-auto max-w-7xl px-6 lg:px-8 z-20">
+    <div class="border-t border-white/10 py-12 md:flex md:items-center md:justify-between">
+      <div class="flex justify-center gap-x-6 md:order-2">
+        <a href="https://x.com/github" class="text-gray-400 hover:text-muted">
+            <span class="sr-only">X</span>
+            <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
+            </svg>
+          </a>
+          <a href="https://www.facebook.com/GitHub" class="text-gray-400 hover:text-muted">
+            <span class="sr-only">Facebook</span>
+            <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/github" class="text-gray-400 hover:text-muted">
+            <span class="sr-only">YouTube</span>
+            <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          <a href="https://github.com/github" class="text-gray-400 hover:text-muted">
+            <span class="sr-only">GitHub</span>
+            <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+            </svg>
+          </a>
+      </div>
+      <p class="mt-8 text-center text-sm/6 text-gray-400 md:order-1 md:mt-0">GitHub Inc. &copy;{{ dateFormat "2006" now }}</p>
+      <p class="mt-8 text-center text-sm/6 text-gray-400 md:order-1 md:mt-0 grid grid-cols-3 gap-x-3 sm:flex sm:gap-x-6">
+        <a href="https://docs.github.com/site-policy/github-terms/github-terms-of-service" class="hover:text-muted">Terms</a>
+        <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" class="hover:text-muted">Privacy</a>
+        <a href="https://github.com/security" class="hover:text-muted">Security</a>
+        <a href="https://www.githubstatus.com/" class="hover:text-muted">Status</a>
+        <a href="https://docs.github.com/" class="hover:text-muted">Docs</a>
+        <a href="https://support.github.com/?tags=dotcom-footer" class="hover:text-muted">Contact GitHub</a>
+        <a href="https://github.com/pricing" class="hover:text-muted">Pricing</a>
+        <a href="https://docs.github.com/get-started/exploring-integrations/about-building-integrations" class="hover:text-muted">API</a>
+        <a href="https://partner.github.com/" class="hover:text-muted">Partners</a>
+        <a href="https://github.blog/" class="hover:text-muted">Blog</a>
+        <a href="https://github.com/about" class="hover:text-muted">About</a>
+      </p>
+    </div>
+  </footer>
+</div>
+{{ end -}}

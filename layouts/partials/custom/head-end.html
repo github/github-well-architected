@@ -1,0 +1,7 @@
+{{- if not .IsHome }}
+  {{ $lightbox := resources.Get "js/lightbox.js" }}
+  {{ if hugo.IsProduction }}
+    {{ $lightbox = $lightbox | resources.Minify | resources.Fingerprint }}
+  {{ end }}
+  <script src="{{ $lightbox.RelPermalink }}"></script>
+{{- end }}

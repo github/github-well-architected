@@ -1,0 +1,6 @@
+<!-- layouts/shortcodes/child-pages.html -->
+<ul>
+    {{ range .Page.Pages }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>

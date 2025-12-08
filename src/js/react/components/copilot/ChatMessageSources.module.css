@@ -1,0 +1,7 @@
+.container {
+  margin: var(--base-size-8) 0;
+  padding-left: var(--base-size-4);
+}
+.button {
+  color: var(--color-fg-emphasis);
+}

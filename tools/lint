@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# tools/lint: Run linting checks for markdown and YAML files
+
+set -e
+cd "$(dirname "$0")/.."
+echo "==> Running tools/lint…"
+
+[ -z "$DEBUG" ] || set -x
+
+lint_markdown() {
+  echo "==> Linting Markdown files…"
+  npx markdownlint-cli \
+    --config .github/linters/.markdownlint.json \
+    '**/*.md' \
+    --ignore node_modules \
+    --ignore playwright-report \
+    --ignore public \
+    --ignore test-results \
+    --ignore .github/ISSUE_TEMPLATE
+}
+
+lint_yaml() {
+  echo "==> Linting YAML files…"
+  npx yaml-lint \
+    '**/*.{yml,yaml}' \
+    --ignore 'node_modules/**' \
+    --ignore 'playwright-report/**' \
+    --ignore 'test-results/**' \
+    --ignore 'public/**'
+}
+
+if [ "$1" = "--markdown" ] || [ "$1" = "-m" ]; then
+  lint_markdown
+elif [ "$1" = "--yaml" ] || [ "$1" = "-y" ]; then
+  lint_yaml
+elif [ "$1" = "--all" ] || [ "$1" = "-a" ] || [ -z "$1" ]; then
+  lint_markdown
+  lint_yaml
+else
+  echo "Usage: tools/lint [--markdown|-m] [--yaml|-y] [--all|-a]"
+  exit 1
+fi
+
+echo "==> tools/lint done."

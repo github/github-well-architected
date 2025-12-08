@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# tools/bootstrap: Resolve all dependencies the app requires
+
+set -e
+cd "$(dirname "$0")/.."
+echo "==> Running tools/bootstrap…"
+
+# Install Node.js dependencies
+echo "==> Running npm install…"
+npm install
+
+# Done
+echo "==> tools/bootstrap done."

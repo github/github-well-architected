@@ -1,0 +1,552 @@
+/* 
+Copied from https://app.unpkg.com/@primer/css@20.8.3/files/dist/markdown.css 
+*/
+
+.markdownBody {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word
+}
+
+.markdownBody::before {
+  display: table;
+  content: ""
+}
+
+.markdownBody::after {
+  display: table;
+  clear: both;
+  content: ""
+}
+
+.markdownBody>*:first-child {
+  margin-top: 0 !important
+}
+
+.markdownBody>*:last-child {
+  margin-bottom: 0 !important
+}
+
+.markdownBody a:not([href]) {
+  color: inherit;
+  text-decoration: none
+}
+
+.markdownBody .absent {
+  color: var(--color-danger-fg)
+}
+
+.markdownBody .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1
+}
+
+.markdownBody .anchor:focus {
+  outline: none
+}
+
+.markdownBody p,
+.markdownBody blockquote,
+.markdownBody ul,
+.markdownBody ol,
+.markdownBody dl,
+.markdownBody table,
+.markdownBody pre,
+.markdownBody details {
+  margin-top: 0;
+  margin-bottom: 16px
+}
+
+.markdownBody hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--color-border-default);
+  border: 0
+}
+
+.markdownBody blockquote {
+  padding: 0 1em;
+  color: var(--color-fg-muted);
+  border-left: .25em solid var(--color-border-default)
+}
+
+.markdownBody blockquote>:first-child {
+  margin-top: 0
+}
+
+.markdownBody blockquote>:last-child {
+  margin-bottom: 0
+}
+
+.markdownBody h1,
+.markdownBody h2,
+.markdownBody h3,
+.markdownBody h4,
+.markdownBody h5,
+.markdownBody h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: var(--base-text-weight-semibold, 600);
+  line-height: 1.25
+}
+
+.markdownBody h1 .octicon-link,
+.markdownBody h2 .octicon-link,
+.markdownBody h3 .octicon-link,
+.markdownBody h4 .octicon-link,
+.markdownBody h5 .octicon-link,
+.markdownBody h6 .octicon-link {
+  color: var(--color-fg-default);
+  vertical-align: middle;
+  visibility: hidden
+}
+
+.markdownBody h1:hover .anchor,
+.markdownBody h2:hover .anchor,
+.markdownBody h3:hover .anchor,
+.markdownBody h4:hover .anchor,
+.markdownBody h5:hover .anchor,
+.markdownBody h6:hover .anchor {
+  text-decoration: none
+}
+
+.markdownBody h1:hover .anchor .octicon-link,
+.markdownBody h2:hover .anchor .octicon-link,
+.markdownBody h3:hover .anchor .octicon-link,
+.markdownBody h4:hover .anchor .octicon-link,
+.markdownBody h5:hover .anchor .octicon-link,
+.markdownBody h6:hover .anchor .octicon-link {
+  visibility: visible
+}
+
+.markdownBody h1 tt,
+.markdownBody h1 code,
+.markdownBody h2 tt,
+.markdownBody h2 code,
+.markdownBody h3 tt,
+.markdownBody h3 code,
+.markdownBody h4 tt,
+.markdownBody h4 code,
+.markdownBody h5 tt,
+.markdownBody h5 code,
+.markdownBody h6 tt,
+.markdownBody h6 code {
+  padding: 0 .2em;
+  font-size: inherit
+}
+
+.markdownBody h1 {
+  padding-bottom: .3em;
+  font-size: 2em;
+  border-bottom: 1px solid var(--color-border-muted)
+}
+
+.markdownBody h2 {
+  padding-bottom: .3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--color-border-muted)
+}
+
+.markdownBody h3 {
+  font-size: 1.25em
+}
+
+.markdownBody h4 {
+  font-size: 1em
+}
+
+.markdownBody h5 {
+  font-size: .875em
+}
+
+.markdownBody h6 {
+  font-size: .85em;
+  color: var(--color-fg-muted)
+}
+
+.markdownBody summary h1,
+.markdownBody summary h2,
+.markdownBody summary h3,
+.markdownBody summary h4,
+.markdownBody summary h5,
+.markdownBody summary h6 {
+  display: inline-block
+}
+
+.markdownBody summary h1 .anchor,
+.markdownBody summary h2 .anchor,
+.markdownBody summary h3 .anchor,
+.markdownBody summary h4 .anchor,
+.markdownBody summary h5 .anchor,
+.markdownBody summary h6 .anchor {
+  margin-left: -40px
+}
+
+.markdownBody summary h1,
+.markdownBody summary h2 {
+  padding-bottom: 0;
+  border-bottom: 0
+}
+
+.markdownBody ul,
+.markdownBody ol {
+  padding-left: 2em
+}
+
+.markdownBody ul.no-list,
+.markdownBody ol.no-list {
+  padding: 0;
+  list-style-type: none
+}
+
+.markdownBody ol[type=a] {
+  list-style-type: lower-alpha
+}
+
+.markdownBody ol[type=A] {
+  list-style-type: upper-alpha
+}
+
+.markdownBody ol[type=i] {
+  list-style-type: lower-roman
+}
+
+.markdownBody ol[type=I] {
+  list-style-type: upper-roman
+}
+
+.markdownBody ol[type="1"] {
+  list-style-type: decimal
+}
+
+.markdownBody div>ol:not([type]) {
+  list-style-type: decimal
+}
+
+.markdownBody ul ul,
+.markdownBody ul ol,
+.markdownBody ol ol,
+.markdownBody ol ul {
+  margin-top: 0;
+  margin-bottom: 0
+}
+
+.markdownBody li>p {
+  margin-top: 16px
+}
+
+.markdownBody li+li {
+  margin-top: .25em
+}
+
+.markdownBody dl {
+  padding: 0
+}
+
+.markdownBody dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: var(--base-text-weight-semibold, 600)
+}
+
+.markdownBody dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px
+}
+
+.markdownBody table {
+  display: block;
+  width: 100%;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto
+}
+
+.markdownBody table th {
+  font-weight: var(--base-text-weight-semibold, 600)
+}
+
+.markdownBody table th,
+.markdownBody table td {
+  padding: 6px 13px;
+  border: 1px solid var(--color-border-default)
+}
+
+.markdownBody table td>:last-child {
+  margin-bottom: 0
+}
+
+.markdownBody table tr {
+  background-color: var(--color-canvas-default);
+  border-top: 1px solid var(--color-border-muted)
+}
+
+.markdownBody table tr:nth-child(2n) {
+  background-color: var(--color-canvas-subtle)
+}
+
+.markdownBody table img {
+  background-color: transparent
+}
+
+.markdownBody img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: var(--color-canvas-default)
+}
+
+.markdownBody img[align=right] {
+  padding-left: 20px
+}
+
+.markdownBody img[align=left] {
+  padding-right: 20px
+}
+
+.markdownBody .emoji {
+  max-width: none;
+  vertical-align: text-top;
+  background-color: transparent
+}
+
+.markdownBody span.frame {
+  display: block;
+  overflow: hidden
+}
+
+.markdownBody span.frame>span {
+  display: block;
+  float: left;
+  width: auto;
+  padding: 7px;
+  margin: 13px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default)
+}
+
+.markdownBody span.frame span img {
+  display: block;
+  float: left
+}
+
+.markdownBody span.frame span span {
+  display: block;
+  padding: 5px 0 0;
+  clear: both;
+  color: var(--color-fg-default)
+}
+
+.markdownBody span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both
+}
+
+.markdownBody span.align-center>span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: center
+}
+
+.markdownBody span.align-center span img {
+  margin: 0 auto;
+  text-align: center
+}
+
+.markdownBody span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both
+}
+
+.markdownBody span.align-right>span {
+  display: block;
+  margin: 13px 0 0;
+  overflow: hidden;
+  text-align: right
+}
+
+.markdownBody span.align-right span img {
+  margin: 0;
+  text-align: right
+}
+
+.markdownBody span.float-left {
+  display: block;
+  float: left;
+  margin-right: 13px;
+  overflow: hidden
+}
+
+.markdownBody span.float-left span {
+  margin: 13px 0 0
+}
+
+.markdownBody span.float-right {
+  display: block;
+  float: right;
+  margin-left: 13px;
+  overflow: hidden
+}
+
+.markdownBody span.float-right>span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: right
+}
+
+.markdownBody code,
+.markdownBody tt {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  white-space: break-spaces;
+  background-color: var(--color-neutral-muted);
+  border-radius: 6px
+}
+
+.markdownBody code br,
+.markdownBody tt br {
+  display: none
+}
+
+.markdownBody del code {
+  text-decoration: inherit
+}
+
+.markdownBody samp {
+  font-size: 85%
+}
+
+.markdownBody pre {
+  word-wrap: normal
+}
+
+.markdownBody pre code {
+  font-size: 100%
+}
+
+.markdownBody pre>code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0
+}
+
+.markdownBody .highlight {
+  margin-bottom: 16px
+}
+
+.markdownBody .highlight pre {
+  margin-bottom: 0;
+  word-break: normal
+}
+
+.markdownBody .highlight pre,
+.markdownBody pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  color: var(--color-fg-default);
+  background-color: var(--color-canvas-subtle);
+  border-radius: 6px
+}
+
+.markdownBody pre code,
+.markdownBody pre tt {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0
+}
+
+.markdownBody .csv-data td,
+.markdownBody .csv-data th {
+  padding: 5px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap
+}
+
+.markdownBody .csv-data .blob-num {
+  padding: 10px 8px 9px;
+  text-align: right;
+  background: var(--color-canvas-default);
+  border: 0
+}
+
+.markdownBody .csv-data tr {
+  border-top: 0
+}
+
+.markdownBody .csv-data th {
+  font-weight: var(--base-text-weight-semibold, 600);
+  background: var(--color-canvas-subtle);
+  border-top: 0
+}
+
+.markdownBody [data-footnote-ref]::before {
+  content: "["
+}
+
+.markdownBody [data-footnote-ref]::after {
+  content: "]"
+}
+
+.markdownBody .footnotes {
+  font-size: 12px;
+  color: var(--color-fg-muted);
+  border-top: 1px solid var(--color-border-default)
+}
+
+.markdownBody .footnotes ol {
+  padding-left: 16px
+}
+
+.markdownBody .footnotes ol ul {
+  display: inline-block;
+  padding-left: 16px;
+  margin-top: 16px
+}
+
+.markdownBody .footnotes li {
+  position: relative
+}
+
+.markdownBody .footnotes li:target::before {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -24px;
+  pointer-events: none;
+  content: "";
+  border: 2px solid var(--color-accent-emphasis);
+  border-radius: 6px
+}
+
+.markdownBody .footnotes li:target {
+  color: var(--color-fg-default)
+}
+
+.markdownBody .footnotes .data-footnote-backref g-emoji {
+  font-family: monospace
+}
