@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Getting Started Checklist
 weight: 3
 prev: library/overview/about-the-assessment

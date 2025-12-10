@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false # Set to false when ready to publish
 title: 'Rulesets Best Practices'
 publishDate: 2024-10-08

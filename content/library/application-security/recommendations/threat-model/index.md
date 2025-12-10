@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false
 title: 'GitHub Repositories Threat Model'
 publishDate: 2024-05-29
@@ -76,6 +78,8 @@ actors may contain threats within themselves which highlights the
 various ways a threat actor could gain access to a GitHub repository.
 
 ![Supply Chain](image1.png)
+
+*Figure attribution: This diagram is derived from the [SLSA Supply Chain Threats model](https://slsa.dev/spec/v1.0/threats), version 1.0, from the [SLSA Framework](https://github.com/slsa-framework/slsa). Licensed under [Community Specification License 1.0](https://github.com/slsa-framework/slsa/blob/main/LICENSE.md).*
 
 ## System analysis
 

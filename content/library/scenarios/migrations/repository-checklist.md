@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Checklist for Repository Migrations
 description: A checklist to help you plan and execute a successful repository migration to GitHub.
 aliases:

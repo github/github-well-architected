@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false # Set to false when ready to publish
 title: 'Enforce GitHub Advanced Security at Scale'
 publishDate: 2024-07-03

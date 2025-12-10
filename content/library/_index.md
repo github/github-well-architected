@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Content Library
 cascade:        # Automatically apply these for all children unless overridden
   type: docs    # Automatically set docs layout for all children: https://imfing.github.io/hextra/docs/guide/organize-files/#layouts

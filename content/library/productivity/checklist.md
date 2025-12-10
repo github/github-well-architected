@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Checklist for Productivity
 weight: 3
 prev: library/productivity/design-principles

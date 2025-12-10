@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false   # Set to false when ready to publish
 title: 'Adopting GitHub Copilot at Scale'
 publishDate: 2024-07-22

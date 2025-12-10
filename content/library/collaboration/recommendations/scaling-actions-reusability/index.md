@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false
 title: 'Scaling GitHub Actions Reusability in the Enterprise'
 publishDate: 2025-04-10
