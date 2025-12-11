@@ -10,5 +10,10 @@ echo "==> Running tools/bootstrap…"
 echo "==> Running npm install…"
 npm install
 
+# Install Playwright and its dependencies
+echo "==> Installing Playwright browsers and dependencies…"
+npx playwright install-deps
+npx playwright install
+
 # Done
 echo "==> tools/bootstrap done."
