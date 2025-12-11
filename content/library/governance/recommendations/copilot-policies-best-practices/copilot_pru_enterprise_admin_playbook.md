@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false
 title: 'Managing GitHub Copilot Premium Request Units (PRUs)'
 publishDate: 2025-08-26

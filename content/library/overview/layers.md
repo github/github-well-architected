@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Layers of GitHub Well-Architected
 weight: 1
 prev: library/overview

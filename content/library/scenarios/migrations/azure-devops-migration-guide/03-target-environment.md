@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Setup
 description: Target Environment Setup Guide
 weight: 12

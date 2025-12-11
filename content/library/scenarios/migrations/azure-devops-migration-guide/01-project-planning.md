@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Plan
 description: Project Planning Guide
 weight: 10

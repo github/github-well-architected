@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false # Set to false when ready to publish
 title: "Accessing private networks from GitHub Actions Runners"
 publishDate: 2024-09-09

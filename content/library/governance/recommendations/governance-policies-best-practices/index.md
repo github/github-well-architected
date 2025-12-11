@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 draft: false
 title: 'GitHub Enterprise Policies & Best Practices'
 publishDate: 2024-07-29

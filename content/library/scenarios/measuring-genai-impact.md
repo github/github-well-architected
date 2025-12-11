@@ -1,4 +1,6 @@
 ---
+# SPDX-FileCopyrightText: GitHub and The Project Authors
+# SPDX-License-Identifier: MIT
 title: Measuring Impact for GenAI Adoption
 weight: 3
 publishDate: 2025-04-24
