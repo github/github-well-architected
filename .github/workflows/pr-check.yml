@@ -28,6 +28,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci -o
+
       - uses: super-linter/super-linter/slim@502f4fe48a81a392756e173e39a861f8c8efe056 # v8.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -84,7 +91,7 @@ jobs:
           # Note: The -o flag is required to install optional
           # dependencies that include pre-built binaries for tailwindcss
           # when running in a CI environment.
-          # 
+          #
           # See: https://github.com/tailwindlabs/tailwindcss/issues/15806
 
           npm ci -o
@@ -124,8 +131,8 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "./${{ env.SITE_DIR }}"
-          retention-days: "7"
+          path: './${{ env.SITE_DIR }}'
+          retention-days: '7'
 
       - name: Deploy site to GitHub Pages
         id: deployment

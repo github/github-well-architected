@@ -1,0 +1,111 @@
+# PR Labeling Workflow
+#
+# Purpose: Automatically applies and removes labels on pull requests based on their status
+# to improve visibility and workflow management.
+#
+# Triggers:
+# - Pull request converted to draft
+# - Pull request marked as ready for review
+# - Pull request opened
+# - Pull request reopened
+# - Pull request closed
+#
+# How it works:
+# - Uses GitHub CLI to modify PR labels based on the event action.
+# - Continues execution even if label operations fail (uses `|| true`).
+#
+# Permissions:
+# - pull-requests: write (required to add/remove labels)
+
+name: Label PR 
+on:
+  pull_request:
+    types:
+      - converted_to_draft
+      - ready_for_review
+      - opened
+      - reopened
+      - closed
+
+permissions: 
+  pull-requests: write  
+
+env:
+  DRAFT_LABEL: "draft"
+  READY_LABEL: "ready for review"
+
+jobs:
+  pr-in-draft-label:
+    if: github.event.action == 'converted_to_draft'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add/Remove PR labels based on event type
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          EVENT_ACTION: ${{ github.event.action }}
+          ADD_LABEL: ${{ env.DRAFT_LABEL }}
+          REMOVE_LABEL: ${{ env.READY_LABEL }}
+        run: &update_run |
+          gh pr edit "$PR_NUMBER" --repo "$REPO" --add-label "$ADD_LABEL" || true
+          gh pr edit "$PR_NUMBER" --repo "$REPO" --remove-label "$REMOVE_LABEL" || true
+          echo "Labels updated based on event action: $EVENT_ACTION for PR #$PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+
+  pr-ready-review-label:
+    if: github.event.action == 'ready_for_review'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add/Remove PR labels based on event type
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          EVENT_ACTION: ${{ github.event.action }}
+          ADD_LABEL: ${{ env.READY_LABEL }}
+          REMOVE_LABEL: ${{ env.DRAFT_LABEL }}
+        run: *update_run 
+
+  open-pr-label:
+    if: github.event.action == 'opened' || github.event.action == 'reopened'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set labels based on draft status
+        shell: bash
+        run: |
+          if [[ "${{ github.event.pull_request.draft }}" == "true" ]]; then
+            echo "ADD_LABEL_VALUE=${{ env.DRAFT_LABEL }}" >> $GITHUB_ENV
+            echo "REMOVE_LABEL_VALUE=${{ env.READY_LABEL }}" >> $GITHUB_ENV
+          else
+            echo "ADD_LABEL_VALUE=${{ env.READY_LABEL }}" >> $GITHUB_ENV
+            echo "REMOVE_LABEL_VALUE=${{ env.DRAFT_LABEL }}" >> $GITHUB_ENV
+          fi
+
+      - name: Add/Remove PR labels based on event type
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          EVENT_ACTION: ${{ github.event.action }}
+          ADD_LABEL: ${{ env.ADD_LABEL_VALUE }}
+          REMOVE_LABEL: ${{ env.REMOVE_LABEL_VALUE }}
+        run: *update_run
+
+  close-remove-labels:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add/Remove PR labels based on event type
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          EVENT_ACTION: ${{ github.event.action }}
+        run: |
+          gh pr edit "$PR_NUMBER" --repo "$REPO" --remove-label "${{ env.DRAFT_LABEL }}" || true
+          gh pr edit "$PR_NUMBER" --repo "$REPO" --remove-label "${{ env.READY_LABEL }}" || true
+          echo "Removed labels based on event action: $EVENT_ACTION for PR #$PR_NUMBER" >> "$GITHUB_STEP_SUMMARY"

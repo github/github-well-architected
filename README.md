@@ -124,6 +124,12 @@ Run only functional tests:
 tools/test --functional
 ```
 
+Run linter:
+
+```bash
+tools/lint
+```
+
 Review test output for errors and address any failures before submitting changes.
 
 For more detailed development instructions, including GitHub Codespaces setup, see the [Contributing Guide](CONTRIBUTING.md).
