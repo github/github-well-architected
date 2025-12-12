@@ -8,9 +8,6 @@
     },
     "ghcr.io/github/features/goproxy:1": {},
     "ghcr.io/github/features/go-linter:2": {},
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    },
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
       "version": "lts",
@@ -18,7 +15,7 @@
     },
     "ghcr.io/devcontainers/features/hugo:1": {
       "extended": true,
-      "version": "latest"
+      "version": "0.151.0"
     }
   },
   "onCreateCommand": ".devcontainer/on-create-command.sh",
@@ -71,12 +68,6 @@
           }
         },
         "github/features": {
-          "permissions": {
-            "contents": "read",
-            "packages": "read"
-          }
-        },
-        "github/*": {
           "permissions": {
             "contents": "read",
             "packages": "read"
