@@ -136,6 +136,11 @@ For more detailed development instructions, including GitHub Codespaces setup, s
 
 ---
 
+
+## License 
+
+This project is licensed under the terms of the MIT open source license. Please refer to the [LICENSE](./LICENSE) file for the full terms.
+
 ## Special thanks
 
 See the repository's [list of contributors](https://github.com/github/github-well-architected/graphs/contributors), as well as authors in Issues and Discussions, to see who all have contributed to the success of this project.
