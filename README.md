@@ -136,8 +136,7 @@ For more detailed development instructions, including GitHub Codespaces setup, s
 
 ---
 
-
-## License 
+## License
 
 This project is licensed under the terms of the MIT open source license. Please refer to the [LICENSE](./LICENSE) file for the full terms.
 
