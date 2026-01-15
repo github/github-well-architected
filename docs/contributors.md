@@ -5,6 +5,6 @@ Thank you to all the amazing people who have contributed to the GitHub Well-Arch
 <!--- CONTRIBUTORS:START --->
 ![Contributors Montage](contributors-montage.png)
 
-@colossus9 @KittyChiu @CallMeGreg @collinmcneese @PickHub @btessiau @sdehm @garnertb @igwejk @jennysharps @jackie-mak @igorcosta @arilivigni @steffen @pwideman @dhruvg20 @kbridgford @brntbeer @data-douser @ssulei7 @felicitymay @Copilot @lineville @Jeffrey-Luszcz @Steve-Glass @abhi-dutta @solvaholic @robandpdx @gitstua @parkerbxyz @andrewakim @thomasphorton @victorp13
+@KittyChiu @colossus9 @CallMeGreg @collinmcneese @PickHub @btessiau @sdehm @garnertb @kenmuse @igwejk @jennysharps @jackie-mak @igorcosta @arilivigni @steffen @pwideman @dhruvg20 @Copilot @kbridgford @brntbeer @data-douser @ssulei7 @felicitymay @lineville @Jeffrey-Luszcz @Steve-Glass @abhi-dutta @solvaholic @robandpdx @gitstua @parkerbxyz @andrewakim @thomasphorton @victorp13
 
 <!--- CONTRIBUTORS:END --->
