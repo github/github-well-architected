@@ -142,6 +142,6 @@ This project is licensed under the terms of the MIT open source license. Please 
 
 ## Special thanks
 
-Thanks to these [wonderful contributors](docs/contributors.md), as well as authors in Issues and Discussions to the success of the GitHub Well-Architected Framework.
+Thanks to these [wonderful contributors](docs/contributors.md), as well as authors in Issues and Discussions for their contributions to the success of the GitHub Well-Architected Framework.
 
 ![Contributors](docs/contributors-montage.png)
