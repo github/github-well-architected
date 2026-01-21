@@ -52,6 +52,7 @@ Approach|Benefit
 ---|---
 Leverage advanced predictive analytics and AI in security detection and remediation.|Anticipates and neutralizes threats before they materialize.<br><br>Improves security decision-making with data-driven insights.<br><br>Enhances the efficiency of security operations through automation.
 Codify security practices by automating security checks and integrating tools into the software development lifecycle.|Embeds security practices into the entire application lifecycle.<br><br>Promotes closer collaboration between development, security, and operations teams.<br><br>Ensures rapid deployment of secure applications.
+Adopt isolated, ephemeral, and secure environments for development, build and deployment pipeline execution.|Reduces opportunities for tampering by ensuring each run starts from a known-clean execution environment.<br><br>Improves code and build integrity by limiting persistence and cross-run contamination.<br><br>Reduces the risk of development and build poisoning, and related supply chain attacks.
 Provide secure default configurations for systems, resources, and environments.|Minimizes the attack surface by assuming no entity within or outside the network is trusted.
 Prioritize security controls on critical system components.|Focuses expertise on critical aspects, applying rigorous security where most needed.<br><br>Regular detection exercises streamline risk mitigation efforts.<br><br>Ensures critical components receive the highest level of security attention.
 
