@@ -67,6 +67,7 @@ github:
 <!-- markdownlint-disable MD025 -->
 <!-- markdownlint-disable MD013 -->
 <!-- markdownlint-disable MD029 -->
+<!-- markdownlint-disable MD007 -->
 
 ## Scenario overview
 
@@ -223,24 +224,8 @@ Use GitHub's built-in role-based access control features.
 1. **Organization roles**: Assign organization-level roles (Owner, Member) based on responsibilities, keeping the number of organization owners limited but more than one
 2. **Team structure**: Create teams that align with SDLC roles (e.g., `security-champions`, `code-reviewers`, `release-managers`)
 3. **Repository roles**: Use built-in repository roles (Admin, Maintain, Write, Triage, Read) or create custom repository roles
-4. **CODEOWNERS**: Define code ownership and required reviewers using CODEOWNERS files
+4. **CODEOWNERS file**: Define code owners and required reviewers using a [CODEOWNERS](https://docs.github.com/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) file
 5. **Security managers role**: Use the security manager role to grant security teams visibility across the organization
-
-**CODEOWNERS example**:
-
-```text
-# Default: all changes require at least one review
-*                      @org/dev-team
-
-# Security-sensitive areas require review from a lead dev or security champion
-/src/auth/**           @org/lead-devs @org/security-champions
-/src/crypto/**         @org/lead-devs @org/security-champions
-/src/payments/**       @org/lead-devs @org/security-champions
-
-# CODEOWNERS and workflow files require lead dev review
-/.github/CODEOWNERS    @org/lead-devs
-/.github/workflows/**  @org/lead-devs
-```
 
 {{< callout type="info" >}}
 Training programs and management commitment should be managed outside GitHub through your organization's learning management and communication systems.
@@ -258,27 +243,18 @@ Combine GitHub-native security features with Actions-based automation.
 
 **Enable organization-wide security features**:
 
-1. **Secret scanning and push protection**: Enable on all repositories to prevent credential exposure
-   - Navigate to Organization Settings > Code security and analysis
-   - Enable "Secret scanning" and "Push protection" for all repositories
-   - Consider enabling "Validity checks" for supported token types
+1. **Security configurations**: Use GitHub's [security configurations](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/about-security-configurations) feature to enable, enforce, and set as default the following security features across all repositories:
+   - **Secret scanning and push protection**: Prevent credential exposure by detecting and blocking secrets before they are committed
+   - **Code scanning**: Automated SAST scanning using CodeQL to detect vulnerable coding patterns
+   - **Dependabot alerts and security updates**: Automatically detect and remediate vulnerable dependencies
 
-2. **Dependabot alerts, security updates, and dependency review**: Enable automatic vulnerability detection and remediation
-   - Enable "Dependabot alerts" for all repositories
-   - Enable "Dependabot security updates" to automatically create PRs for vulnerable dependencies
-   - Optionally enable "Grouped security updates" to reduce PR volume by combining related updates
-   - Use the [Dependency Review](https://github.com/actions/starter-workflows/blob/main/code-scanning/dependency-review.yml) action to detect and block new vulnerable dependencies in pull requests
+   Security configurations provide centralized management and enforcement, reducing administrative overhead while ensuring comprehensive coverage across your repositories. For detailed guidance on creating and applying security configurations, refer to the [GitHub documentation](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/creating-a-custom-security-configuration-for-your-enterprise).
 
-3. **Code scanning**: Set up automated SAST scanning using CodeQL or third-party tools
-   - Enable CodeQL analysis in all repositories
-   - Configure required status checks to block merges if vulnerabilities are detected above a certain severity
-   - Use the [CodeQL starter workflow](https://github.com/actions/starter-workflows/blob/main/code-scanning/codeql.yml) as a template for implementation
-
-4. **Immutable releases**: Prevent modifications to published releases
+2. **Immutable releases**: Prevent modifications to published releases
    - Enable immutable releases on repositories to ensure release artifacts cannot be altered after publication
    - This provides assurance that distributed software matches the original release
 
-5. **Artifact attestations**: Sign artifacts during build and validate provenance before consumption
+3. **Artifact attestations**: Sign artifacts during build and validate provenance before consumption
    - Use GitHub's artifact attestation feature to cryptographically sign build artifacts
    - Enable consumers to verify artifact provenance and integrity using `gh attestation verify`
    - Implements supply chain security best practices aligned with the [SLSA framework](https://slsa.dev/)
@@ -346,14 +322,52 @@ Leverage GitHub-hosted runners for most CI/CD workloads to benefit from automati
 
 Combine GitHub-native access controls with your identity provider.
 
-1. **Authentication**: Require SAML SSO or OIDC for organization access
-2. **Multi-factor authentication**: Enforce MFA for all users
-3. **IP allow lists**: Restrict access to GitHub from approved IP ranges
-4. **Repository permissions**: Use team-based access control with least privilege
-5. **Repository rulesets**: Prevent direct commits to protected branches
-6. **Required reviews**: Mandate code owner review for all changes
-7. **Push protection**: Enable secret scanning push protection to prevent credential commits
-8. **Push rulesets**: Use push rulesets to further restrict changes to sensitive file paths
+1. **Authentication**: Require SAML SSO or OIDC for access to your GitHub environment
+
+    - Start by integrating your identity provider (IdP) with GitHub using either [SAML SSO](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/configuring-saml-single-sign-on-for-your-enterprise) or [OIDC SSO](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/configuring-authentication-for-enterprise-managed-users/configuring-oidc-for-enterprise-managed-users).
+    - Prefer GitHub Enterprise Cloud with [Enterprise Managed Users](https://docs.github.com/enterprise-cloud@latest/admin/concepts/identity-and-access-management/enterprise-managed-users) (EMU) when you need centralized lifecycle management (provisioning, deprovisioning, and stronger governance boundaries) enforced by the IdP.
+    - Turn on [required 2FA for the enterprise](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-security-settings-in-your-enterprise#requiring-two-factor-authentication-for-organizations-in-your-enterprise) (or enforce MFA at the IdP if you use EMU).
+    - Decide whether to allow a grace period for enrollment. Keep it short, communicate early, and remove access for users who do not comply.
+    - Use audit logs to monitor MFA and sign-in related events and to verify that enforcement is working as intended.
+
+2. **IP allow lists**: Restrict access to GitHub from approved IP ranges
+
+    - Configure an enterprise [IP allow list](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise/restricting-network-traffic-to-your-enterprise-with-an-ip-allow-list) for web and API access to reduce exposure from untrusted networks.
+    - Maintain a change-controlled process for adding and removing IP ranges (including temporary allowances for incident response).
+    - If you plan to restrict CI/CD traffic by IP, validate compatibility with your runner model (e.g. GitHub-hosted runners).
+
+3. **Repository permissions**: Use team-based access control with least privilege
+
+    - Set conservative organization defaults (for example, base permission set to no access) and grant access through teams instead of direct user-to-repo permissions.
+    - Use role separation: keep organization owners limited, use repository admins sparingly, and grant broad visibility to security teams through the [security manager](https://docs.github.com/enterprise-cloud@latest/organizations/managing-peoples-access-to-your-organization-with-roles/managing-security-managers-in-your-organization) role.
+    - Align access control design with your roles and responsibilities model in PO.2 to keep permissions understandable and auditable.
+
+4. **Repository rulesets**: Prevent direct commits to protected branches
+
+    - Create organization-level rulesets that apply to all repositories (or to targeted repo sets using custom properties) and protect default branches and release branches.
+    - Use rulesets to block high-risk operations such as force pushes and branch deletion, and to require pull requests for changes.
+    - For deeper guidance on using rulesets as your policy engine (including monitoring bypass activity), see PO.4. For rulesets that enforce code scanning and dependency review, see PW.5.
+
+5. **Required reviews**: Mandate code owner review for all changes
+
+    - Require pull requests before merge and configure minimum approvals, dismissal of stale approvals, and “require review from code owners”.
+    - Maintain a CODEOWNERS file for security-sensitive paths (authentication, authorization, cryptography, payments, and the `.github` directory) to guarantee subject matter review.
+    - For a complete example of review-focused ruleset configuration, see PW.7.
+
+6. **Push rulesets**: Use push rulesets to further restrict changes to sensitive file paths
+
+    - Add a push ruleset to prevent or tightly control direct pushes to sensitive paths, such as `.github/workflows/**`, `CODEOWNERS`, IaC directories, and security policy files.
+    - Use these rulesets to enforce “changes must flow through pull requests” for specific files even when other parts of the repository allow direct pushes.
+    - Keep bypass permissions limited and review bypass events regularly.
+
+7. **Use commit signing**: Configure commit signing using a GPG, SSH, or S/MIME key
+
+    - Standardize on a signing method that supports user interaction (passphrase prompts, biometrics, or hardware-backed keys) and document the supported options for developers.
+    - Provide an onboarding path for developers to [configure signing keys](https://docs.github.com/enterprise-cloud@latest/authentication/managing-commit-signature-verification/about-commit-signature-verification) and validate verification status in pull requests.
+
+    {{< callout type="info" >}}
+    **Why user interaction matters**: The key defense here isn’t just the cryptographic signature - it’s the human verification step. A malicious script running on your machine can access your signing key, but it can’t press your fingerprint to the sensor or type your passphrase. This human-in-the-loop requirement is what blocks automated attacks from creating commits on your behalf.
+    {{< /callout >}}
 
 #### PS.2: Provide a mechanism for verifying software release integrity
 
@@ -527,139 +541,103 @@ PW.3 has been replaced by PO.1 and PW.4 in NIST SSDF v1.1
 
 Use GitHub policies and dependency management features to enforce secure software reuse.
 
-1. **GitHub Actions policies**: Set [enterprise policies](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-actions-in-your-enterprise#policies) to only allow actions created by GitHub, verified Marketplace creators, or those that have been explicitly approved.
+1. **GitHub Actions policies**: Set [enterprise policies](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-actions-in-your-enterprise#policies) to only allow actions created by GitHub, verified Marketplace creators, or those that have been explicitly approved. Navigate to Enterprise Policies > Actions > Policies > and configure:
 
-Navigate to Enterprise Policies > Actions > Policies > and configure:
+    - [ ] Allow all actions and reusable workflows
+    - [ ] Allow enterprise actions and reusable workflows
+    - [x] Allow enterprise, and select non-enterprise, actions and reusable workflows
+      - [x] Allow actions created by GitHub
+      - [x] Allow actions by Marketplace verified creators
+      - [x] Allow or block specified actions and reusable workflows
+        - actions/*
+        - github/*
+        - docker/*
+        - [etc...]
 
-- [ ] Allow all actions and reusable workflows
-- [ ] Allow enterprise actions and reusable workflows
-- [x] Allow enterprise, and select non-enterprise, actions and reusable workflows
-  - [x] Allow actions created by GitHub
-  - [x] Allow actions by Marketplace verified creators
-  - [x] Allow or block specified actions and reusable workflows
-    - actions/*
-    - github/*
-    - docker/*
-    - [etc...]
+2. **OIDC for cloud access**: Enforce authentication to cloud providers through [Actions OIDC](https://docs.github.com/enterprise-cloud@latest/actions/concepts/security/openid-connect), restricting access with a [trust condition](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/secure-your-work/security-harden-deployments/oidc-with-reusable-workflows) that includes the `job_workflow_ref` variable. This prevents repositories from configuring cloud access directly and ensures consistent security controls. Store the cloud provider secrets (client ID, tenant ID, subscription ID) as organization secrets so they can be inherited by the caller workflows. Example reusable workflow for Azure access:
 
-2. **OIDC for cloud access**: Enforce authentication to cloud providers through [Actions OIDC](https://docs.github.com/enterprise-cloud@latest/actions/concepts/security/openid-connect) with centralized reusable workflows.
+    ```yaml
+    # .github/workflows/reusable-azure-deploy.yml in your .github repository
+    name: Reusable Azure Deployment
+    on:
+      workflow_call:
+        inputs:
+          environment:
+            required: true
+            type: string
+            description: 'Target environment (dev, staging, prod)'
+          azure-region:
+            required: true
+            type: string
+            description: 'Azure region for deployment'
+        secrets:
+          azure-client-id:
+            required: true
+            description: 'Azure client ID for OIDC authentication'
+          azure-tenant-id:
+            required: true
+            description: 'Azure tenant ID for OIDC authentication'
+          azure-subscription-id:
+            required: true
+            description: 'Azure subscription ID for deployment'
 
-Create reusable workflows that handle cloud authentication using OIDC, restricting access with a [trust condition](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/secure-your-work/security-harden-deployments/oidc-with-reusable-workflows) that includes the `job_workflow_ref` variable. This prevents repositories from configuring cloud access directly and ensures consistent security controls. Store the cloud provider secrets (client ID, tenant ID, subscription ID) as organization secrets so they can be inherited by the caller workflows.
+    permissions:
+      id-token: write
+      contents: read
 
-Example reusable workflow for Azure access:
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.environment }}
+        steps:
+          - uses: actions/checkout@v5
 
-```yaml
-# .github/workflows/reusable-azure-deploy.yml in your .github repository
-name: Reusable Azure Deployment
-on:
-  workflow_call:
-    inputs:
-      environment:
-        required: true
-        type: string
-        description: 'Target environment (dev, staging, prod)'
-      azure-region:
-        required: true
-        type: string
-        description: 'Azure region for deployment'
-    secrets:
-      azure-client-id:
-        required: true
-        description: 'Azure client ID for OIDC authentication'
-      azure-tenant-id:
-        required: true
-        description: 'Azure tenant ID for OIDC authentication'
-      azure-subscription-id:
-        required: true
-        description: 'Azure subscription ID for deployment'
+          - name: Azure Login using OIDC
+            uses: azure/login@v2
+            with:
+              client-id: ${{ secrets.azure-client-id }}
+              tenant-id: ${{ secrets.azure-tenant-id }}
+              subscription-id: ${{ secrets.azure-subscription-id }}
 
-permissions:
-  id-token: write
-  contents: read
+          # Deployment steps would follow
+          - name: Deploy to Azure
+            run: |
+              echo "Deploying to ${{ inputs.environment }} in ${{ inputs.azure-region }}"
+              # Add your deployment commands here
+    ```
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    steps:
-      - uses: actions/checkout@v5
+    Consumer repositories call this workflow instead of configuring cloud access directly:
 
-      - name: Azure Login using OIDC
-        uses: azure/login@v2
+    ```yaml
+    # In a repository's .github/workflows/deploy.yml
+    name: Deploy to Azure
+    on:
+      push:
+        branches: [main]
+
+    jobs:
+      deploy:
+        uses: my-org/.github/.github/workflows/reusable-azure-deploy.yml@main
         with:
-          client-id: ${{ secrets.azure-client-id }}
-          tenant-id: ${{ secrets.azure-tenant-id }}
-          subscription-id: ${{ secrets.azure-subscription-id }}
+          environment: production
+          azure-region: eastus
+        secrets:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    ```
 
-      # Deployment steps would follow
-      - name: Deploy to Azure
-        run: |
-          echo "Deploying to ${{ inputs.environment }} in ${{ inputs.azure-region }}"
-          # Add your deployment commands here
-```
+    Benefits of centralized OIDC workflows:
 
-Consumer repositories call this workflow instead of configuring cloud access directly:
-
-```yaml
-# In a repository's .github/workflows/deploy.yml
-name: Deploy to Azure
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    uses: my-org/.github/.github/workflows/reusable-azure-deploy.yml@main
-    with:
-      environment: production
-      azure-region: eastus
-    secrets:
-      azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-      azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-      azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-```
-
-Benefits of centralized OIDC workflows:
-
-- No long-lived cloud credentials stored in GitHub secrets
-- Consistent security controls across all cloud deployments
-- Centralized audit trail of cloud access
-- Simplified credential rotation and revocation
-- Reduced blast radius if a repository is compromised
+    - No long-lived cloud credentials stored in GitHub secrets
+    - Consistent security controls across all cloud deployments
+    - Centralized audit trail of cloud access
+    - Simplified credential rotation and revocation
+    - Reduced blast radius if a repository is compromised
 
 3. **Dependabot alerts**: Enable Dependabot [alerts](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-alerts/about-dependabot-alerts) and automated [security updates](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) for known vulnerabilities in dependencies.
 
-4. **Dependency review**: Use the [dependency review](https://github.com/actions/dependency-review-action) action to block new vulnerable dependencies and open-source software with non-compliant licenses.
-
-For example:
-
-```yaml
-name: Dependency Review
-on: [pull_request]
-
-permissions:
-  contents: read
-  pull-requests: write
-
-jobs:
-  dependency-review:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v4
-        with:
-          # Block pull requests with vulnerabilities at moderate severity or higher
-          fail-on-severity: moderate
-          # Block dependencies with incompatible licenses
-          deny-licenses: GPL-2.0, GPL-3.0, LGPL-2.0, LGPL-3.0, AGPL-3.0
-          # Post detailed summary in PR comments
-          comment-summary-in-pr: always
-```
-
-Make dependency review a required workflow in your repository rulesets to prevent merging pull requests that introduce vulnerable or non-compliant dependencies.
+4. **Dependency review**: Use the [dependency review](https://github.com/actions/dependency-review-action) action to block new vulnerable dependencies and open-source software with non-compliant licenses. Refer to the example workflow file in section PW.5.
 
 #### PW.5: Create source code by adhering to secure coding practices
 
@@ -669,11 +647,52 @@ Make dependency review a required workflow in your repository rulesets to preven
 
 **Implementation details**:
 
-1. **Code scanning**: Enable CodeQL (or other SAST tools) for automated code analysis
-2. **Require code scanning results**: Block merges if code scanning finds vulnerabilities beyond a specific severity
-3. **Security configurations**: Use GitHub [security configurations](https://docs.github.com/enterprise-cloud@latest/code-security/securing-your-organization/introduction-to-securing-your-organization-at-scale/choosing-a-security-configuration-for-your-repositories) to standardize settings across repositories
+Use security configurations to enable and enforce security scanning, then use repository rulesets to prevent vulnerable code from being merged.
 
-Refer to the CodeQL starter workflow for implementation details: [CodeQL starter workflow](https://github.com/actions/starter-workflows/blob/main/code-scanning/codeql.yml)
+1. **Security configurations**: Refer to section PO.3 for detailed guidance on using GitHub's [security configurations](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/creating-a-custom-security-configuration-for-your-enterprise) to enable and enforce code scanning, secret scanning, and Dependabot across all repositories.
+
+2. **Repository rulesets for code scanning enforcement**: Use [repository rulesets](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) to require code scanning results before code is merged. Configure the severity threshold for code scanning results that will fail a status check and block PRs from merging. This prevents net-new vulnerabilities from being introduced unless an authorized user intentionally bypasses the requirement. All bypass activity is captured by GitHub's audit log and reviewable in the ruleset insights tab, providing visibility for emergency deployments.
+
+   Example repository ruleset configuration:
+
+   - [x] Require code scanning results
+     - Tool: `CodeQL`
+     - Security alerts: `High or higher`
+     - Alerts: `Error` (blocks merge)
+
+   This configuration ensures that pull requests introducing high or critical severity vulnerabilities cannot be merged without explicit bypass authorization, which is logged and auditable.
+
+3. **Repository rulesets for dependency review**: Enforce a required workflow that includes [Dependency Review](https://docs.github.com/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review), which catches and blocks PR merges when changes introduce net-new vulnerable dependencies or add dependencies with restricted licenses. Configure dependency review as a required workflow in your repository rulesets to ensure consistent enforcement.
+
+   Example dependency review workflow:
+
+   ```yaml
+   name: Dependency Review
+   on: [pull_request]
+
+   permissions:
+     contents: read
+     pull-requests: write
+
+   jobs:
+     dependency-review:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Checkout code
+           uses: actions/checkout@v5
+
+         - name: Dependency Review
+           uses: actions/dependency-review-action@v4
+           with:
+             # Block pull requests with vulnerabilities at moderate severity or higher
+             fail-on-severity: moderate
+             # Block dependencies with incompatible licenses
+             deny-licenses: GPL-2.0, GPL-3.0, LGPL-2.0, LGPL-3.0, AGPL-3.0
+             # Post detailed summary in PR comments
+             comment-summary-in-pr: always
+   ```
+
+4. **Secret scanning push protection**: Always aim to enable secret scanning push protection organization-wide. When first establishing new secret scanning custom patterns, allow bypass to soft-block developers while you analyze the frequency and use cases for false positives and refine your patterns. Once patterns are validated, consider removing bypass permissions for critical repositories. Push protection prevents secrets from ever entering the repository history, which is more secure than detection after commit.
 
 #### PW.6: Configure the compilation, interpreter, and build processes to improve executable security
 
@@ -713,25 +732,36 @@ GitHub-hosted runners provide a secure-by-default build environment. If self-hos
 
 **Implementation details**:
 
-1. **Pull request reviews**: Require human code review for all changes to default and protected branches
-2. **Code scanning**: Automated SAST scanning with CodeQL (or third-party tools)
-3. **Review assignments**: Automatically assign security champions as reviewers using pull request templates or CODEOWNERS files.
-4. **Code suggestions**: Use review comments to propose security fixes
+Use repository rulesets to enforce pull request requirements and code review processes, combined with automated and manual security reviews.
 
-Here is an example repository ruleset configuration to enforce automated review by CodeQL + manual review:
+1. **Repository rulesets for pull request requirements**: Refer to the repository ruleset guidance in section PW.5 for code scanning enforcement. Additionally, configure repository rulesets to require pull requests before merging to default and protected branches:
 
-- [x] Require pull request reviews before merging
+   - [x] Require pull request before merging
+     - [x] Required approving reviews: 1 (or more, depending on your risk tolerance)
+     - [x] Dismiss stale pull request approvals when new commits are pushed
+     - [x] Require review from Code Owners
+     - [x] Require approval of the most recent reviewable push
+
+   Use [CODEOWNERS](https://docs.github.com/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) files to identify and automatically tag required reviewers for security-sensitive code paths. This ensures that changes to critical areas (authentication, authorization, cryptography, payment processing, and the `.github` directory) are always reviewed by security champions or lead developers.
+
+2. **Automated code scanning**: Enable CodeQL or other SAST tools for automated security analysis. Require code scanning results in your repository rulesets to ensure all pull requests are scanned before merging.
+
+3. **Code review suggestions**: Use review comments to propose fixes directly in the pull request. Reviewers can suggest specific code changes that address concerns, and authors can apply them with a single click.
+
+4. **Copilot code review**: Automatically request [Copilot code review](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review?tool=webui) with [custom instructions](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review?tool=webui#customizing-copilots-reviews-with-custom-instructions) that emphasize security to automate initial security review.
+
+**Complete repository ruleset example for PW.7**:
+
+- [x] Require pull request before merging
   - [x] Required approving reviews: 1
+  - [x] Dismiss stale pull request approvals when new commits are pushed
   - [x] Require review from Code Owners
+  - [x] Require approval of the most recent reviewable push
 
 - [x] Require code scanning results
   - [x] CodeQL - Security alerts: `High or higher`, Alerts: `Error`
 
 - [x] Automatically request Copilot code review
-
-{{< callout type="info" >}}
-Tip: Use Copilot code review with [custom instructions](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review?tool=webui#customizing-copilots-reviews-with-custom-instructions) that include an emphasis on security to automate initial code security review.
-{{< /callout >}}
 
 #### PW.8: Test executable code to identify vulnerabilities
 
