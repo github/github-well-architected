@@ -93,7 +93,7 @@ To secure GitHub Actions workflows, consider the following strategies:
 
 ## Assumptions and preconditions
 
-This article assumes readers are familiar with [GitHub Actions](https://docs.github.com/en/enterprise-cloud@latest/actions/about-github-actions/understanding-github-actions) and have experience creating and managing workflows. It also assumes a basic understanding of security best practices and concepts such as authentication and authorization.
+This article assumes readers are familiar with [GitHub Actions](https://docs.github.com/en/enterprise-cloud@latest/actions/about-github-actions/understanding-github-actions) and have experience creating and managing workflows. It also assumes a basic understanding of security best practices and concepts such as authentication, authorization, and OIDC.
 
 ## Recommended implementation
 
@@ -110,7 +110,9 @@ When [configuring OIDC trust relationships with cloud providers](https://docs.gi
 - **`sub` claim**: The primary OIDC subject identifier, uniquely representing the repository that requested the token. Use this claim to restrict access to specific repositories and environments. Prefer an exact match on a complete claim instead of wildcard matches.
 - **`job_workflow_ref` claim**: Specifies the exact workflow file path and commit SHA. Note that only a limited number of cloud providers support this custom claim (e.g. [Azure](https://learn.microsoft.com/en-us/entra/workload-id/workload-identities-flexible-federated-identity-credentials?tabs=github)).
 
-Use the most specific claims possible when establishing the trust relationship to prevent unauthorized access—even from legitimate repositories.
+Define the most granular trust conditions wherever possible to prevent unauthorized access, even from legitimate repositories. [Customize the `sub` claim](https://docs.github.com/en/enterprise-cloud@latest/actions/reference/security/oidc#customizing-the-token-claims) when the cloud provider's OIDC implementation does not support matching **custom claims** or you need immutable identifiers in the `sub`.
+
+- Prefer **immutable identifiers** (e.g., `repository_owner_id:12345:repository_id:67890`) over mutable ones (e.g., `repo:github/some-repo`).
 
 #### Scaling with reusable workflows
 
@@ -280,6 +282,7 @@ Specific helpful articles:
 - [Security Hardening for GitHub Actions](https://docs.github.com/en/enterprise-cloud@latest/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)
 - [Self-hosted runner security](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners#self-hosted-runner-security)
 - [Events that trigger workflows](https://docs.github.com/en/enterprise-cloud@latest/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows)
+- [OIDC token claims](https://docs.github.com/en/enterprise-cloud@latest/actions/reference/security/oidc#oidc-token-claims)
 - [Secure use reference](https://docs.github.com/en/enterprise-cloud@latest/actions/reference/security/secure-use)
 
 ### External Resources
