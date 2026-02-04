@@ -14,7 +14,7 @@ When creating a new Content Library article, include relevant taxonomies in the 
 ---
 title: 'Your Article Title'
 draft: false
-publishDate: 2024-12-05
+publishDate: 2025-12-05
 
 params:
   author:
@@ -43,7 +43,7 @@ features:
 
 components:
   - code-scanning
-  - repository-rulesets
+  - branch-rulesets
 ---
 ```
 
@@ -65,10 +65,12 @@ pillars:
 
 # The areas of the GitHub adoption journey. Inspiration taken from docs.github.com
 areas:
+  - agent-and-extensions
   - ci-cd-and-devops
   - client-apps
   - collaborative-coding
   - community
+  - context-engineering
   - developers
   - enterprise-and-teams
   - getting-started
@@ -78,13 +80,16 @@ areas:
 # Classifications of industries who may be at different stages of the customer journey.
 verticals:
   - automotive
-  - manufacturing
   - finance
   - gaming
-  - media
   - government
   - information-technology
+  - manufacturing
+  - media
+  - professional-service
+  - retail
   - smb-corporate
+  - mid-market
 
 # Individuals in key roles on the customer journey, typically consisting of one or more administrators and the end-user community.
 personas:
@@ -105,43 +110,65 @@ platform:
 features:
   - codespaces
   - copilot
+  - copilot-cli
   - git
-  - github-advanced-security
   - github-actions
+  - github-advanced-security
+  - github-apps
   - github-cli
+  - github-desktop
+  - github-discussions
   - github-mobile
+  - github-marketplace
   - github-pages
+  - github-packages
   - github-projects
+  - github-releases
   - issues-and-pull-requests
-  - mcp
   - repositories
 
 # Deeper-level topics of the GitHub Platform and its features. They are most often interacted with by end-users.
 components:
   - audit-log
   - actions-oidc
+  - actions-runners
   - billing-and-cost-centers
+  - branch-rulesets
+  - caches-and-artifacts
+  - chatmode
   - coding-agents
   - code-review-automation
   - code-scanning
+  - context-engineering
   - copilot-autofix
-  - copilot-enterprise
   - copilot-business
   - copilot-chat
+  - copilot-enterprise
+  - copilot-spaces
+  - custom-instructions
   - dependabot-and-dependency-review
+  - deployment-and-environments
   - git-lfs
   - governance-and-policy
+  - graph-api
   - insights-and-metrics
   - limits
+  - mcp-and-extensions
+  - migration
   - performance-engineering
+  - prompt-engineering
   - push-rulesets
   - repository-custom-properties
-  - repository-rulesets
+  - repository-rulesets # to be deprecated
+  - rest-api
+  - review-agents
+  - secret-protection
   - secret-scanning
   - security-campaigns
   - security-configurations
   - sso-saml
   - sso-oidc
+  - webhooks
 
 # Associated teams and other GitHub and Partner resources that can provide additional support.
 github:
@@ -153,6 +180,7 @@ github:
   - enterprise-support
   - expert-services
   - fast-track
+  - microsoft
   - partners
   - product-marketing
 ```

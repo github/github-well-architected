@@ -66,14 +66,14 @@ flowchart LR
     F --> H[[Step 7<br />GitHub Review]]
     H --> I[Step 8<br />Publish]
 
-    style A fill:pink
-    style B fill:pink
-    style C fill:pink
-    style D fill:pink
-    style E fill:yellow
-    style F fill:pink
-    style H fill:silver
-    style I fill:yellow
+    style A fill:pink,color:#000
+    style B fill:pink,color:#000
+    style C fill:pink,color:#000
+    style D fill:pink,color:#000
+    style E fill:yellow,color:#000
+    style F fill:pink,color:#000
+    style H fill:silver,color:#000
+    style I fill:yellow,color:#000
 ```
 
 **Legend:**
@@ -342,19 +342,18 @@ There are several primary types of contributions to this project:
 
 ### 📝 Content Library Article Submission(s)
 
-Contributions will typically author content articles. To start writing, we recommend review these essential framework resources:
+Contributions will typically author content articles under `/content/` folder. To start writing, we recommend reviewing these essential framework resources:
 
 - [Framework Overview] - Learn about the WAF mission, vision, objectives, and five pillars
-- [Project Structure](/docs/project-structure.md) - Understand the repository layout and where content lives
 - [Taxonomies](/docs/taxonomies.md) - Explore the design principles, areas, and other classifications
 
 **Inspiration for Content Library articles** comes from **Azure Architecture Center**. See the following example articles for your inspiration: 💡
 
-- [📄 Reliability: Recommendations for designing for redundancy](https://learn.microsoft.com/en-us/azure/well-architected/reliability/redundancy)
-- [📄 Security: Recommendations for identity and access management](https://learn.microsoft.com/en-us/azure/well-architected/security/identity-access)
-- [📄 Cost Optimization: Recommendations for optimizing environment costs](https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/optimize-environment-costs)
-- [📄 Operational Excellence: Recommendations for using infrastructure as code](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/infrastructure-as-code-design)
-- [📄 Performance Efficiency: Recommendations for capacity planning](https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/capacity-planning)
+- [📄 Reliability: Recommendations for designing for redundancy][reliability-redundancy]
+- [📄 Security: Recommendations for identity and access management][security-identity-access]
+- [📄 Cost Optimization: Recommendations for optimizing environment costs][cost-optimize-environment]
+- [📄 Operational Excellence: Recommendations for using infrastructure as code][operational-iac]
+- [📄 Performance Efficiency: Recommendations for capacity planning][performance-capacity-planning]
 
 ### 💻 Website Code Changes
 
@@ -412,6 +411,22 @@ See [Framework Overview] for details on each pillar.
 - Keep sentences **short and clear**
 - Avoid unnecessary jargon
 - Include practical examples
+- Prefer GitHub Docs links to **Enterprise Cloud**: `https://docs.github.com/en/enterprise-cloud@latest` (unless the guidance is specific to GitHub Enterprise Server)
+- Use Hugo shortcodes to keep articles consistent (see `archetypes/default.md`):
+  - Further assistance: `{{% seeking-further-assistance-details %}}`
+  - Related links: `{{% related-links-github-docs %}}`
+
+### Callouts
+
+Use Hextra callouts to highlight important information:
+
+```md
+{{< callout type="info" >}}
+This is an informational note.
+{{< /callout >}}
+```
+
+Use `type` for standard callouts (`info`, `warning`, `error`). For custom callouts, use `emoji`.
 
 > [!IMPORTANT]
 > Remember: [GitHub Docs] is the primary source of truth. Our framework supplements documentation with design thinking and decision-making guidance.
@@ -483,3 +498,8 @@ By contributing, you agree that your contributions will be licensed under the [M
 [Framework Overview]: /docs/framework-overview.md
 [Create a content request Issue]: https://github.com/github/github-well-architected-internal/issues/new?template=request-content.yml
 [GitHub Docs]: https://docs.github.com
+[reliability-redundancy]: https://learn.microsoft.com/en-us/azure/well-architected/reliability/redundancy
+[security-identity-access]: https://learn.microsoft.com/en-us/azure/well-architected/security/identity-access
+[cost-optimize-environment]: https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/optimize-environment-costs
+[operational-iac]: https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/infrastructure-as-code-design
+[performance-capacity-planning]: https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/capacity-planning
