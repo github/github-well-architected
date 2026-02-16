@@ -1,0 +1,24 @@
+name: "Close stale issues and PRs"
+on:
+  schedule:
+   - cron: '0 0 * * *' # Runs every day at midnight
+
+jobs:
+  stale:
+    permissions:
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/stale@997185467fa4f803885201cee163a9f38240193d # v10.1.1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        stale-issue-message: 'Thanks for opening this issue! To keep the project healthy, we close inactive issues after some time. There has not been any activity in the last 28 days - if you are still working on this or feel it should remain open, just leave a quick comment in the next 7 days to let us know where things are at. We really appreciate your input!'
+        stale-pr-message: 'Thanks for raising this PR! To keep the project healthy, we close inactive PRs after some time. There has not been any activity in the last 28 days - if you are still working on this or feel it should remain open, just leave a quick comment in the next 7 days to let us know where things are at. We really appreciate your input!'
+        close-issue-message: 'Closing this issue as it has been marked stale and has not received any updates in the past 7 days. If you are still working on this or believe it should be reopened, feel free to leave an update. Thanks again for contributing!'
+        close-pr-message: 'Closing this PR as it has been marked stale and has not received any updates in the past 7 days. If you are still working on this or believe it should be reopened, feel free to leave an update. Thanks again for contributing!'
+        stale-issue-label: 'stale'
+        stale-pr-label: 'stale'
+        exempt-pr-labels: 'dependencies'
+        days-before-stale: 28
+        days-before-close: 7
