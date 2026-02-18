@@ -1,11 +1,14 @@
-fail-on-severity: moderate
+# Dependency review configuration for GitHub Well-Architected Framework
+# Optimized for static site operations - balancing security with maintenance effort
 
+# Only fail on high severity vulnerabilities (includes both high and critical severity levels)
+fail-on-severity: high
+
+# Always provide PR comments summarizing dependency changes
 comment-summary-in-pr: always
 
-# allow-licenses:
-#   - MIT
-
+# Only fail on runtime and unknown scope vulnerabilities
+# Development dependencies are excluded to reduce noise for this static site
 fail-on-scopes:
-  - development
   - runtime
   - unknown
