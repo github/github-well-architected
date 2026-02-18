@@ -1,0 +1,24 @@
+{{- /*
+Shortcode: quarterly-updates
+
+Auto-renders quarterly release notes section files from the current page bundle.
+
+Convention:
+  - Quarterly section resources are named like "YYYY-qN.md" (for example, "2025-q4.md").
+  - Sorting is based on filename (descending).
+  - Files must use markdown headings (##) for TOC compatibility.
+
+Usage:
+  {{% quarterly-updates %}}
+
+Note: Use percent delimiters (%) instead of angle brackets (<) so headings appear in TOC.
+*/ -}}
+
+{{- $sections := .Page.Resources.Match "20*-q*.md" -}}
+{{- if not $sections -}}
+  {{- errorf "quarterly-updates: no matching section files found for %q" .Page.File.Path -}}
+{{- end -}}
+
+{{- range (sort $sections "Name" "desc") -}}
+  {{- .RenderShortcodes -}}
+{{- end -}}
