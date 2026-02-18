@@ -14,9 +14,6 @@ updates:
     schedule:
       # Daily updates to ensure dependencies are always up-to-date
       interval: "daily"
-    labels:
-      - "CI/CD"
-      - "dependabot"
     commit-message:
       prefix: "chore(deps)"
     # Group version and security updates separately.
