@@ -1,23 +1,51 @@
+# Dependabot version update configuration for GitHub Well-Architected Framework
+# Optimized for static site operations - balancing security with maintenance effort
+#
+# Configuration principles:
+# - Daily updates to ensure dependencies are always up-to-date
+# - increase-if-necessary versioning for npm to minimize breaking changes
+# - Grouped updates per ecosystem per intentional for easier review
+
 version: 2
 updates:
+  # GitHub Actions dependencies
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directory: "/.github/workflows"
     schedule:
+      # Daily updates to ensure dependencies are always up-to-date
       interval: "daily"
     labels:
       - "CI/CD"
       - "dependabot"
     commit-message:
-      prefix: ci
+      prefix: "chore(deps)"
+    # Group version and security updates separately.
     groups:
-      actions-deps:
+      actions-version:
+        applies-to: version-updates
         patterns:
           - "*"
+      actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  # NPM dependencies (Hugo site and tooling)
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
+      # Daily updates to ensure dependencies are always up-to-date
       interval: "daily"
+    commit-message:
+      prefix: "chore(deps)"
+    versioning-strategy: increase-if-necessary
+    # Group version and security updates separately.
     groups:
-      npm-deps:
+      npm-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      npm-security:
+        applies-to: security-updates
         patterns:
           - "*"
