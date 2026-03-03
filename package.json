@@ -75,6 +75,9 @@
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1"
   },
+  "overrides": {
+    "serialize-javascript": ">=7.0.3"
+  },
   "jest": {
     "roots": [
       "<rootDir>/src/js/"
