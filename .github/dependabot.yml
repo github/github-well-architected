@@ -2,7 +2,7 @@
 # Optimized for static site operations - balancing security with maintenance effort
 #
 # Configuration principles:
-# - Daily updates to ensure dependencies are always up-to-date
+# - Monthly scheduled updates to balance dependency freshness with maintenance effort
 # - increase-if-necessary versioning for npm to minimize breaking changes
 # - Grouped updates per ecosystem per intentional for easier review
 
@@ -12,10 +12,12 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
     schedule:
-      # Daily updates to ensure dependencies are always up-to-date
-      interval: "daily"
+      # Monthly scheduled updates to balance freshness with maintenance effort; security updates can still be raised separately
+      interval: "monthly"
     commit-message:
       prefix: "chore(deps)"
+    reviewers:
+      - "github/cse-intelligence-engine-squad"
     # Group version and security updates separately.
     groups:
       actions-version:
@@ -31,11 +33,13 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      # Daily updates to ensure dependencies are always up-to-date
-      interval: "daily"
+      # Monthly scheduled updates to balance freshness with maintenance effort; security updates can still be raised separately
+      interval: "monthly"
     commit-message:
       prefix: "chore(deps)"
     versioning-strategy: increase-if-necessary
+    reviewers:
+      - "github/cse-intelligence-engine-squad"
     # Group version and security updates separately.
     groups:
       npm-version:

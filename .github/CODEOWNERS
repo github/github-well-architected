@@ -1,7 +1,7 @@
 
 # Default owners for all files in the repository
-* @github/github-well-architected-admins @github/cse-intelligence-engine-squad @bot-digital-customer-success @github/github-well-architected-maintainers
+# This includes CICD workflows (/.github), utility scripts for production deployments (/script), and other CSE-specific configurations
+* @github/github-well-architected-admins @github/cse-intelligence-engine-squad @bot-digital-customer-success
 
-# Owners for .github and script directories
-# This includes CICD workflows, and other CSE-specific configurations
-/.github/ @github/github-well-architected-admins @github/cse-intelligence-engine-squad @bot-digital-customer-success
+# Owners for content directory
+/content/ @github/github-well-architected-admins @github/github-well-architected-maintainers
