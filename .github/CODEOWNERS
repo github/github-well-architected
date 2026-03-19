@@ -4,4 +4,4 @@
 * @github/github-well-architected-admins @github/cse-intelligence-engine-squad @bot-digital-customer-success
 
 # Owners for content directory
-/content/ @github/github-well-architected-maintainers
+/content/ @github/github-well-architected-admins @github/github-well-architected-maintainers
