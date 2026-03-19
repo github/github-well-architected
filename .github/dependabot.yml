@@ -2,7 +2,7 @@
 # Optimized for static site operations - balancing security with maintenance effort
 #
 # Configuration principles:
-# - Monthly updates to ensure dependencies are always up-to-date
+# - Monthly updates to keep dependencies reasonably current while reducing update noise
 # - increase-if-necessary versioning for npm to minimize breaking changes
 # - Grouped updates per ecosystem per intentional for easier review
 
@@ -12,7 +12,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
     schedule:
-      # Monthly updates to ensure dependencies are always up-to-date
+      # Monthly updates to balance reduced PR noise with reasonably current dependencies
       interval: "monthly"
     commit-message:
       prefix: "chore(deps)"
@@ -33,7 +33,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      # Monthly updates to ensure dependencies are always up-to-date
+      # Monthly updates to balance reduced PR noise with reasonably current dependencies
       interval: "monthly"
     commit-message:
       prefix: "chore(deps)"
