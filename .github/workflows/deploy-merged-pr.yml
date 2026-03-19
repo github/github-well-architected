@@ -75,7 +75,7 @@ jobs:
       # OSS App
       - name: Generate GitHub App Token
         id: pr_app_token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.WELLARCHITECTED_OSS_APP_ID }}
           private-key: ${{ secrets.WELLARCHITECTED_OSS_APP_PRIVATE_KEY }}
@@ -108,7 +108,7 @@ jobs:
       # OSS App
       - name: Generate GitHub App Token
         id: dispatch_app_token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.WELLARCHITECTED_OSS_APP_ID }}
           private-key: ${{ secrets.WELLARCHITECTED_OSS_APP_PRIVATE_KEY }}
