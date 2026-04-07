@@ -251,3 +251,23 @@ Relying on human intervention for deployment.
 - Document any remaining manual processes thoroughly.
 
 By organizing anti-patterns into these clear categories and addressing their distinct aspects, teams can more systematically improve their GitHub practices.
+
+## Application Security Anti-Patterns
+
+### Detecting PII with secret scanning custom patterns
+
+Using GitHub secret scanning custom patterns to detect Personally Identifiable Information (PII) such as social security numbers, dates of birth, or government-issued identifiers in source code.
+
+**Why It's an Anti-Pattern**
+
+- Secret scanning is designed for credentials and tokens that can be revoked and rotated. PII such as social security numbers and dates of birth is permanent and cannot be rotated.
+- When secret scanning detects a value, the alert stores and displays it so reviewers can assess the finding. Alerts cannot be deleted — only dismissed. Once PII triggers an alert, the sensitive data is permanently embedded in the alert record. This creates a second, unmanageable copy of the very data the organization intended to protect.
+- Storing PII in non-deletable alert records creates compliance exposure under frameworks like GDPR (right to erasure), CCPA (right to deletion), HIPAA (disposal requirements), and PCI DSS (secure deletion mandates).
+
+**How to Avoid**
+
+- Keep secret scanning custom patterns focused on their intended purpose: detecting organization-specific credentials, API keys, and tokens that follow the detect-revoke-rotate lifecycle.
+- Use purpose-built data loss prevention (DLP) tooling to detect PII in code. DLP tools support redaction, quarantine, and deletion capabilities that align with regulatory requirements.
+- Deploy DLP tooling as pre-commit hooks to prevent PII from entering the repository in the first place.
+- Audit existing custom patterns for any PII detection rules and remove them. When deleting a custom pattern entirely, the option to delete the existing alerts is provided.
+- Document an organizational policy that explicitly defines which tools handle which data types: secret scanning for credentials, DLP tooling for PII.
