@@ -32,9 +32,7 @@
         "golang.go",
         // Recommended for Hextra theme
         "mhutchie.git-graph",
-        "prettier.prettier-vscode",
-        "tamasfe.even-better-toml",
-        "budparr.language-hugo-vscode",
+        "esbenp.prettier-vscode",
 
         // Recommended extensions from https://gohugo.io/tools/editors/#visual-studio-code
         "eliostruyf.vscode-front-matter",
@@ -50,7 +48,7 @@
           "--whole-files",
           "--new-from-rev=origin/main"
         ],
-        "editor.defaultFormatter": "prettier.prettier-vscode",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
         "editor.detectIndentation": false,
