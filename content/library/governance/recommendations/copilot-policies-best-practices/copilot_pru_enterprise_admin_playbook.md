@@ -154,8 +154,10 @@ Upon completion of this playbook, administrators will be able to:
 Premium Request Units (PRUs) represent usage credits for advanced GitHub Copilot features that exceed standard plan allowances. These units enable access to:
 
 - Advanced AI models (Claude, Gemini, etc.)
-- Agentic coding capabilities (Copilot Coding Agent)
+- Agentic coding capabilities (Copilot cloud agent)
 - Enhanced code review capabilities (Copilot Code Review)
+
+For governance-specific controls around cloud agents — policy configuration, security boundaries, MCP governance, and audit pipelines — see [Governing AI cloud agents in GitHub Enterprise]({{< relref "governing-agents.md" >}}).
 
 **Key Principles:**
 
@@ -176,7 +178,7 @@ Premium Request Units (PRUs) represent usage credits for advanced GitHub Copilot
 
 - Enhanced developer productivity with advanced AI models
 - Improved code quality through advanced review features
-- Accelerated development cycles with coding agents
+- Accelerated development cycles with cloud agents
 
 ### 2. Planning & Configuration
 
@@ -443,7 +445,7 @@ From the Enterprise Admin, three different types of organizations are defined:
    - Access limited to standard features.
    - Standard users have basic Copilot features but no PRU access.
 
-**In summary:**  
+**In summary:**
 The Enterprise Admin governs and manages policies and budgets across all organizations, while each organization determines licenses and access based on business requirements. Team members and standard users then utilize features and resources aligned with their assigned roles and budget levels.
 
 {{< callout type="info" >}}
@@ -531,7 +533,7 @@ Response timeframes are suggested based on enterprise best practices. Organizati
 **Symptoms:**
 
 - Premium models not available in Copilot Chat
-- Coding agents disabled or restricted
+- cloud agents disabled or restricted
 - Error messages about PRU limitations
 
 **Diagnostic Steps:**

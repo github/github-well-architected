@@ -274,7 +274,7 @@ Build trust across the supply chain by establishing cryptographic provenance for
 
 For packages you maintain:
 
-1. Link your GitHub repository as a trusted publisher in your package registry settings (npm, PyPI, RubyGems, etc.)
+1. Link your GitHub repository as a trusted publisher in your package registry settings (npm, PyPI, RubyGems, NuGet, crates.io, etc.)
 2. Update your release workflow to use [OIDC authentication](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments) instead of long-lived tokens
 3. Publish with provenance attestations (e.g., `npm publish --provenance`) to create cryptographic proof on the specific commit of the source repository
 4. Create [linked artifact storage records](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/linked-artifacts) with the [`actions/attest`](https://github.com/actions/attest) action
@@ -361,7 +361,7 @@ The most secure approach (reviewing every dependency change manually and disabli
 - **Attestations not universally available**: Not all packages support attestations yet. Use attestation availability as one factor in dependency selection and gradually work toward full coverage.
 - **Keeping lockfiles current**: Lockfiles prevent unexpected updates but can become stale. Regularly update dependencies through Dependabot or scheduled audits to ensure security patches aren't missed while maintaining reproducible builds.
 - **Breaking changes in security updates**: Security updates sometimes include breaking changes that require code modifications. Establish separate processes for security updates (expedited) vs. feature updates (standard review), and allocate time for security debt remediation.
-- **Workflow security risks**: The `pull_request_target` trigger runs with elevated permissions and access to secrets, even for pull requests from forks. Prefer the regular `pull_request` trigger, define least-privilege workflow permissions, and enable [CodeQL workflow analysis](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning) to detect vulnerabilities.
+- **Workflow security risks**: The `pull_request_target` trigger runs with elevated permissions and access to secrets, even for pull requests from forks. Prefer the regular `pull_request` trigger, define least-privilege workflow permissions, and enable [CodeQL workflow analysis](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning) to detect vulnerabilities. See the [GitHub Actions 2026 security roadmap](https://github.blog/news-insights/product-news/whats-coming-to-our-github-actions-2026-security-roadmap/) for upcoming capabilities addressing these risks.
 
 ## Seeking further assistance
 
@@ -384,6 +384,7 @@ Specifically, you may find the following links helpful:
 - [Our plan for a more secure npm supply chain](https://github.blog/security/supply-chain-security/our-plan-for-a-more-secure-npm-supply-chain/) - GitHub's response to the Shai-Hulud attack
 - [The second half of software supply chain security on GitHub](https://github.blog/security/supply-chain-security/the-second-half-of-software-supply-chain-security-on-github/) - Build provenance and artifact attestations
 - [Securing the open source supply chain: The essential role of CVEs](https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-the-essential-role-of-cves/) - Understanding vulnerability data and automation
+- [Securing the open source supply chain across GitHub](https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-across-github/) - Prevention steps for secret exfiltration attacks and GitHub's security roadmap
 
 ### External resources
 

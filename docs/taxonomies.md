@@ -104,6 +104,7 @@ personas:
 platform:
   - github-enterprise-cloud
   - github-enterprise-cloud-plus-emu
+  - github-enterprise-cloud-data-residency
   - github-enterprise-server
 
 # GitHub product functions designed to support every stage of development.
@@ -135,8 +136,9 @@ components:
   - billing-and-cost-centers
   - branch-rulesets
   - caches-and-artifacts
-  - chatmode
   - coding-agents
+  - review-agents
+  - third-party-agents
   - code-review-automation
   - code-scanning
   - context-engineering
@@ -144,6 +146,7 @@ components:
   - copilot-business
   - copilot-chat
   - copilot-enterprise
+  - copilot-skill
   - copilot-spaces
   - custom-instructions
   - dependabot-and-dependency-review
@@ -180,6 +183,7 @@ github:
   - enterprise-support
   - expert-services
   - fast-track
+  - forward-deployed-engineering
   - microsoft
   - partners
   - product-marketing
