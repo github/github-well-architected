@@ -98,6 +98,8 @@ Use these key strategies as a baseline to implement GitHub's best practices for 
 
 14. Initiate and impose **commit signing** whenever possible. This will deter malicious actors from creating a commit with malicious code and help prevent a possible supply chain attack.
 
+    > **Note:** Copilot cloud agent signs its commits automatically. For broader agent governance guidance, see [Governing agents in GitHub Enterprise]({{< relref "governing-agents.md" >}})
+
 15. **Bypass of rulesets should not be allowed** under the Repository Ruleset configuration. Enforcing policies around repo ruleset is designed for a reason and allowing users to bypass rulesets might allow an attacker to gain access as a user who is allowed to bypass ruleset and compromise the integrity of the codebase.
 
 16. **Runner groups should be limited** to a select number of repositories. Configuring a runner group for all repositories can expose vulnerabilities or allow malicious actors to exploit misconfigured runners. Additionally, maintaining runner groups for specific repositories ensures that self-hosted runners are used for their intended specialized workloads. Granting access to everyone in the organization can lead to wasting resources on unnecessary execution tasks.
