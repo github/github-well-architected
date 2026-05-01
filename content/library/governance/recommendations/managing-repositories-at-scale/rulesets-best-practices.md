@@ -109,7 +109,7 @@ Enterprises need consistent, enforceable guardrails for how code enters, evolves
    - Grant bypass only to roles/teams with clear break-glass standard operating procedures.
    - Monitor bypass exceptions via the audit log, [REST API](https://docs.github.com/enterprise-cloud@latest/rest/repos/bypass-requests), webhooks, or the native [rule insights](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/managing-rulesets-for-repositories-in-your-organization#viewing-insights-for-rulesets) dashboard; look for patterns indicating a need to adjust rules.
 6. Change management & versioning
-   - [Rulesest history](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/managing-rulesets-for-repositories-in-your-organization#using-ruleset-history) is retained for 180 days; you can view all the changes to a ruleset and revert back to a specific iteration.
+   - [Rulesets history](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/managing-rulesets-for-repositories-in-your-organization#using-ruleset-history) is retained for 180 days; you can view all the changes to a ruleset and revert back to a specific iteration.
 7. Measurement & feedback
    - Metrics: % repos covered per tier, # blocked events by rule, mean time to remediate violation patterns, bypass frequency.
    - Use rule insights to adjust high-friction rules.

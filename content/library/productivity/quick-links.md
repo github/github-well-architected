@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 title: Quick Links
 weight: 1
-prev: library/productivity/introduction
+prev: library/productivity
 next: library/productivity/design-principles
 ---
 
