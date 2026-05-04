@@ -15,6 +15,7 @@ env:
   CI: development
   SITE_DIR: public
   HUGO_VERSION: 0.151.0
+  DART_SASS_VERSION: 1.99.0
 
 jobs:
   lint:
@@ -84,7 +85,7 @@ jobs:
 
       - name: Install Dart Sass
         run: |
-          npm install -g sass
+          npm install -g sass@${DART_SASS_VERSION}
           sass --version
 
       - name: Install test dependencies
