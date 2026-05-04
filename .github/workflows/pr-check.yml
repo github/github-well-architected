@@ -78,7 +78,13 @@ jobs:
           sudo dpkg -i ${{ runner.temp }}/hugo.deb
           hugo version
       - name: Install Dart Sass
-        run: sudo snap install dart-sass
+        env:
+          DART_SASS_VERSION: 1.99.0
+        run: |
+          curl -LO https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz
+          tar -xzf dart-sass-${DART_SASS_VERSION}-linux-x64.tar.gz
+          sudo cp -r dart-sass/* /usr/local/bin/
+          sass --version
 
       - uses: actions/setup-node@v6
         with:
