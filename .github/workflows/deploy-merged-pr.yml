@@ -11,8 +11,41 @@ permissions:
   actions: read
   
 jobs:
-  check-merge-state:
+  check-file-changes:
     if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      SOURCE_REPO: ${{ github.repository }}
+    outputs:
+      should_run: ${{ steps.filter.outputs.should_run }}
+    steps:
+      - name: Check Changed File Paths
+        id: filter
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          EXCLUDED_PATHS=(
+            ".github/workflows/"
+          )
+
+          CHANGED_FILES=$(gh pr view $PR_NUMBER --json files --repo $SOURCE_REPO --jq '[.files[].path]')
+
+          EXCLUDE_FILTER=$(printf '"%s",' "${EXCLUDED_PATHS[@]}")
+          EXCLUDE_FILTER="[${EXCLUDE_FILTER%,}]"
+
+          NON_WORKFLOW_CHANGES=$(echo "$CHANGED_FILES" | jq --argjson exclude "$EXCLUDE_FILTER" '[.[] | select(. as $f | $exclude | any(. as $p | $f | startswith($p)) | not)] | length')
+          if [ "$NON_WORKFLOW_CHANGES" -gt 0 ]; then
+            echo "PR contains changes outside .github/workflows/ — proceeding."
+            echo "should_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "All changes are under .github/workflows/ — skipping workflow."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+          fi
+
+  check-merge-state:
+    needs: check-file-changes
+    if: needs.check-file-changes.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     env:
       PR_NUMBER: ${{ github.event.pull_request.number }}
