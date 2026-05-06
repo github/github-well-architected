@@ -44,8 +44,7 @@ jobs:
           fi
 
   check-merge-state:
-    needs: check-file-changes
-    if: needs.check-file-changes.outputs.should_run == 'true'
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     env:
       PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -128,8 +127,8 @@ jobs:
           echo "Auto-merge enabled successfully!"
 
   dispatch-to-internal:
-    needs: check-merge-state
-    if: needs.check-merge-state.outputs.checks_passed == 'true' && github.event.review.state == 'approved'
+    needs: [check-file-changes, check-merge-state]
+    if: needs.check-merge-state.outputs.checks_passed == 'true' && needs.check-file-changes.outputs.should_run == 'true' && github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     env:
       SOURCE_REPO: github/github-well-architected
