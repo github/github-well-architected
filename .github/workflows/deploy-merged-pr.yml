@@ -36,10 +36,10 @@ jobs:
 
           NON_WORKFLOW_CHANGES=$(echo "$CHANGED_FILES" | jq --argjson exclude "$EXCLUDE_FILTER" '[.[] | select(. as $f | $exclude | any(. as $p | $f | startswith($p)) | not)] | length')
           if [ "$NON_WORKFLOW_CHANGES" -gt 0 ]; then
-            echo "PR contains changes outside filter paths — proceeding."
+            echo "PR contains changes outside filtered paths — proceeding."
             echo "should_sync=true" >> $GITHUB_OUTPUT
           else
-            echo "All changes are under filter paths — skipping workflow."
+            echo "All changes are under filtered paths — skipping workflow."
             echo "should_sync=false" >> $GITHUB_OUTPUT
           fi
 
