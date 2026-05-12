@@ -65,6 +65,14 @@ github:
 
 Adopting GitHub's general platform best practices is crucial for effectively managing software development projects. These practices provide a structured framework that ensures projects are secure, maintainable, and scalable. By fostering a collaborative and efficient environment, these guidelines help organizations avoid common pitfalls, maintain high-quality codebases, and streamline project workflows. Ultimately, adhering to these best practices leads to successful and sustainable software projects.
 
+For enterprise governance architecture decisions — including structural components, user access models, organization strategies, enterprise policies, billing, repository governance, teams and roles, programmatic access, and audit logs — use the companion guide [Essentials of governance and administration with GitHub Enterprise]({{< relref "../governance-administration-essentials/index.md" >}}).
+This article remains focused on high-impact policy guardrails.
+
+For additional topic-specific guidance, see also:
+
+- [Repository rulesets best practices]({{< relref "../managing-repositories-at-scale/rulesets-best-practices.md" >}})
+- [Custom properties best practices]({{< relref "../managing-repositories-at-scale/custom-properties-best-practices.md" >}})
+
 ## Key design strategies and checklist
 
 Use these key strategies as a baseline to implement GitHub's best practices for governance:
