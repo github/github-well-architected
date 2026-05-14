@@ -845,7 +845,7 @@ jobs:
 1. **Security alerts**: Review and triage alerts in the Security tab
 2. **Dependabot security updates**: Automatically generate PRs for dependency updates
 3. **Repository custom properties**: Use [custom properties](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/managing-custom-properties-for-repositories-in-your-organization) to classify repositories by business criticality, enabling risk-based prioritization of alerts
-4. **Security campaigns**: Use [security campaigns](https://docs.github.com/enterprise-cloud@latest/code-security/securing-your-organization/tracking-security-work-across-your-organization/about-security-campaigns) to prioritize and coordinate remediation of specific alert types across repositories
+4. **Security campaigns**: Use [security campaigns](https://docs.github.com/enterprise-cloud@latest/code-security/securing-your-organization/fixing-security-alerts-at-scale) to prioritize and coordinate remediation of specific alert types across repositories
 5. **Copilot Autofix**: Use [Copilot Autofix](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/managing-code-scanning-alerts/about-autofix-for-codeql-code-scanning) to automatically generate fix suggestions for vulnerabilities identified by CodeQL
 
 {{< callout type="info" >}}

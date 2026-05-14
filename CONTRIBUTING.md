@@ -411,7 +411,7 @@ See [Framework Overview] for details on each pillar.
 - Keep sentences **short and clear**
 - Avoid unnecessary jargon
 - Include practical examples
-- Prefer GitHub Docs links to **Enterprise Cloud**: `https://docs.github.com/en/enterprise-cloud@latest` (unless the guidance is specific to GitHub Enterprise Server)
+- Prefer GitHub Docs links to **Enterprise Cloud**: `https://docs.github.com/enterprise-cloud@latest` (unless the guidance is specific to GitHub Enterprise Server)
 - Use Hugo shortcodes to keep articles consistent (see `archetypes/default.md`):
   - Further assistance: `{{% seeking-further-assistance-details %}}`
   - Related links: `{{% related-links-github-docs %}}`
