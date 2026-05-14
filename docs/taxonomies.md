@@ -71,6 +71,7 @@ areas:
   - collaborative-coding
   - community
   - context-engineering
+  - continuous-delivery
   - developers
   - enterprise-and-teams
   - getting-started
@@ -141,7 +142,6 @@ components:
   - third-party-agents
   - code-review-automation
   - code-scanning
-  - context-engineering
   - copilot-autofix
   - copilot-business
   - copilot-chat

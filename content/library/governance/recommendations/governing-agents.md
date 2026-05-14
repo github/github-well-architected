@@ -370,7 +370,7 @@ Copilot agents consume both [GitHub Actions minutes and premium requests](https:
 - **Actions minutes add up.** Each agent session consumes GitHub Actions minutes for the duration of the agent's work. Monitor Actions usage to ensure agent workloads do not impact your CI/CD capacity.
 - **Model selection amplifies cost.** Different models have different [request multipliers](https://docs.github.com/en/copilot/concepts/billing/copilot-requests). Factor model choice into your cost governance.
 
-For detailed operational procedures — budget configuration workflows, license tier upgrades, cost center allocation, KPI benchmarks, and troubleshooting — see [Managing GitHub Copilot Premium Request Units (PRUs)]({{< relref "copilot-policies-best-practices/copilot_pru_enterprise_admin_playbook.md" >}}).
+For detailed guidance on budget configuration, cost center allocation, user-level budgets, and cost attribution — see [Managing AI credits with FinOps principles]({{< relref "managing-ai-credits.md" >}}).
 
 {{< callout type="info" >}}
 Cost governance is part of AI governance. Predictable costs keep adoption sustainable. Revisit budgets quarterly as you scale usage or adopt new features.
@@ -413,7 +413,7 @@ Review quality depends heavily on custom instructions. Without instructions, rev
 - [GitHub Enterprise Policies & Best Practices]({{< relref "governance-policies-best-practices" >}}) — general platform security hardening checklist (rulesets, CODEOWNERS, commit signing, audit log streaming)
 - [Rulesets Best Practices]({{< relref "rulesets-best-practices.md" >}}) — guidance on push vs. branch rulesets, file-path scoping, and CODEOWNERS integration
 - [Application Security Checklist]({{< relref "/library/application-security/checklist" >}}) — foundational code security practices (CI checks, pull review, secret scanning) that agent governance builds on
-- [Managing GitHub Copilot Premium Request Units (PRUs)]({{< relref "copilot-policies-best-practices/copilot_pru_enterprise_admin_playbook.md" >}}) — budget configuration, license tier management, KPI benchmarks, and cost optimization procedures
+- [Managing AI credits with FinOps principles]({{< relref "managing-ai-credits.md" >}}) — layered budget configuration, user-level budgets, cost attribution, and usage governance
 
 ### External resources
 
