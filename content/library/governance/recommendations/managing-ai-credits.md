@@ -136,22 +136,18 @@ and user-level budgets prevent individual overconsumption of shared resources.
 
 User-level budgets (ULBs) are recommended as the only hard enforcement caps, while enterprise and cost center budgets act as monitoring guardrails unless explicitly configured to stop usage.
 
-### 2: Separate included AI credits governance from additional spend governance
+### 2: Distinguish governance goals for included AI credits and additional spend
 
-Design distinct governance approaches for each spending phase. A billing cycle
-has two phases: the included AI credits phase (where usage draws from the pre-paid
-pool) and the additional spend phase (where usage incurs additional charges
-after the pool is exhausted). For the included AI credits phase, use ULBs to
-prevent any single user from exhausting the shared pool before others benefit.
-For the additional spend phase (post-pool spend), use enterprise and cost
-center budgets to cap the additional cost your organization is willing to incur.
+Design distinct governance approaches for each spending phase. A billing cycle has two phases: the included AI credits phase (where usage draws from the pre-paid pool) and the additional spend phase (where usage incurs additional charges after the pool is exhausted).
+While it is useful to think about these phases separately, current controls do not fully isolate governance between them.
 
-All budget layers apply at all times; this separation keeps your governance model coherent. ULBs are your tool for
-fair consumption of the shared pool. Enterprise and cost center budgets are
-your tool for controlling incremental cost exposure. Mixing their purposes —
-for example, relying only on the enterprise-level budget while ignoring ULBs — leaves
-the pooled AI credits ungoverned and vulnerable to a few heavy users
-draining it before month-end.
+For the included AI credits phase, the primary goal is fair access to a shared pool.
+Without guardrails, a small number of heavy users can exhaust the shared pool before others benefit. User-level budgets (ULBs) serve as the primary mechanism to moderate this behavior and promote more balanced consumption.
+For the additional spend phase (post-pool spend), the goal shifts to controlling financial exposure. Enterprise and cost center budgets help cap the additional cost your organization is willing to incur.
+
+With UBB, the controls overlap rather than operate independently by phase. ULBs apply across both included credits and additional spend, while enterprise and cost center budgets apply only after the included credits are exhausted. As a result, ULBs serve a dual role: ensuring fair consumption of the shared pool while also acting as a guardrail on overall usage. Enterprise and cost center budgets remain the primary controls for managing additional spend exposure.
+
+Maintaining this distinction keeps your governance approach coherent. It clarifies the different goals at each phase — fair consumption during the included AI credits phase and cost control during the additional spend phase.
 
 ### 3: Establish cost attribution before you optimize
 
