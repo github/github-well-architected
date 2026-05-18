@@ -133,18 +133,13 @@ Once you're ready to start, fork the repository and begin authoring. We **strong
 
 There are three options to create a new article:
 
-##### 1. Copy/paste the template into a new file
-
-Simply copy [`archetypes/default.md`] and paste it into:
-
-```plaintext
-content/library/{PILLAR}/recommendations/{ARTICLE-NAME}.md
-```
-
-##### 2. Use the command `hugo new content` to create a new file (recommended in Codespaces)
+##### Option 1. Use the command `hugo new content` to create a new file (recommended in Codespaces)
 
 ```shell
+# For recommendations:
 hugo new content library/{PILLAR}/recommendations/{ARTICLE-NAME}.md
+# For scenarios:
+hugo new content library/scenarios/{ARTICLE-NAME}.md
 ```
 
 For example,
@@ -156,7 +151,7 @@ hugo new content library/productivity/recommendations/my-article.md
 > [!IMPORTANT]
 > When you use this method, you do not need to put `content/` in the command since Hugo considers it the root.
 
-##### 3. Use a page bundle to create a new article with associated files like images
+##### Option 2. Use a page bundle to create a new article with associated files like images
 
 Add a folder (instead of one markdown file) at that location and bundle the files together. The format is:
 
@@ -164,6 +159,22 @@ Add a folder (instead of one markdown file) at that location and bundle the file
 content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/index.md
 content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/image1.png
 content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/image2.png
+```
+
+##### Option 3. Copy/paste the template into a new file
+
+Simply copy [`archetypes/default.md`] and paste it into:
+
+For **recommendation** articles:
+
+```plaintext
+content/library/{PILLAR}/recommendations/{ARTICLE-NAME}.md
+```
+
+For **scenario** articles:
+
+```plaintext
+content/library/scenarios/{ARTICLE-NAME}.md
 ```
 
 ##### Writing Style:
@@ -185,9 +196,10 @@ publishDate: 2024-12-05 # Date the article is published
 
 # Add author details
 params:
-  author:
-    name: Mona
-    handle: octocat
+  authors:
+    [
+      { name: 'Mona', handle: 'octocat' },
+    ]
 
 # Classifications of the framework to drive key concepts, design principles, and architectural best practices
 pillars:
@@ -197,6 +209,8 @@ pillars:
 ```
 
 - When you are done with your article, set `draft: false` when you are ready to publish.
+
+- Set `publishDate` to the date the article is first merged to `main`. Do not change it on future revisions.
 
 - All recommended values for all of these fields are described in [Taxonomies]. **Insert all that apply to your article. This is how your article will be discoverable!**
 
