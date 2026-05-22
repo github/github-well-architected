@@ -261,7 +261,15 @@ Consider defining the list of allowed actions using policy as code (e.g., via Te
 
 ### Segregate runners
 
-Use [runner groups](https://docs.github.com/en/actions/concepts/runners/runner-groups) and [labels](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/apply-labels) to separate high-privilege runners (with access to sensitive resources or direct host access) from low-privilege runners. This segregation allows for more granular control over [which repositories can access different runners](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/manage-access#changing-which-repositories-can-access-a-runner-group) and which [jobs can access specific runners](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job), reducing the risk of a compromised or misconfigured workflow gaining access to sensitive resources. For example, create a runner group for container image build runners or a runner group with runners having access to restricted networks and restrict its members to only the repositories that require those privileges, place unprivileged tasks such as linting and static analysis in a separate runner group with no access to secrets or sensitive resources.
+Use [runner groups](https://docs.github.com/en/actions/concepts/runners/runner-groups) and [labels](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/apply-labels) to separate high-privilege runners from low-privilege runners. High-privilege runners may have access to sensitive resources or direct host access, while low-privilege runners should not.
+
+This separation provides more granular control over [which repositories can access different runners](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/manage-access#changing-which-repositories-can-access-a-runner-group) and which [jobs can access specific runners](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job). It also reduces the risk that a compromised or misconfigured workflow could gain access to sensitive resources.
+
+For example, you could create:
+
+- A runner group for container image build runners, limited to only the repositories that require those privileges.
+- A runner group for runners with access to restricted networks.
+- A separate low-privilege runner group for tasks such as linting and static analysis, with no access to secrets or sensitive resources.
 
 ## Additional solution detail and trade-offs to consider
 
