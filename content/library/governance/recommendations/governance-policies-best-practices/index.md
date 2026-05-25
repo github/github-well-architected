@@ -65,6 +65,14 @@ github:
 
 Adopting GitHub's general platform best practices is crucial for effectively managing software development projects. These practices provide a structured framework that ensures projects are secure, maintainable, and scalable. By fostering a collaborative and efficient environment, these guidelines help organizations avoid common pitfalls, maintain high-quality codebases, and streamline project workflows. Ultimately, adhering to these best practices leads to successful and sustainable software projects.
 
+For enterprise governance architecture decisions — including structural components, user access models, organization strategies, enterprise policies, billing, repository governance, teams and roles, programmatic access, and audit logs — use the companion guide [Essentials of governance and administration with GitHub Enterprise]({{< relref "../governance-administration-essentials/index.md" >}}).
+This article remains focused on high-impact policy guardrails.
+
+For additional topic-specific guidance, see also:
+
+- [Repository rulesets best practices]({{< relref "../managing-repositories-at-scale/rulesets-best-practices.md" >}})
+- [Custom properties best practices]({{< relref "../managing-repositories-at-scale/custom-properties-best-practices.md" >}})
+
 ## Key design strategies and checklist
 
 Use these key strategies as a baseline to implement GitHub's best practices for governance:
@@ -97,6 +105,8 @@ Use these key strategies as a baseline to implement GitHub's best practices for 
 13. **Define CODEOWNERS**: To protect a repository against unauthorized changes, you also need to define owners using a `CODEOWNERS` file. The most secure method is to define a `CODEOWNERS` file in the `.github` directory of the repository and define the repository owner as the owner of either the `CODEOWNERS` file (`/.github/CODEOWNERS @owner_username`) or the whole directory (`/.github/ @owner_username`).
 
 14. Initiate and impose **commit signing** whenever possible. This will deter malicious actors from creating a commit with malicious code and help prevent a possible supply chain attack.
+
+    > **Note:** Copilot cloud agent signs its commits automatically. For broader agent governance guidance, see [Governing agents in GitHub Enterprise]({{< relref "governing-agents.md" >}})
 
 15. **Bypass of rulesets should not be allowed** under the Repository Ruleset configuration. Enforcing policies around repo ruleset is designed for a reason and allowing users to bypass rulesets might allow an attacker to gain access as a user who is allowed to bypass ruleset and compromise the integrity of the codebase.
 

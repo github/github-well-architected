@@ -15,6 +15,7 @@ env:
   CI: development
   SITE_DIR: public
   HUGO_VERSION: 0.151.0
+  DART_SASS_VERSION: 1.99.0
 
 jobs:
   lint:
@@ -35,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: npm ci -o
 
-      - uses: super-linter/super-linter/slim@61abc07d755095a68f4987d1c2c3d1d64408f1f9 # v8.5.0
+      - uses: super-linter/super-linter/slim@9e863354e3ff62e0727d37183162c4a88873df41 # v8.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
@@ -49,14 +50,11 @@ jobs:
       actions: write
       checks: write
       contents: read
-      id-token: write
-      pages: write
       pull-requests: write
       security-events: write
 
     environment:
       name: development
-      url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
 
@@ -67,7 +65,7 @@ jobs:
           fetch-depth: 0
 
       - name: Dependency Review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           config-file: >-
             ./.github/dependency-review-config.yml
@@ -77,12 +75,15 @@ jobs:
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
           sudo dpkg -i ${{ runner.temp }}/hugo.deb
           hugo version
-      - name: Install Dart Sass
-        run: sudo snap install dart-sass
 
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+
+      - name: Install Dart Sass
+        run: |
+          npm install -g sass@${DART_SASS_VERSION}
+          sass --version
 
       - name: Install test dependencies
         run: |
@@ -114,10 +115,6 @@ jobs:
             exit 1
           fi
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        id: setup-pages
-
       - name: Build site
         run: |
           hugo --gc --minify --baseURL "/"
@@ -127,18 +124,6 @@ jobs:
           chmod -c -R +rX "${{ env.SITE_DIR }}/" | while read line; do
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: './${{ env.SITE_DIR }}'
-          retention-days: '7'
-
-      - name: Deploy site to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          preview: true
 
       - name: HTML Proofer
         uses: chabad360/htmlproofer@c2750eb7eb937599ac859517e7dd23a29f1b3ed7 # v2
@@ -150,7 +135,7 @@ jobs:
         run: |
           npm run test:functional
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: playwright-report

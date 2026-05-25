@@ -16,7 +16,8 @@ This repository maintains the static site for the [GitHub Well-Architected Frame
 **Quick links:**
 
 - 🌐 [View the site](https://wellarchitected.github.com)
-- 💬 [Discussions](https://github.com/github/github-well-architected/discussions)
+- 💬 [Community Discussions](https://github.com/orgs/community/discussions?discussions_q=label%3A%22GitHub+Well-Architected%22)
+- 🤝 [Partners Discussions](https://github.com/githubpartners-community/community/discussions/categories/waf-feedback-and-suggestions)
 - 📖 [Contributing Guide](CONTRIBUTING.md)
 
 [🎬 Watch the Teaser video](https://github.com/user-attachments/assets/51fc5744-a61b-4119-8892-bd93b1c26fe8)
