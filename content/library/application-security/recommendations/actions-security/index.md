@@ -261,7 +261,7 @@ Consider defining the list of allowed actions using policy as code (e.g., via Te
 
 ### Segregate runners
 
-Use [runner groups](https://docs.github.com/en/actions/concepts/runners/runner-groups) and [labels](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/apply-labels) to separate high-privilege runners from low-privilege runners. High-privilege runners may have access to sensitive resources or direct host access, while low-privilege runners should not.
+Use [runner groups](https://docs.github.com/en/actions/concepts/runners/runner-groups) or [labels](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/apply-labels) to separate high-privilege runners from low-privilege runners. High-privilege runners may have access to sensitive resources or direct host access, while low-privilege runners should not.
 
 This separation provides more granular control over [which repositories can access different runners](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/manage-access#changing-which-repositories-can-access-a-runner-group) and which [jobs can access specific runners](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job). It also reduces the risk that a compromised or misconfigured workflow could gain access to sensitive resources.
 
