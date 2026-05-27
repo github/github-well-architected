@@ -1,7 +1,7 @@
 ---
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
-draft: true # Set to false when ready to publish
+draft: false # Set to false when ready to publish
 title: 'Securing GitHub Actions Workflows'
 publishDate: 2024-08-16
 params:
