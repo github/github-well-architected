@@ -269,7 +269,7 @@ For example, you could create:
 
 - A runner group for container image build runners, limited to only the repositories that require those privileges.
 - A runner group for runners with access to restricted networks.
-- A separate low-privilege runner group for tasks such as linting and static analysis, with no access to secrets or sensitive resources.
+- A separate runner group for low-privilege tasks such as linting and static analysis, used in repositories where secrets are either absent entirely or isolated in separate environments.
 
 ## Additional solution detail and trade-offs to consider
 
