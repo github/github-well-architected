@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'public/**'  # Ignore changes to the public directory
+      - 'public/**' # Ignore changes to the public directory
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}
@@ -31,7 +31,8 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: 24
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci -o
@@ -39,11 +40,11 @@ jobs:
       - uses: super-linter/super-linter/slim@9e863354e3ff62e0727d37183162c4a88873df41 # v8.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: main
-          FILTER_REGEX_EXCLUDE: docs/tool/.*
+          FILTER_REGEX_EXCLUDE: tools/.*
           VALIDATE_MARKDOWN: true
           VALIDATE_YAML: true
           MARKDOWN_CONFIG_FILE: .markdownlint.json
+          ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: true
 
   test:
     permissions:
@@ -78,7 +79,14 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: 24
+          cache: 'npm'
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
 
       - name: Install Dart Sass
         run: |
@@ -86,6 +94,7 @@ jobs:
           sass --version
 
       - name: Install test dependencies
+        timeout-minutes: 10
         run: |
           # Clean install of the node modules
 
