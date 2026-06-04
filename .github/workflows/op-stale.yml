@@ -10,7 +10,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/stale@b5d41d4e1d5dceea10e7104786b73624c18a190f # v10.2.0
+    - uses: actions/stale@eb5cf3af3ac0a1aa4c9c45633dd1ae542a27a899 # v10.3.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'Thanks for opening this issue! To keep the project healthy, we close inactive issues after some time. There has not been any activity in the last 28 days - if you are still working on this or feel it should remain open, just leave a quick comment in the next 7 days to let us know where things are at. We really appreciate your input!'

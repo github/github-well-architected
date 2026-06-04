@@ -37,7 +37,7 @@
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
-    "@playwright/test": "^1.56.0",
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/cli": "^4.1.14",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.7.1",
