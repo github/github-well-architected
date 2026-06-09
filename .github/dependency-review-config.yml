@@ -12,3 +12,8 @@ comment-summary-in-pr: always
 fail-on-scopes:
   - runtime
   - unknown
+
+# GHSA-r5fr-rjxr-66jc currently has no patched lodash release.
+# This is only introduced transitively via @primer/react -> styled-components.
+allow-ghsas:
+  - GHSA-r5fr-rjxr-66jc
