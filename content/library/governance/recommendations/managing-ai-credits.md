@@ -11,7 +11,7 @@ params:
     [
       { name: 'Kitty Chiu', handle: 'kittychiu' },
     ]
-
+weight: 2
 # Classifications of the framework to drive key concepts, design principles, and architectural best practices
 pillars:
   - governance

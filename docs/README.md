@@ -11,7 +11,7 @@ Welcome to the GitHub Well-Architected Framework documentation. This directory c
 
 ## Quick Links
 
-- [GitHub Well-Architected Framework Website](https://wellarchitected.github.com)
+- [GitHub Well-Architected Framework Website](https://learn.github.com/well-architected)
 - [GitHub Well-Architected Repository (open source, external)](https://github.com/github/github-well-architected)
 - [Content Library Backlog](https://github.com/orgs/github/projects/23239/views/3)
 - [Contributing guide](../.github/CONTRIBUTING.md)

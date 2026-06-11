@@ -1,6 +1,7 @@
 ---
 draft: false
 title: 'Expanding the context of Enterprise Custom Agents'
+weight: 2
 publishDate: 2026-03-11
 params:
   # Add and remove authors as needed. Please reserve authorship for significant contributions, not edits and feedback.
@@ -416,13 +417,13 @@ Use kebab-case for filenames: `secure-coding-standards.md`
 
 ## Seeking further assistance
 
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## Related links
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 

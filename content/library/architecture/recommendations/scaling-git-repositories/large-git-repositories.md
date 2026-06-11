@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 draft: false # Set to false when ready to publish
 title: 'Managing large Git Repositories'
+weight: 3
 publishDate: 2024-09-03
 params:
   authors: [{ name: 'Steffen Hiller', handle: 'steffen' }]
@@ -115,7 +116,7 @@ This section defines the key design strategies that a company could employ to im
 
 ### 2. **Efficient Storage Management**
 
-- **Using Git LFS**: Using Git Large File Storage (LFS) to manage large files outside of the Git repository will help keep the repository size mangeable and improve performance for standard Git operations. Moving files to LFS after they have already been committed to the repository will require rewriting history. See [When to use Git LFS](/library/architecture/recommendations/scaling-git-repositories/when-to-use-git-lfs/).
+- **Using Git LFS**: Using Git Large File Storage (LFS) to manage large files outside of the Git repository will help keep the repository size mangeable and improve performance for standard Git operations. Moving files to LFS after they have already been committed to the repository will require rewriting history. See [When to use Git LFS](./when-to-use-git-lfs).
 - **Managing Old Data**: A well-maintained repository not only improves collaboration but also reduces potential workload on Git servers. Cleaning up stale pull requests and removing or archiving obsolete branches and tags helps streamline the repository and minimize storage usage. Consistently maintaining a tidy repository will keep the size manageable and reduce the likelihood of performance issues.
 
 ### 3. **History and Version Control Optimization**

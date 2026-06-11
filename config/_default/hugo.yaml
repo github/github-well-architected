@@ -4,19 +4,26 @@ languageCode: en-us
 title: GitHub Well-Architected
 enableInlineShortcodes: true   # https://imfing.github.io/hextra/docs/guide/shortcodes/icon
 enableGitInfo: true
+contentDir: content-processed
 
 # import hextra as module
 module:
   imports:
   - path: github.com/imfing/hextra
     version: v0.8.6
-  
+
 
 build:
   # cache busting for css changes
   cachebusters:
   - source: layouts/.*
     target: css
+
+# Cascade type: docs to all library pages so Hugo uses the docs layout (sidebar enabled)
+cascade:
+  - _target:
+      path: /library/**
+    type: docs
 
 markup:
   # allow raw html
@@ -90,7 +97,7 @@ params:
   displayAuthorInfo: true
 
 frontmatter:
-  publishDate: 
+  publishDate:
       - publishDate
       - :filename
       - date
@@ -100,7 +107,7 @@ frontmatter:
   navbar:
     displayTitle: true
     displayLogo: true
-    logo: 
+    logo:
       path: media/github-mark.svg
       dark: media/github-mark-white.svg
       link: /

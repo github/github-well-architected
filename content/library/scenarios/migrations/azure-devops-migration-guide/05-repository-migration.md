@@ -341,4 +341,4 @@ After completing the repository migration:
 1. Verify all repositories are accessible and functioning
 2. Ensure mannequins have been properly reclaimed
 3. Confirm critical integrations are working
-4. Proceed to [Post-migration activities]({{% ref path="06-post-migration.md" %}})
+4. Proceed to [Post-migration activities](./post-migration)

@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Measuring Impact for GenAI Adoption
-weight: 3
+weight: 4
 publishDate: 2025-04-24
 params:
   authors: [{ name: 'Kitty Chiu', handle: 'kittychiu' }]
@@ -39,11 +39,7 @@ Organizations should establish a comprehensive measurement strategy that capture
 
 Effective implementation requires that users receive appropriate access to GenAI tools governed by enterprise guardrails. Track metrics such as license activation rate and onboarding completion.
 
-For Copilot,
-[GitHub Enterprise settings](https://docs.github.com/en/enterprise-cloud@latest/copilot/managing-copilot/managing-copilot-for-your-enterprise/managing-policies-and-features-for-copilot-in-your-enterprise)
-helps Copilot stay compliant with organizational policies, and the
-[User Management REST API](https://docs.github.com/en/rest/copilot/copilot-user-management?apiVersion=2022-11-28)
-provides quantitative tracking of license activations.
+For Copilot, [GitHub Enterprise settings](https://docs.github.com/en/enterprise-cloud@latest/copilot/managing-copilot/managing-copilot-for-your-enterprise/managing-policies-and-features-for-copilot-in-your-enterprise) helps Copilot stay compliant with organizational policies, and the [User Management REST API](https://docs.github.com/en/rest/copilot/copilot-user-management?apiVersion=2022-11-28) provides quantitative tracking of license activations.
 
 **Implementation Control Checklist:**
 
@@ -79,7 +75,7 @@ Segment adoption metrics by organization and teams to identify areas requiring a
 
 As users integrate GenAI features into their workflows, measure tangible business outcomes with a balanced framework. This validates the organization-specific success criteria of the GenAI tooling investment.
 
-GitHub has a point-of-view detailed in the [four engineering system success zones](../../productivity/recommendations/engineering-system-metrics).
+GitHub has a point-of-view detailed in the [four engineering system success zones](../productivity/recommendations/engineering-system-metrics).
 
 **Measurement Approach:** Track where teams are positioned on the [J-curve of change](https://www.david-viney.me/post/the-j-curve-of-change), focusing on identifying the inflection point where productivity gains materialize.
 
@@ -97,13 +93,13 @@ Common business challenges where Copilot may assist:
 
 ## Seeking further assistance
 
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## References & next steps
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 

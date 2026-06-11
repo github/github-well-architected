@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Getting Started Checklist
-weight: 3
+weight: 4
 prev: library/overview/about-the-assessment
 next: library/overview/release-notes
 ---
@@ -23,9 +23,9 @@ This checklist serves as a high-level guide for conducting a GitHub Well-Archite
 Once you are familiar with the Getting Started checklist above, it is time to drill down on the checklists for each pillar:
 
 {{< cards >}}
-{{< card link="/library/productivity/checklist" title="⚙️ Productivity Checklist" >}}
-{{< card link="/library/collaboration/checklist" title="👥 Collaboration Checklist" >}}
-{{< card link="/library/application-security/checklist" title="🔒 Application Security Checklist" >}}
-{{< card link="/library/governance/checklist" title="📜 Governance Checklist" >}}
-{{< card link="/library/architecture/checklist" title="📐 Architecture Checklist" >}}
+{{< card link="../productivity/checklist" title="Productivity Checklist" >}}
+{{< card link="../collaboration/checklist" title="Collaboration Checklist" >}}
+{{< card link="../application-security/checklist" title="Application Security Checklist" >}}
+{{< card link="../governance/checklist" title="Governance Checklist" >}}
+{{< card link="../architecture/checklist" title="Architecture Checklist" >}}
 {{< /cards >}}

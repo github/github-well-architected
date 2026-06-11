@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Anti-patterns
-weight: 1
+weight: 2
 ---
 
 <!-- markdownlint-disable MD024 -->

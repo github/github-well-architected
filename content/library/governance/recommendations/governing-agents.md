@@ -5,6 +5,7 @@
 draft: false # Set to false when ready to publish
 
 title: 'Governing agents in GitHub Enterprise'
+weight: 4
 publishDate: 2026-04-13
 params:
   authors:
@@ -179,7 +180,7 @@ For enterprises managing multiple business units, the question is not _whether_ 
 - **GitHub Copilot Business or Enterprise** licenses are assigned. See [comparing Copilot plans](https://docs.github.com/en/copilot/get-started/plans#comparing-copilot-plans) for current feature availability by plan.
 - **GitHub Actions** is enabled for your enterprise and organizations. The cloud agent runs on Actions runners and consumes Actions minutes.
 - You have a **SIEM platform** (e.g., Splunk, Microsoft Sentinel, Datadog) capable of ingesting GitHub audit log streams.
-- Your enterprise already has [foundational code security practices]({{< relref "/library/application-security/checklist" >}}) in place (CI checks, pull review, secret scanning). Agent governance is an additive layer, not a replacement.
+- Your enterprise already has [foundational code security practices](../../application-security/checklist) in place (CI checks, pull review, secret scanning). Agent governance is an additive layer, not a replacement.
 - This recommendation does **not** cover GitHub Enterprise Server (GHES) deployments — agent capabilities are cloud-only at this time.
 - The term **custom instructions** as used throughout this article broadly encompasses the full agentic configuration layer — including agent definitions (custom agents) and skill definitions (`SKILL.md`) — unless otherwise specified.
 
@@ -266,7 +267,7 @@ Before deploying a custom agent enterprise-wide, test it in a sandbox repository
 The [GitHub MCP Registry](https://github.com/mcp) provides a curated list of community MCP servers. For enterprise use, you can layer your own governance:
 
 1. Maintain an internal list of reviewed and approved MCP servers with their endpoints, allowed scopes, and review status.
-2. Use [rulesets]({{< relref "rulesets-best-practices.md" >}}) to protect MCP configuration files (`.github/copilot/mcp.json` or `.mcp.json`) in repositories.
+2. Use [rulesets](./managing-repositories-at-scale/rulesets-best-practices) to protect MCP configuration files (`.github/copilot/mcp.json` or `.mcp.json`) in repositories.
 3. [Configure an MCP registry](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry) to curate a discoverable set of pre-approved servers. If your policy requires strict control, set the [MCP allowlist policy](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-server-access) to "Registry only." For enterprises where teams need to experiment, use "Allow all" with rulesets on `.github/copilot/mcp.json` and `.mcp.json` (step 2) so changes require review.
 
 Registry enforcement matches on server name, can be bypassed, and [does not apply to the cloud agent](https://docs.github.com/en/copilot/concepts/mcp-management#supported-surfaces) — treat it as a governance signal and discoverability layer for IDEs, not a hard security boundary. Rulesets on `mcp.json` (step 2) are the primary technical control against unauthorized MCP endpoints across all surfaces except for cloud agent.
@@ -370,7 +371,7 @@ Copilot agents consume both [GitHub Actions minutes and premium requests](https:
 - **Actions minutes add up.** Each agent session consumes GitHub Actions minutes for the duration of the agent's work. Monitor Actions usage to ensure agent workloads do not impact your CI/CD capacity.
 - **Model selection amplifies cost.** Different models have different [request multipliers](https://docs.github.com/en/copilot/concepts/billing/copilot-requests). Factor model choice into your cost governance.
 
-For detailed guidance on budget configuration, cost center allocation, user-level budgets, and cost attribution — see [Managing AI credits with FinOps principles]({{< relref "managing-ai-credits.md" >}}).
+For detailed guidance on budget configuration, cost center allocation, user-level budgets, and cost attribution — see [Managing AI credits with FinOps principles](./managing-ai-credits).
 
 {{< callout type="info" >}}
 Cost governance is part of AI governance. Predictable costs keep adoption sustainable. Revisit budgets quarterly as you scale usage or adopt new features.
@@ -410,10 +411,10 @@ Review quality depends heavily on custom instructions. Without instructions, rev
 
 ### Related articles in this framework
 
-- [GitHub Enterprise Policies & Best Practices]({{< relref "governance-policies-best-practices" >}}) — general platform security hardening checklist (rulesets, CODEOWNERS, commit signing, audit log streaming)
-- [Rulesets Best Practices]({{< relref "rulesets-best-practices.md" >}}) — guidance on push vs. branch rulesets, file-path scoping, and CODEOWNERS integration
-- [Application Security Checklist]({{< relref "/library/application-security/checklist" >}}) — foundational code security practices (CI checks, pull review, secret scanning) that agent governance builds on
-- [Managing AI credits with FinOps principles]({{< relref "managing-ai-credits.md" >}}) — layered budget configuration, user-level budgets, cost attribution, and usage governance
+- [GitHub Enterprise Policies & Best Practices](./governance-policies-best-practices) — general platform security hardening checklist (rulesets, CODEOWNERS, commit signing, audit log streaming)
+- [Rulesets Best Practices](./managing-repositories-at-scale/rulesets-best-practices) — guidance on push vs. branch rulesets, file-path scoping, and CODEOWNERS integration
+- [Application Security Checklist](../../application-security/checklist) — foundational code security practices (CI checks, pull review, secret scanning) that agent governance builds on
+- [Managing AI credits with FinOps principles](./managing-ai-credits) — layered budget configuration, user-level budgets, cost attribution, and usage governance
 
 ### External resources
 

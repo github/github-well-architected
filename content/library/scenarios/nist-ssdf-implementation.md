@@ -1,6 +1,7 @@
 ---
 draft: false
 title: "Implementing the NIST SSDF with GitHub"
+weight: 6
 publishDate: 2026-01-20
 params:
   authors: [

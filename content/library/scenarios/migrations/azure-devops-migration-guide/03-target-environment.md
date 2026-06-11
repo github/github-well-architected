@@ -118,8 +118,8 @@ GitHub Enterprise Cloud with Data Residency requires Managed Users.
 
 ### Pre-migration integration setup
 
-- [ ] Review your [assessment findings]({{% ref path="02-source-environment-assessment.md" %}}) for Azure DevOps service dependencies
-- [ ] Plan integration configuration based on your [project charter]({{% ref path="01-project-planning.md" %}}) decisions
+- [ ] Review your [assessment findings](./assess) for Azure DevOps service dependencies
+- [ ] Plan integration configuration based on your [project charter](./plan) decisions
 - [ ] Test authentication methods between Azure DevOps and GitHub Enterprise Cloud
 - [ ] Validate service connections and permissions before migration begins
 
@@ -148,7 +148,7 @@ If planning to keep Azure Pipelines temporarily or permanently:
 ## Organization structure
 
 {{< callout type="info" >}}
-**Reference your assessment**: Before setting up your organization structure, review your findings from the [repository documentation]({{% ref path="02-source-environment-assessment.md#repository-documentation" %}}) and [access patterns]({{% ref path="02-source-environment-assessment.md#access-patterns" %}}) sections in your assessment.
+**Reference your assessment**: Before setting up your organization structure, review your findings from the [repository documentation](./assess#repository-documentation) and [access patterns](./assess#access-patterns) sections in your assessment.
 
 This will help you understand how to properly structure teams and permissions based on your current Azure DevOps setup and repository organization.
 {{< /callout >}}
@@ -315,4 +315,4 @@ Without enabling GitHub Actions, functionality like [GitHub Copilot Coding Agent
 After completing your target environment setup:
 
 1. Review the [GitHub Well-Architected Framework Security Pillar](https://wellarchitected.github.com/pillars/security/)
-2. Proceed to [Migration Testing]({{% ref path="04-migration-testing.md" %}})
+2. Proceed to [Migration Testing](./test)

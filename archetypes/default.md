@@ -1,72 +1,67 @@
 ---
 draft: false # Set to true to keep the page hidden
 title: 'Insert title here'
-publishDate: YYYY-MM-DD
+publishDate: 2006-01-02 # Example format placeholder; replace before merge
+
+# Optional navigation metadata
+# weight: 1
+# prev: library/{PILLAR}/previous-page
+# next: library/{PILLAR}/next-page
+
 params:
-
-# Add and remove authors as needed. Please reserve authorship for significant contributions, not edits and feedback.
-
-authors: [
-{name: "INSERT_NAME_1", handle: "INSERT_HANDLE_1"},
-{name: "INSERT_NAME_2", handle: "INSERT_HANDLE_2"},
-]
+  authors:
+    - name: "INSERT_NAME_1"
+      handle: "INSERT_HANDLE_1"
+    - name: "INSERT_NAME_2"
+      handle: "INSERT_HANDLE_2"
 
 # Classifications of the framework to drive key concepts, design principles, and architectural best practices
 
 pillars:
-
-- placeholder
-- placeholder
+  - placeholder
+  - placeholder
 
 # The areas of the GitHub adoption journey. Inspiration taken from docs.github.com
 
 areas:
-
-- placeholder
-- placeholder
+  - placeholder
+  - placeholder
 
 # Classifications of industries who may be at different stages of the customer journey.
 
 verticals:
-
-- placeholder
-- placeholder
+  - placeholder
+  - placeholder
 
 # Individuals in key roles on the customer journey, typically consisting of one or more administrators and the end-user community.
 
 personas:
-
-- placeholder
-- placeholder
+  - placeholder
+  - placeholder
 
 # Deployment options for GitHub Enterprise, including Cloud (GHEC), Server (GHES), and Hybrid.
 
 platform:
-
-- placeholder
-- placeholder
+  - placeholder
+  - placeholder
 
 # GitHub product functions designed to support every stage of development.
 
 features:
-
-- placeholder
-- placeholder
+  - placeholder
+  - placeholder
 
 # Deeper-level topics of the GitHub Platform and its features. They are most often interacted with by end-users.
 
 components:
-
-- placeholder
-- placeholder
+  - placeholder
+  - placeholder
 
 # Associated teams and other GitHub and Partner resources that can provide additional support.
 
 github:
-
-- placeholder
-- placeholder
-
+  - placeholder
+  - placeholder
 ---
 
 <!-- This disables the linting rule for multiple top-level headers -->

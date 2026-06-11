@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Design Principles
-weight: 2
+weight: 3
 prev: library/collaboration/quick-links
 next: library/collaboration/checklist
 ---

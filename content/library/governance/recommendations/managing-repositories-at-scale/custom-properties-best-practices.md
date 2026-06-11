@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 draft: false   # Set to false when ready to publish
 title: 'Custom Properties Best Practices'
+weight: 2
 publishDate: 2025-09-02
 params:
   authors: [
@@ -174,7 +175,7 @@ business-criticality: "Medium"
 Connect custom properties to automated policy enforcement through repository rulesets. While rulesets define the "what" of your governance policies, custom properties enable the "when" and "where" - allowing you to apply different governance rules based on repository characteristics rather than manually managing which repositories get which rules.
 
 {{< callout type="information" >}}
-Read more on working with rulesets in [repository rulesets best practices]({{< relref "rulesets-best-practices.md" >}}).
+Read more on working with rulesets in [repository rulesets best practices](./rulesets-best-practices).
 {{< /callout >}}
 
 This integration solves common governance challenges:
@@ -305,13 +306,13 @@ Avoid creating too many properties initially. Start with essential properties an
 {{< /callout >}}
 
 ## Seeking further assistance
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## Related links
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 

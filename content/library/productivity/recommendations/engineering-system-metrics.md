@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 draft: false # Set to false when ready to publish
 title: 'Engineering System Metrics'
+weight: 2
 publishDate: 2025-04-24
 params:
   # Add and remove authors as needed. Please reserve authorship for significant contributions, not edits and feedback.
@@ -66,14 +67,9 @@ github:
 
 ## Recommendation overview
 
-How well your DevSecOps system performs goes beyond merely measuring the outputs of individual developers
-(e.g. lines of code) and systems (e.g. number of workflow runs). You need to seek clarity on your system's
-leading and lagging indicators, so that your working focus is on the leading indicators that provide
-early signals and enable steering of the downstream impacts.
+How well your DevSecOps system performs goes beyond merely measuring the outputs of individual developers (e.g. lines of code) and systems (e.g. number of workflow runs). You need to seek clarity on your system's leading and lagging indicators, so that your working focus is on the leading indicators that provide early signals and enable steering of the downstream impacts.
 
-[Engineering System Success](../../design-principles/#design-for-engineering-system-success) goes beyond
-engineering excellence - it focuses on optimization. Success is to work altogether with a foundation
-of quality, velocity, and developer happiness, to drive improvements in desired business outcomes.
+[Engineering System Success](../design-principles#design-for-engineering-system-success) goes beyond engineering excellence - it focuses on optimization. Success is to work altogether with a foundation of quality, velocity, and developer happiness, to drive improvements in desired business outcomes.
 
 ## Key design strategies and checklist
 
@@ -86,9 +82,7 @@ of quality, velocity, and developer happiness, to drive improvements in desired 
 
 ## Assumptions and preconditions
 
-This recommendation recognises the leading DevEx and DevOps metrics frameworks like [SPACE](https://queue.acm.org/detail.cfm?id=3454124),
-[DevEx](https://queue.acm.org/detail.cfm?id=3595878), [DX Core 4](https://getdx.com/research/measuring-developer-productivity-with-the-dx-core-4/),
-and [DORA](https://dora.dev/).
+This recommendation recognises the leading DevEx and DevOps metrics frameworks like [SPACE](https://queue.acm.org/detail.cfm?id=3454124), [DevEx](https://queue.acm.org/detail.cfm?id=3595878), [DX Core 4](https://getdx.com/research/measuring-developer-productivity-with-the-dx-core-4/), and [DORA](https://dora.dev/).
 
 ## Four zones and twelve metrics
 
@@ -119,49 +113,33 @@ Each organization's context can differ and may prefer different downstream metri
 
 ### Data integration
 
-The calculation of the twelve metrics should align with your specific workflows, tech stack, and tools. It is
-important to understand your teams' workflows to determine which data to use from GitHub or other data
-sources in your engineering system. Data integration from systems like ITSM tools or incident management
-platforms may be required for metrics such as lead time or recovery time. Work with business owners to
-define key metrics like "production failure" and "in production" to ensure consistency.
+The calculation of the twelve metrics should align with your specific workflows, tech stack, and tools. It is important to understand your teams' workflows to determine which data to use from GitHub or other data sources in your engineering system. Data integration from systems like ITSM tools or incident management platforms may be required for metrics such as lead time or recovery time. Work with business owners to define key metrics like "production failure" and "in production" to ensure consistency.
 
 ### Qualitative and quantitative data
 
-Metrics like tooling satisfaction or change failure rate can may be complimented with developer surveys,
-offering valuable insights without adding complexity. Surveys are particularly useful for organizations
-still developing DevEx or DevOps metrics. Leaders should balance the effort and benefits of telemetry-based
-measurement versus qualitative feedback.
+Metrics like tooling satisfaction or change failure rate can may be complimented with developer surveys, offering valuable insights without adding complexity. Surveys are particularly useful for organizations still developing DevEx or DevOps metrics. Leaders should balance the effort and benefits of telemetry-based measurement versus qualitative feedback.
 
 ### Companion metrics for insight
 
-You may employ companion metrics to provide context to these primary metrics, offering insights to the
-performance. For example, pairing lead time with change failure rate ensures shorter lead times reflect real
-improvements rather than rushed deployments. Striking the right balance is key — too many metrics can dilute
-focus, while too few risk misinterpretation. Individual teams should tailor companion metrics to their
-workflows, ensuring a holistic view of the engineering system is captured.
+You may employ companion metrics to provide context to these primary metrics, offering insights to the performance. For example, pairing lead time with change failure rate ensures shorter lead times reflect real improvements rather than rushed deployments. Striking the right balance is key — too many metrics can dilute focus, while too few risk misinterpretation. Individual teams should tailor companion metrics to their workflows, ensuring a holistic view of the engineering system is captured.
 
 ### Metrics are interdependent
 
-These four zones are a form of companion metric-thinking by highlighting their interdependence. Improvements
-in one zone should complement others, avoiding trade-offs that undermine overall success. This balanced
-approach fosters sustainable engineering system performance aligned with business goals.
+These four zones are a form of companion metric-thinking by highlighting their interdependence. Improvements in one zone should complement others, avoiding trade-offs that undermine overall success. This balanced approach fosters sustainable engineering system performance aligned with business goals.
 
 ### Balance cost and benefits of measurement
 
-Strike a pragmatic balance between measurement effort and benefits by implementing critical metrics first,
-leveraging existing data sources, automating collection pipelines, and regularly evaluating each metric's
-relevancy. Remain cautious about potential suboptimization or gaming behaviors for incentive rather than
-actual engineering system success.
+Strike a pragmatic balance between measurement effort and benefits by implementing critical metrics first, leveraging existing data sources, automating collection pipelines, and regularly evaluating each metric's relevancy. Remain cautious about potential suboptimization or gaming behaviors for incentive rather than actual engineering system success.
 
 ## Seeking further assistance
 
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## Related links
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 

@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The display name of the item"
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description of the item"
+    },
+    "weight": {
+      "type": "number",
+      "description": "The weight of the item, used for sorting and prioritization"
+    },
+    "icon": {
+      "type": "string",
+      "description": "The octicon associated with the item, used for visual representation"
+    },
+    "params": {
+      "type": "object",
+      "description": "Flexible parameters that don't affect presentation (or only affect specific items)"
+    },
+    "slug": {
+      "type": "string",
+      "description": "A kebab-case identifier"
+    },
+    "publishDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date the item was published, used for sorting and display"
+    }
+  },
+  "required": ["title", "weight"],
+  "additionalProperties": true
+}

@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 draft: false   # Set to false when ready to publish
 title: 'Applying DevOps methodology'
+weight: 4
 publishDate: 2024-07-31
 params:
   authors: [
@@ -119,13 +120,13 @@ The public cloud's growth has added complexity but also enabled faster, more fre
 By closing the development-operations gap and fostering better collaboration, organizations can achieve more efficient and reliable software delivery. Learn more by checking out the GitHub blog article on [The evolving role of operations in DevOps](https://github.blog/enterprise-software/devops/the-evolving-role-of-operations-in-devops/).
 
 ## Seeking further assistance
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## Related links
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 
