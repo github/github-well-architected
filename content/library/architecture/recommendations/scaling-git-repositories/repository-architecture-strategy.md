@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 draft: false # Set to false when ready to publish
 title: 'Exploring repository architecture strategy'
+weight: 2
 publishDate: 2024-09-03
 params:
   authors: [{ name: 'Steffen Hiller', handle: 'steffen' }]

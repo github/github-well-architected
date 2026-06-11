@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Checklist for Architecture
-weight: 3
+weight: 4
 prev: library/architecture/design-principles
 next: library/architecture/recommendations
 ---

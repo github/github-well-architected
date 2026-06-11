@@ -1,13 +1,7 @@
 ---
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
-title: Recommendations
+title: Overview
+linkTitle: Recommendations
 weight: 5
-prev: library/application-security
 ---
-
-This section describes specific recommendations that offer expert opinions and actionable prescriptions in the context of the 🔒 **Application Security** space. Each article discusses various trade-offs and considerations to help you make informed decisions tailored to your unique context.
-
-Articles in this section include:
-
-{{< child-pages >}}

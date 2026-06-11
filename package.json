@@ -12,8 +12,10 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "watch": "webpack --mode development --watch",
-    "dev": "concurrently \"npm run watch\" \"hugo server --disableFastRender --noHTTPCache --watch --navigateToChanged\"",
-    "dev:ignore-cache": "concurrently \"npm run watch\" \"hugo server --ignoreCache\""
+    "preprocess:content": "node src/markdown-includer/includeMarkdown.js ./content ./content-processed && node src/resolve-hugo-links/adjust-hugo-links.js ./content-processed",
+    "watch:markdown": "node watch-markdown.js",
+    "dev": "concurrently \"npm run watch\" \"npm run watch:markdown\" \"hugo server --disableFastRender --noHTTPCache --watch --navigateToChanged\"",
+    "dev:ignore-cache": "concurrently \"npm run watch\" \"npm run watch:markdown\" \"hugo server --ignoreCache\""
   },
   "repository": {
     "type": "git",

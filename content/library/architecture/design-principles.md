@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Design Principles
-weight: 2
+weight: 3
 prev: library/architecture/quick-links
 next: library/architecture/checklist
 ---
