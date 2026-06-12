@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The display name of the item"
+    },
+    "slug": {
+      "type": "string",
+      "description": "A kebab-case identifier"
+    }
+  },
+  "additionalProperties": false
+}

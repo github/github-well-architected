@@ -124,6 +124,10 @@ jobs:
             exit 1
           fi
 
+      - name: Preprocess content
+        run: |
+          npm run preprocess:content
+
       - name: Build site
         run: |
           hugo --gc --minify --baseURL "/"

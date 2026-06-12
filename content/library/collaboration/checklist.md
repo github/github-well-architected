@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Checklist for Collaboration
-weight: 3
+weight: 4
 prev: library/collaboration/design-principles
 next: library/collaboration/recommendations
 ---

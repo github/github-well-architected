@@ -399,4 +399,4 @@ After completing migration testing:
 
 1. Update your migration runbook with lessons learned
 2. Schedule your production migration
-3. Proceed to [Repository migration]({{% ref path="05-repository-migration.md" %}})
+3. Proceed to [Repository migration](./migrate)

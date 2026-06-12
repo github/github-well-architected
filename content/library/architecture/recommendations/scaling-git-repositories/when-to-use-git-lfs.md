@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 draft: false   # Set to false when ready to publish
 title: 'When to use Git LFS'
+weight: 4
 publishDate: 2024-09-03
 params:
   authors: [
@@ -237,13 +238,13 @@ Compression ratio: 84.9%
 To our beloved friend John ([@jwiebalk](https://github.com/jwiebalk)), a Hubber who was always there to help and never wanted the credit. ❤️
 
 ## Seeking further assistance
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## Related links
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 

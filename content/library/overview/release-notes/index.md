@@ -2,15 +2,21 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Release notes
-weight: 4
+weight: 5
 prev: library/overview/getting-started-checklist
 next: library/scenarios
 ---
 
 Find general updates here on new content, feature enhancements, and improvements that help teams architect and optimize deployments of the tools that support their development communities.
 
-{{% quarterly-updates %}}
-
+<includeMarkdown>2026-q2.md</includeMarkdown>
+<includeMarkdown>2026-q1.md</includeMarkdown>
+<includeMarkdown>2025-q4.md</includeMarkdown>
+<includeMarkdown>2025-q3.md</includeMarkdown>
+<includeMarkdown>2025-q2.md</includeMarkdown>
+<includeMarkdown>2025-q1.md</includeMarkdown>
+<includeMarkdown>2024-q4.md</includeMarkdown>
+<!-- markdownlint-disable-next-line MD022 -->
 ## Future Plans & Roadmap
 
 - **Partner & Ecosystem Growth**: Ongoing partner showcases, workshops, and contributions will introduce new specialized assessment offerings

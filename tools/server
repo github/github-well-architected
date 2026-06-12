@@ -6,6 +6,17 @@ set -e
 cd "$(dirname "$0")/.."
 echo "==> Running tools/server…"
 
+# Remove any previous processed-content directory.
+rm -rf "$PWD/content-processed"
+
+# Preprocess markdown into Hugo's active content directory.
+echo "==> Preprocessing markdown includes…"
+node src/markdown-includer/includeMarkdown.js "$PWD/content" "$PWD/content-processed"
+
+# Adjust relative links in the preprocessed content.
+echo "==> Adjusting relative links for Hugo…"
+node src/resolve-hugo-links/adjust-hugo-links.js "$PWD/content-processed"
+
 # Start the server
 echo "==> Starting the development server…"
 if [ "$1" = "--ignoreCache" ]; then

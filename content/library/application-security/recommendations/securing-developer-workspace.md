@@ -1,6 +1,7 @@
 ---
 draft: false
 title: 'Securing developer workspace'
+weight: 2
 publishDate: 2025-12-19
 params:
   authors: [

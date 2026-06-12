@@ -48,6 +48,7 @@ Thank you for contributing! We look forward to working with you. ❤️
 - :octocat: See [GitHub Well-Architected Framework overview] to understand the program and purpose.
 - 🗳️ We use [GitHub Flow] to manage changes. It is the most effective way to collaborate with all stakeholders on this project.
 - 🐙 [Issues] are used to **track work**, such as bug reports and feature requests. They are also used to keep track of ideas that may not yet be ready to work on.
+- :writing_hand: [Frontmatter and metadata](docs/contributing-learn.md) make content discoverable and publishable.
 - 🚢 [Pull requests] are the best way to collaborate on reviews.
 
 ---
@@ -131,39 +132,25 @@ Once you're ready to start, fork the repository and begin authoring. We **strong
 
 #### Create your article
 
-There are three options to create a new article:
+There are two options for creating a new article.
 
-##### Option 1. Use the command `hugo new content` to create a new file (recommended in Codespaces)
+> [!IMPORTANT]
+> Hugo-based authoring workflows are deprecated in this repository. Rely on standard Markdown file creation and editing for article authoring. Hugo remains part of local preview/build behind the repository scripts.
+
+##### Option 1. Use the template helper command (recommended)
+
+Run:
 
 ```shell
 # For recommendations:
-hugo new content library/{PILLAR}/recommendations/{ARTICLE-NAME}.md
+tools/new-content recommendation {PILLAR} {ARTICLE-NAME}
 # For scenarios:
-hugo new content library/scenarios/{ARTICLE-NAME}.md
+tools/new-content scenario {ARTICLE-NAME}
 ```
 
-For example,
+Replace `{PILLAR}` and `{ARTICLE-NAME}` with real values.
 
-```shell
-hugo new content library/productivity/recommendations/my-article.md
-```
-
-> [!IMPORTANT]
-> When you use this method, you do not need to put `content/` in the command since Hugo considers it the root.
-
-##### Option 2. Use a page bundle to create a new article with associated files like images
-
-Add a folder (instead of one markdown file) at that location and bundle the files together. The format is:
-
-```plaintext
-content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/index.md
-content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/image1.png
-content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/image2.png
-```
-
-##### Option 3. Copy/paste the template into a new file
-
-Simply copy [`archetypes/default.md`] and paste it into:
+This command copies [`archetypes/default.md`] into the correct destination.
 
 For **recommendation** articles:
 
@@ -177,42 +164,30 @@ For **scenario** articles:
 content/library/scenarios/{ARTICLE-NAME}.md
 ```
 
-##### Writing Style:
+##### Option 2. Use a page bundle to create a new article with associated files like images
+
+Add a folder (instead of one markdown file) at that location and bundle the files together. The format is:
+
+```plaintext
+content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/index.md
+content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/page1.md
+content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/assets/image1.png
+content/library/{PILLAR}/recommendations/{ARTICLE-NAME}/assets/image2.png
+```
+
+> [!WARNING]
+> Do not use `hugo new content` for new article creation in this repository.
+
+#### Writing style
 
 - Always use sentence case
 - Keep your files tidy - no rogue spaces or characters, please
 - Use dashes for unordered lists (not `*`)
 - Use single spaces before and after headings, lists, and paragraphs
 
-#### Edit front-matter
+#### Required frontmatter and metadata
 
-Each article (written in markdown) should have front-matter at the top of the file. This front-matter should look like this:
-
-```yaml
----
-draft: true # Set to false when ready to publish
-title: 'Insert title here'
-publishDate: 2024-12-05 # Date the article is published
-
-# Add author details
-params:
-  authors:
-    [
-      { name: 'Mona', handle: 'octocat' },
-    ]
-
-# Classifications of the framework to drive key concepts, design principles, and architectural best practices
-pillars:
-  - placeholder
-  - placeholder
----
-```
-
-- When you are done with your article, set `draft: false` when you are ready to publish.
-
-- Set `publishDate` to the date the article is first merged to `main`. Do not change it on future revisions.
-
-- All recommended values for all of these fields are described in [Taxonomies]. **Insert all that apply to your article. This is how your article will be discoverable!**
+Articles must include the required frontmatter fields described in [docs/contributing-learn.md](docs/contributing-learn.md). This is critical for the content to be processed and published correctly.
 
 ---
 
@@ -356,10 +331,10 @@ There are several primary types of contributions to this project:
 
 ### 📝 Content Library Article Submission(s)
 
-Contributions will typically author content articles under `/content/` folder. To start writing, we recommend reviewing these essential framework resources:
+Contributions typically involve authoring content articles under the `/content/` folder. To start writing, we recommend reviewing these essential framework resources:
 
 - [Framework Overview] - Learn about the WAF mission, vision, objectives, and five pillars
-- [Taxonomies](/docs/taxonomies.md) - Explore the design principles, areas, and other classifications
+- [Taxonomies] - Explore the design principles, areas, and other classifications
 
 **Inspiration for Content Library articles** comes from **Azure Architecture Center**. See the following example articles for your inspiration: 💡
 
@@ -426,7 +401,7 @@ See [Framework Overview] for details on each pillar.
 - Avoid unnecessary jargon
 - Include practical examples
 - Prefer GitHub Docs links to **Enterprise Cloud**: `https://docs.github.com/enterprise-cloud@latest` (unless the guidance is specific to GitHub Enterprise Server)
-- Use Hugo shortcodes to keep articles consistent (see `archetypes/default.md`):
+- Use repository shortcodes to keep articles consistent (see [`archetypes/default.md`]):
   - Further assistance: `{{% seeking-further-assistance-details %}}`
   - Related links: `{{% related-links-github-docs %}}`
 
@@ -488,7 +463,7 @@ Here are the checklists for code reviewers.
 
 ## Code of conduct
 
-By participating, you are expected to the GitHub Community [Code of Conduct].
+By participating, you are expected to follow the GitHub Community [Code of Conduct].
 
 ---
 

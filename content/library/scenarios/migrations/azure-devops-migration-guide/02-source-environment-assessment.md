@@ -71,7 +71,7 @@ Identify which Azure DevOps services you want to retain to ensure your teams rem
 
 ### Integration dependencies
 
-Please refer to the training strategy in [project planning]({{% ref path="01-project-planning.md" %}}) for assistance in training on any additional integration dependencies.
+Please refer to the training strategy in [project planning](./plan) for assistance in training on any additional integration dependencies.
 
 Understanding service relationships is key to maintaining workflows:
 
@@ -305,7 +305,7 @@ Understanding performance factors helps optimize the migration process:
 After completing your environment assessment:
 
 1. Review the [GitHub Well-Architected Framework](https://wellarchitected.github.com/library/governance/checklist/) for governance planning
-2. Proceed to [Target Environment Setup]({{% ref path="03-target-environment.md" %}}) to prepare your GitHub Enterprise Cloud environment
+2. Proceed to [Target Environment Setup](./setup) to prepare your GitHub Enterprise Cloud environment
 
 {{< callout type="info" >}}
 Use the inventory report data to create a migration timeline that minimizes disruption to active development work.

@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Quick links
-weight: 1
+weight: 2
 prev: library/application-security
 next: library/application-security/design-principles
 ---

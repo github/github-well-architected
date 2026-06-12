@@ -1,0 +1,5 @@
+title: Architecture
+description: Approaches for designing scalable, resilient, and efficient GitHub environments, including enterprise-level solutions (e.g., GHES), tailored to your organization's needs.
+slug: architecture
+icon: OrganizationIcon
+weight: 7

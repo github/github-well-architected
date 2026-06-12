@@ -1,0 +1,5 @@
+title: Application Security
+description: Proactive guidelines for embedding security into every stage of development, from code scanning to compliance.
+weight: 5
+slug: application-security
+icon: ShieldLockIcon

@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Checklist for Governance
-weight: 3
+weight: 4
 prev: library/governance/design-principles
 next: library/governance/recommendations
 ---
@@ -16,7 +16,7 @@ This assessment checklist focuses on evaluating and enhancing the **Governance**
   - Leverage pull requests and enforce branch rules to maintain code quality.
   - Verify that required status checks are enabled.
   - Ensure code review requirements are set.
-  
+
 - **Compliance Checks:**
   - Review compliance checks for code and dependencies.
   - Ensure automated tools are integrated for continuous compliance.
