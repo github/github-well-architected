@@ -5,7 +5,7 @@ draft: false # Set to false when ready to publish
 title: 'Securing GitHub Actions Workflows'
 publishDate: 2024-08-16
 params:
-  authors: [{ name: 'Greg Mohler', handle: 'callmegreg' }, { name: 'Kitty Chiu', handle: 'kittychiu' }]
+  authors: [{ name: 'Greg Mohler', handle: 'callmegreg' }, { name: 'Kitty Chiu', handle: 'kittychiu' }, { name: 'Thomas Sjögren', handle: 'konstruktoid' }]
 
 # Classifications of the framework to drive key concepts, design principles, and architectural best practices
 pillars:
@@ -90,6 +90,7 @@ To secure GitHub Actions workflows, consider the following strategies:
 10. **Use `head.sha` instead of `head.ref`**: Where possible, reference by commit SHA instead of a user-provided branch name or tag (ref), especially in sensitive contexts (such as `run` steps). If require, use environment variable to store `head.ref` and reference it to prevent injection attack.
 11. **Use caution with public repositories**: Anyone can suggest changes to public repositories. Review workflow triggers, and never use self-hosted runners with public repositories.
 12. **Restrict allowed actions**: Use the [*Allow enterprise, and select non-enterprise, actions and reusable workflows*](https://docs.github.com/en/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-actions-in-your-enterprise#controlling-access-to-public-actions-and-reusable-workflows) setting  to control which actions can run.
+13. **Segregate runners**: Use runner groups and labels to separate high-privilege runners (with access to secrets, sensitive resources or host access) from low-privilege runners.
 
 ## Assumptions and preconditions
 
@@ -126,6 +127,7 @@ Repository rulesets provide a strong defensive layer that complements workflow-l
 - [Require status checks to pass before merging](https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-status-checks-to-pass-before-merging): Ensure automated validation checks pass before merging.
 - [Require code scanning results](https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-code-scanning-results): Identify security vulnerabilities before merge.
 - [Require signed commits](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-signed-commits): Ensure all commits are signed to prove who authored them and that they haven't been modified.
+- [Require workflows to pass before merging](https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-workflows-to-pass-before-merging): Ensure organizational or enterprise-level requirements for workflows are met before merging. This could be a workflow that checks for required labels, validates commit messages, or performs other organizational policy checks.
 - Restrict bypass permissions: Limit bypass capabilities to emergencies and monitor via audit logs.
 
 ### Implement least privilege for workflow permissions
@@ -256,6 +258,18 @@ GitHub-hosted runners are network isolated by default. They can make outbound ca
 The [allowed actions and reusable workflows setting](https://docs.github.com/en/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-actions-in-your-enterprise#allowing-select-actions-and-reusable-workflows-to-run) controls which actions can run (or not run) in your organization or enterprise. This provides centralized governance and makes it easy to respond to compromised actions without searching across repositories.
 
 Consider defining the list of allowed actions using policy as code (e.g., via Terraform or the REST API) to establish a request/approval process, track changes for audit purposes, and improve visibility into which actions are allowed.
+
+### Segregate runners
+
+Use [runner groups](https://docs.github.com/en/actions/concepts/runners/runner-groups) and [labels](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/apply-labels) to separate high-privilege runners from low-privilege runners. High-privilege runners may have access to sensitive resources or direct host access, while low-privilege runners should not.
+
+This separation provides more granular control over [which repositories can access different runners](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/manage-access#changing-which-repositories-can-access-a-runner-group) and which [jobs can access specific runners](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job). It also reduces the risk that a compromised or misconfigured workflow could gain access to sensitive resources.
+
+For example, you could create:
+
+- A runner group for container image build runners, limited to only the repositories that require those privileges.
+- A runner group for runners with access to restricted networks.
+- A separate low-privilege runner group for tasks such as linting and static analysis, with no access to secrets or sensitive resources.
 
 ## Additional solution detail and trade-offs to consider
 
