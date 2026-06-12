@@ -1,6 +1,6 @@
 ---
 name: technical-writing-review
-description: Validate and improve GitHub Well-Architected Framework (WAF) documentation for architectural correctness, decision quality, explicit trade-offs, and actionable guidance. Use this when reviewing pull requests, markdown files, or draft content to ensure recommendations are technically sound, context-aware, and guide readers toward correct design decisions.
+description: Validate and improve GitHub Well-Architected Framework (WAF) documentation under the content/ folder for architectural correctness, decision quality, explicit trade-offs, and actionable guidance. Use this when reviewing pull requests, markdown files, or draft content in content/ to ensure recommendations are technically sound, context-aware, and guide readers toward correct architecture and design decisions.
 ---
 
 # Technical Writing Review

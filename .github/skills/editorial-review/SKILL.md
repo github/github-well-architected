@@ -1,6 +1,6 @@
 ---
 name: editorial-review
-description: Review and refine GitHub Well-Architected Framework (WAF) documentation for clarity, precision, consistency, and publication readiness. Use this when reviewing pull requests, markdown files, or draft content to ensure guidance is unambiguous, readable, and aligned with editorial standards.
+description: Review and refine GitHub Well-Architected Framework (WAF) documentation under the content/ folder for clarity, precision, consistency, and publication readiness. Use this when reviewing pull requests, markdown files, or draft content in content/ to ensure guidance is unambiguous, readable, and aligned with editorial standards.
 ---
 
 # Editorial Review
