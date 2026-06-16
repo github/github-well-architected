@@ -1,5 +1,5 @@
 ---
-draft: true # Set to false when ready to publish
+draft: false # Set to true to keep the page hidden
 title: 'Insert title here'
 publishDate: YYYY-MM-DD
 params:
