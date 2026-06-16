@@ -2,6 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Checklist for Repository Migrations
+weight: 3
 description: A checklist to help you plan and execute a successful repository migration to GitHub.
 aliases:
 - "planning-guides/repository-checklist/"
@@ -13,7 +14,7 @@ aliases:
 This checklist is intended to facilitate a successful migration to GitHub by providing an overview of the necessary steps involved, with a focus on migrating repositories.  This checklist is a guide on **what** needs to be done for a migration as an approach for planning.
 
 ## Seeking further assistance
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 

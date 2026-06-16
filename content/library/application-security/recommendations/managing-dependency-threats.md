@@ -1,6 +1,7 @@
 ---
 draft: false
 title: 'Defending against dependency supply chain attacks'
+weight: 3
 publishDate: 2025-12-10
 params:
   authors: [
@@ -303,7 +304,7 @@ Build a comprehensive automated detection system that catches vulnerabilities at
 
 **Dependency vulnerabilities:**
 
-Enable [Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) to automatically detect vulnerabilities and create pull requests for updates. Consider grouping patch updates for expedited review, assigning security team reviewers, and scheduling daily scans. Use [auto-triage rules](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-auto-triage-rules/about-dependabot-auto-triage-rules) to reduce alert fatigue by automatically dismissing low-risk alerts or alerts for dependencies that don't affect your usage. For comprehensive guidance on managing security alerts at scale, see [Prioritizing security alert remediation](../prioritizing-alerts/).
+Enable [Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) to automatically detect vulnerabilities and create pull requests for updates. Consider grouping patch updates for expedited review, assigning security team reviewers, and scheduling daily scans. Use [auto-triage rules](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-auto-triage-rules/about-dependabot-auto-triage-rules) to reduce alert fatigue by automatically dismissing low-risk alerts or alerts for dependencies that don't affect your usage. For comprehensive guidance on managing security alerts at scale, see [Prioritizing security alert remediation](./prioritizing-alerts).
 
 Add the [dependency review action](https://github.com/actions/dependency-review-action) to your pull request workflows and require it as a status check to prevent potential vulnerabilities from being introduced. Configure it to fail on high-severity vulnerabilities, block problematic licenses, and warn on low [OpenSSF Scorecard](https://securityscorecards.dev/) scores.
 

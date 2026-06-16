@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Quick Links
-weight: 1
-prev: library/productivity
+weight: 2
+prev: library/productivity/introduction
 next: library/productivity/design-principles
 ---
 

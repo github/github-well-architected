@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 draft: false # Set to false when ready to publish
 title: 'Rulesets Best Practices'
+weight: 3
 publishDate: 2024-10-08
 params:
   authors:
@@ -150,7 +151,7 @@ Enterprises need consistent, enforceable guardrails for how code enters, evolves
 ### 1. Custom properties strategy
 
 {{< callout type="information" >}}
-Read more on working with custom properties in [custom properties best practices]({{< relref "custom-properties-best-practices.md" >}}).
+Read more on working with custom properties in [custom properties best practices](./custom-properties-best-practices).
 {{< /callout >}}
 
 Define a schema that makes sense for your organization. For example:
@@ -254,13 +255,13 @@ Avoid enabling too many restrictive rules simultaneously; stage them and monitor
 
 ## Seeking further assistance
 
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## Related links
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 

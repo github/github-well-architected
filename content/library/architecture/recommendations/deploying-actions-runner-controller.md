@@ -1,6 +1,7 @@
 ---
 draft: false
 title: 'Deploying Actions Runner Controller'
+weight: 4
 publishDate: 2025-12-19
 params:
   # Add and remove authors as needed. Please reserve authorship for significant contributions, not edits and feedback.
@@ -220,7 +221,7 @@ When a container mode is selected, ARC configures the runner pods using a pre-de
 
 {{< callout type="warning" >}}
 ARC scales by requesting pods in Kubernetes according to the provided `template.spec` or `containerMode` template. Kubernetes is then responsible for scheduling and running the pods based on that specification. Misconfigured `template.spec` settings are a common sources of performance, reliability, and scaling issues with ARC.
-{{</ callout >}}
+{{< /callout >}}
 
 - **Provide a `template.spec` for production use.**
   For production deployments, it is recommended to comment out the `containerMode` setting and define your runner specifications. If you need the features provided by the `dind`, `kubernetes`, or `kubernetes-novolume` container mode, use the included templates as a starting point. This gives you control over the container settings, allowing you to set requests/limits, security contexts, and a custom runner image.
@@ -271,13 +272,13 @@ Kubernetes does not contain a Docker runtime, so this mode does not support Acti
 
 ## Seeking further assistance
 
-<!-- The Hugo shortcode below will fully populate this section -->
+<!-- The shortcode below will fully populate this section -->
 
 {{% seeking-further-assistance-details %}}
 
 ## Related links
 
-<!-- The Hugo shortcode below will include a subsection that links to GitHub's documentation. -->
+<!-- The shortcode below will include a subsection that links to GitHub's documentation. -->
 
 {{% related-links-github-docs %}}
 

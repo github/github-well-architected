@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 draft: false # Set to false when ready to publish
-
+weight: 6
 title: 'Governing agentic workflows with gh-aw and APM'
 publishDate: 2026-06-01
 params:

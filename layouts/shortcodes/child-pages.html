@@ -1,6 +1,14 @@
 <!-- layouts/shortcodes/child-pages.html -->
 <ul>
-    {{ range .Page.Pages }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ if .Page.Pages }}
+      {{ range .Page.Pages }}
+        <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+      {{ end }}
+    {{ else }}
+      {{ range .Page.Parent.Pages }}
+        {{ if ne .RelPermalink $.Page.RelPermalink }}
+          <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+        {{ end }}
+      {{ end }}
     {{ end }}
   </ul>
