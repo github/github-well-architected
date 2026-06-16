@@ -1,0 +1,71 @@
+#!/bin/sh
+
+# tools/new-content: Create a new content file from archetypes/default.md
+
+set -eu
+cd "$(dirname "$0")/.."
+
+usage() {
+  echo "Usage: tools/new-content recommendation <pillar> <article-name>"
+  echo "   or: tools/new-content scenario <article-name>"
+  echo "Example: tools/new-content recommendation productivity adopting-copilot-at-scale"
+  echo "Example: tools/new-content scenario migration-readiness-checklist"
+  exit 1
+}
+
+if [ "$#" -lt 2 ]; then
+  usage
+fi
+
+kind="$1"
+
+normalize_name() {
+  case "$1" in
+    *.md) echo "${1%.md}" ;;
+    *) echo "$1" ;;
+  esac
+}
+
+case "$kind" in
+  recommendation)
+    if [ "$#" -ne 3 ]; then
+      usage
+    fi
+
+    pillar="$2"
+    name="$(normalize_name "$3")"
+
+    case "$pillar" in
+      productivity|collaboration|application-security|governance|architecture)
+        ;;
+      *)
+        echo "Invalid pillar: $pillar"
+        echo "Expected one of: productivity, collaboration, application-security, governance, architecture"
+        exit 1
+        ;;
+    esac
+
+    target="content/library/$pillar/recommendations/$name.md"
+    ;;
+  scenario)
+    if [ "$#" -ne 2 ]; then
+      usage
+    fi
+
+    name="$(normalize_name "$2")"
+    target="content/library/scenarios/$name.md"
+    ;;
+  *)
+    usage
+    ;;
+esac
+
+mkdir -p "$(dirname "$target")"
+
+if [ -e "$target" ]; then
+  echo "File already exists: $target"
+  exit 1
+fi
+
+cp archetypes/default.md "$target"
+echo "Created $target"

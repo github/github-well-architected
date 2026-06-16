@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Checklist for Application Security
-weight: 3
+weight: 4
 prev: library/application-security/design-principles
 next: library/application-security/recommendations
 ---

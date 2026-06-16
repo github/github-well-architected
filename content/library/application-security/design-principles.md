@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Design Principles
-weight: 2
+weight: 3
 prev: library/application-security/quick-links
 next: library/application-security/checklist
 ---

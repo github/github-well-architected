@@ -1,0 +1,14 @@
+{
+  "name": "markdown-includer",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "markdown-includer": "includeMarkdown.js"
+  },
+  "scripts": {
+    "merge": "node includeMarkdown.js",
+    "markdown-includer": "node includeMarkdown.js",
+    "test": "node --test"
+  }
+}

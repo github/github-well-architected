@@ -259,5 +259,5 @@ Help your administrators and developers feel confident in the new environment an
 
 ## Next steps
 
-1. Proceed to [Environment assessment]({{% ref path="02-source-environment-assessment.md" %}})
+1. Proceed to [Environment assessment](./assess)
 2. Consider engaging [GitHub Expert Services](https://github.com/services#services-catalog) for additional support

@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: Checklist for Productivity
-weight: 3
+weight: 4
 prev: library/productivity/design-principles
 next: library/productivity/recommendations
 ---
@@ -125,7 +125,7 @@ This assessment checklist focuses on evaluating and enhancing the **Productivity
   - Map engineering efforts to organizational priorities.
 
 - **Map and Prioritize Findings**
-  - Categorize barriers by the [four engineering system success zones](../recommendations/engineering-system-metrics).
+  - Categorize barriers by the [four engineering system success zones](./recommendations/engineering-system-metrics).
   - Map barriers' interconnections between zones and capability areas.
   - Prioritize barriers based on impact and organizational alignment.
   - Select metrics to track progress.
@@ -136,7 +136,7 @@ This assessment checklist focuses on evaluating and enhancing the **Productivity
   - Pilot and evaluate solutions before full-scale implementation.
 
 - **Establish Balanced Metrics**
-  - Define leading and lagging indicators for all [four engineering system success zones](../recommendations/engineering-system-metrics).
+  - Define leading and lagging indicators for all [four engineering system success zones](./recommendations/engineering-system-metrics).
   - Track metrics across all zones in a balanced way.
   - Review metrics periodically to identify emerging trends.
 

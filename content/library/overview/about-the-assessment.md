@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: GitHub and The Project Authors
 # SPDX-License-Identifier: MIT
 title: About the Assessment
-weight: 2
+weight: 3
 prev: library/overview/layers
 next: library/overview/getting-started-checklist
 ---
