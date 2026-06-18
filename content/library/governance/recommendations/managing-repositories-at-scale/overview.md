@@ -5,6 +5,7 @@ draft: false   # Set to false when ready to publish
 title: Overview
 linkTitle: Managing Repositories at Scale
 weight: 1
+aliases: [.]
 ---
 
 
