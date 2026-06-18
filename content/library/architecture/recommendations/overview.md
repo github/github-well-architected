@@ -4,6 +4,7 @@
 title: Overview
 weight: 1
 prev: library/architecture
+aliases: [.]
 ---
 
 
