@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 title: Overview
 weight: 1
+aliases: [.]
 ---
 
 
