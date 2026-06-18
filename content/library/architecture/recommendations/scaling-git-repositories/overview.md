@@ -5,6 +5,7 @@ draft: false # Set to false when ready to publish
 title: Overview
 linkTitle: Scaling Git repositories
 weight: 1
+aliases: [.]
 ---
 
 
