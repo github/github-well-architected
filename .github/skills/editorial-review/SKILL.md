@@ -1,6 +1,7 @@
 ---
 name: editorial-review
 description: Review and refine GitHub Well-Architected Framework (WAF) documentation under the content/ folder for clarity, precision, consistency, and publication readiness. Use this when reviewing pull requests, markdown files, or draft content in content/ to ensure guidance is unambiguous, readable, and aligned with editorial standards.
+compatibility: Requires access to repository files. Designed for the Content_Reviewer agent and Copilot Review Agent.
 ---
 
 # Editorial Review
