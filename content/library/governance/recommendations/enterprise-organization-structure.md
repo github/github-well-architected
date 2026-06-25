@@ -148,6 +148,24 @@ A shared sandbox organization where developers can freely create and experiment 
 
 For very large enterprises with tens of thousands of users spread across major divisions that operate semi-independently, a model that maps one organization per top-level division provides each business unit's platform team with meaningful administrative autonomy while the enterprise layer sets non-negotiable governance baselines. This is distinct from creating separate organizations for teams or projects within a division—that remains an anti-pattern.
 
+### Delegated administration and team autonomy
+
+A frequently overlooked but practical justification for multiple organizations is the need to give teams meaningful administrative ownership of their own environment—without exposing other teams to the risk of those elevated permissions or the private resources associated with them.
+
+Within a single shared GitHub organization, some capabilities are scoped exclusively to organization owners or to roles with significant organizational-level permissions. These include:
+
+- **Organization-level secrets** for Actions and Codespaces—secrets that can be made available across any repository in the organization. In a shared org, a team that needs its own CI/CD secrets cannot restrict other org owners from seeing or modifying those secrets.
+- **Actions policies**—controlling which actions and reusable workflows are permitted across the organization's repositories.
+- **Built-in elevated roles** such as Security Manager (organization-wide security settings and alert visibility) and CI/CD Admin (managing Actions runners and organization-level Actions policies).
+- **Custom organization roles** that delegate specific administrative functions to team leads—for example, the ability to manage teams, configure rulesets, or administer Actions within the organization.
+- **Base membership permissions**, default repository visibility, team synchronization settings, and other organization-wide defaults.
+
+In a shared organization, granting any of these permissions to a team's leads creates two problems: the team gains visibility or influence over other teams' resources, and the central platform team becomes an administrative bottleneck for changes that each team should own. When one team's org owner can see or modify another team's organization-level secrets, the isolation that those secrets were meant to provide is weakened.
+
+A dedicated organization per team or division addresses both issues. The team's leads can be organization owners—or be granted custom organization roles—scoped entirely to their own organization. Organization-level secrets are isolated by default: they are not visible or accessible across organization boundaries. The team operates with genuine self-service autonomy, and the central platform team is freed from serving as an intermediary for routine administrative tasks.
+
+This is distinct from access isolation (covered in the legal and regulatory separation section above). The driving concern here is operational and organizational: reducing the administrative burden on a central team while giving distributed teams the control they need to move quickly and manage their own environment.
+
 ### Mergers, acquisitions, and divestitures
 
 Organizations can be transferred between enterprise accounts and invited into a new enterprise. This makes GitHub organizations a useful unit of migration management for M&A activities. Acquiring a company's GitHub organization and inviting it into your enterprise account can be significantly easier than migrating all of its repositories into an existing organization. The organization retains its name, URLs, and existing external links while adopting enterprise-level policies.
@@ -176,6 +194,8 @@ The case for consolidation remains strong for many enterprises. A minimal org st
 | Regulatory separation | Requires additional controls | Organization is a natural boundary |
 | Billing granularity | Use cost centers for reporting | Organizations plus cost centers for reporting |
 | M&A agility | May require repo migration | Organizations transfer between enterprises |
+| Team administrative autonomy | Difficult; org owners have org-wide scope | Natural boundary; teams can be org owners within their own scope |
+| Org-level secret isolation | Org owners can see all org-level secrets | Secrets are scoped to the organization; no cross-org visibility |
 | Administrative overhead | Lower when governed well | Managed by enterprise-level tooling at scale |
 
 ## Decision framework
@@ -247,6 +267,8 @@ Audit active organizations periodically. Archive or migrate repositories from le
 GitHub's historical recommendation of minimal organizations reflected the real cost of org sprawl at a time when enterprise-level management tools did not exist. That calculus has changed materially. Enterprise teams, enterprise rulesets, enterprise App installations, enterprise custom properties, and enterprise-level identity management collectively reduce the overhead of operating multiple organizations to a fraction of what it once was.
 
 The right number of organizations for your enterprise is the number that reflects your actual legal, regulatory, compliance, and operational requirements—not the smallest number achievable by shoehorning unrelated entities together, and not the largest number achievable by mapping every team and project to its own organization. Let business requirements drive the structure, not technical limitation or organizational politics.
+
+It is also worth noting that GitHub continues to invest in capabilities that make managing multiple organizations easier. Recent and ongoing work includes enterprise-level custom organization roles that can be defined once and reused across all organizations in the enterprise ([changelog, August 2025](https://github.blog/changelog/2025-08-21-enterprises-can-create-organization-roles-for-use-across-their-enterprise-and-custom-role-limits-have-been-increased/)), expanded governance and role assignment via enterprise teams in public preview ([changelog, October 2025](https://github.blog/changelog/2025-10-23-managing-roles-and-governance-via-enterprise-teams-is-in-public-preview/)), significantly increased enterprise teams scale limits ([changelog, December 2025](https://github.blog/changelog/2025-12-08-enterprise-teams-product-limits-increased-by-over-10x/)), and unified enterprise team support in organization APIs ([changelog, February 2026](https://github.blog/changelog/2026-02-23-enterprise-team-support-in-organization-apis/)). These investments reflect GitHub's direction: providing enterprise-level tooling that makes the operational cost of a larger org count manageable, while preserving the organizational and security boundaries that teams need.
 
 When in doubt, start minimal, govern intentionally, and add organizations as genuine need is demonstrated.
 
