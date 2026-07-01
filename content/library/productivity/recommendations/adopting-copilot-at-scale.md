@@ -22,19 +22,19 @@ areas:
 # Classifications of industries who may be at different stages of the customer journey.
 verticals:
   - automotive
-  - manufacturing
-  - finance
-  - gaming
-  - media
-  - government
-  - information-technology
-  - healthcare
-  - retail
   - education
   - energy
-  - telecommunications
+  - finance
+  - gaming
+  - government
+  - healthcare
   - hospitality
-  - professional-services
+  - information-technology
+  - manufacturing
+  - media
+  - professional-service
+  - retail
+  - telecommunications
 
 # Individuals in key roles on the customer journey, typically consisting of one or more administrators and the end-user community.
 personas:
@@ -111,7 +111,7 @@ An example GitHub Copilot launch plan should include the following minimum eleme
 #### Launch week (week 0)
 
 - Communicate the opportunity, benefits, and availability of GitHub Copilot to your organization
-- Provide on-demand [training](https://learn.microsoft.com/en-us/training/modules/introduction-to-github-copilot/) and [resources](https://docs.github.com/en/enterprise-cloud@latest/copilot/quickstart) for users to get started with GitHub Copilot
+- Provide on-demand [training](https://learn.microsoft.com/en-us/training/modules/introduction-to-github-copilot/) and [resources](https://docs.github.com/en/enterprise-cloud@latest/copilot/get-started/quickstart) for users to get started with GitHub Copilot
 
 #### Post-launch (weeks 1-4)
 
@@ -122,7 +122,7 @@ An example GitHub Copilot launch plan should include the following minimum eleme
 #### Post-launch (weeks 5-8)
 
 - Monitor GitHub Copilot adoption and activity metrics
-- Develop a GitHub Copilot reporting mechanism to track KPIs and derive meaningful insights about GitHub Copilot by using the [Copilot Usage API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28) and [Copilot User Management API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28)
+- Develop a GitHub Copilot reporting mechanism to track KPIs and derive meaningful insights about GitHub Copilot by using the [Copilot usage metrics API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage-metrics?apiVersion=2022-11-28) and [Copilot User Management API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28)
 - Build on your GitHub Copilot Expert Hub with advanced training and resources specific to your organization
 - Gather feedback from users and iterate on your GitHub Copilot program
 
@@ -146,7 +146,7 @@ GitHub offers many free resources to help users get started with GitHub Copilot:
 - [GitHub Copilot Learning Pathway](https://resources.github.com/learn/pathways/copilot/essentials/essentials-of-github-copilot/)
 - [GitHub Copilot Youtube Playlist](https://www.youtube.com/playlist?list=PL0lo9MOBetEHEHi9h0k_lPn0XZdEeYZDS)
 - [GitHub Copilot Blog Posts](https://github.blog/?s=copilot)
-- [GitHub Copilot Quickstart Documentation](https://docs.github.com/en/enterprise-cloud@latest/copilot/quickstart)
+- [GitHub Copilot Quickstart Documentation](https://docs.github.com/en/enterprise-cloud@latest/copilot/get-started/quickstart)
 
 To best prepare your existing team and future hires, consider offering a mix of instructor-led and on-demand Copilot enablement resources.
 
@@ -184,10 +184,10 @@ GitHub Copilot licenses can be assigned in a few different ways, each with their
 3) Specific teams in an organization
 4) Specific teams in an enterprise
 
-While assigning licenses out of a single organization can simplify license management, it restricts the granularity of Copilot telemetry data from the [Copilot Usage API endpoint for organizations](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage?apiVersion=2022-11-28#get-a-summary-of-copilot-usage-for-organization-members).
+While assigning licenses out of a single organization can simplify license management, it restricts the granularity of Copilot telemetry data from the [Copilot usage metrics API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage-metrics?apiVersion=2022-11-28#get-copilot-organization-usage-metrics).
 If you would like to track GitHub Copilot usage across your GitHub Organizations, consider assigning licenses to specific teams or individuals in those organizations.
 
-<!-- PLACEHOLDER FOR COPILOT USAGE API ENDPOINT FOR TEAMS TRADE-OFFS -->
+<!-- PLACEHOLDER FOR COPILOT USAGE METRICS API ENDPOINT FOR TEAMS TRADE-OFFS -->
 
 {{< callout type="info" >}}
 When a user receives a seat from multiple organizations in the same enterprise, GitHub takes care of deduplicating these seats before billing for the user.

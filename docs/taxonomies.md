@@ -81,16 +81,21 @@ areas:
 # Classifications of industries who may be at different stages of the customer journey.
 verticals:
   - automotive
+  - education
+  - energy
   - finance
   - gaming
   - government
+  - healthcare
+  - hospitality
   - information-technology
   - manufacturing
   - media
+  - mid-market
   - professional-service
   - retail
   - smb-corporate
-  - mid-market
+  - telecommunications
 
 # Individuals in key roles on the customer journey, typically consisting of one or more administrators and the end-user community.
 personas:
