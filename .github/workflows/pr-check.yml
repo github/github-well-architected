@@ -113,17 +113,6 @@ jobs:
         run: |
           npm run test:unit
 
-      - name: Build JS bundle
-        run: |
-          # Build the JavaScript bundle using webpack
-          npm run build
-
-          # Make sure the bundle.js exists and has content
-          if [ ! -s static/js/bundle.js ]; then
-            echo "::error::bundle.js was not created or is empty"
-            exit 1
-          fi
-
       - name: Preprocess content
         run: |
           npm run preprocess:content

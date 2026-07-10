@@ -11,11 +11,11 @@
 
 ## Welcome
 
-This repository maintains the static site for the [GitHub Well-Architected Framework](https://wellarchitected.github.com) and its Content Library. The site provides opinionated, community-driven guidance for adopting and deploying the GitHub platform effectively.
+This repository maintains the static site for the [GitHub Well-Architected Framework](https://learn.github.com/well-architected) and its Content Library. The site provides opinionated, community-driven guidance for adopting and deploying the GitHub platform effectively.
 
 **Quick links:**
 
-- 🌐 [View the site](https://wellarchitected.github.com)
+- 🌐 [View the site](https://learn.github.com/well-architected)
 - 💬 [Community Discussions](https://github.com/orgs/community/discussions?discussions_q=label%3A%22GitHub+Well-Architected%22)
 - 🤝 [Partners Discussions](https://github.com/githubpartners-community/community/discussions/categories/waf-feedback-and-suggestions)
 - 📖 [Contributing Guide](CONTRIBUTING.md)

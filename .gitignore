@@ -30,10 +30,6 @@ node_modules/
 .vscode/
 .frontmatter/
 
-# React build output
-static/js/bundle.js
-static/js/bundle.js.LICENSE.txt
-
 # Environment files
 .env
 
