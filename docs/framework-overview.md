@@ -2,7 +2,7 @@
 
 ## Mission
 
-The [GitHub Well-Architected Framework](https://wellarchitected.github.com) provides **community-driven guidance** to help organizations adopt and deploy GitHub effectively.
+The [GitHub Well-Architected Framework](https://learn.github.com/well-architected) provides **community-driven guidance** to help organizations adopt and deploy GitHub effectively.
 Our goal is to foster **opinionated, prescriptive best practices, design principles, and strategic insights** that empower teams to:
 
 - Maximize GitHub’s potential
@@ -24,7 +24,7 @@ It consists of two core components:
 
 ### 📚 Explore, Self-Serve, and Learn
 
-- A **self-service experience** via [https://wellarchitected.github.com](https://wellarchitected.github.com/)
+- A **self-service experience** via [GitHub Learn](https://learn.github.com/well-architected)
 - A **searchable content library** with best practices, assessment findings, and ongoing data insights
 - A foundation for **Copilot Service training** and learning milestones
 

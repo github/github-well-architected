@@ -311,7 +311,7 @@ You'll be notified when maintainers begin their review and if any final adjustme
 
 ### Step 8: Publish - Go live!
 
-Once approved, your article automatically publishes to the live site at [wellarchitected.github.com](https://wellarchitected.github.com).
+Once approved, your article automatically publishes to [GitHub Learn](https://learn.github.com/well-architected).
 
 **What happens:**
 

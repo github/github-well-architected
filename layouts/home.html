@@ -3,8 +3,5 @@
   {{- partial "head.html" . -}}
   <body dir="{{ .Site.Language.LanguageDirection | default `ltr` }}" class="min-w-sm">
     {{- block "main" . }}{{ end -}}
-    
-    <!-- React Copilot Chat Widget -->
-    <script src="{{ "js/bundle.js" | relURL }}"></script>
   </body>
 </html>
