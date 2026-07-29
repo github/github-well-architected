@@ -15,6 +15,7 @@ hugo.linux
 .DS_Store
 site
 node_modules/
+devcontainer-lock.json
 
 # Playwright tests
 /test-results/
