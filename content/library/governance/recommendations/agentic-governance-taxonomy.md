@@ -87,4 +87,4 @@ A maturity assessment of agent governance can be expressed as a five-by-four gri
   {{< card link="/library/governance/recommendations/governance-policies-best-practices" title="Governance best practices" subtitle="Broader governance guidance" icon="shield-check" >}}
 {{< /cards >}}
 
-{{< seeking-further-assistance-details >}}
+{{% seeking-further-assistance-details %}}

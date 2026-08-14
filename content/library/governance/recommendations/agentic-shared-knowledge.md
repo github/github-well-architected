@@ -136,4 +136,4 @@ As you expand to new workflows, expand context coverage. As you observe what con
   {{< card link="/library/productivity/recommendations/engineering-system-metrics" title="Engineering system metrics" subtitle="Measuring the engineering system overall" icon="chart-bar" >}}
 {{< /cards >}}
 
-{{< seeking-further-assistance-details >}}
+{{% seeking-further-assistance-details %}}
