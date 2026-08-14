@@ -122,4 +122,4 @@ When Detect surfaces a defect, the audit should produce three linked outputs, no
   {{< card link="../../architecture/recommendations/expanding-enterprise-custom-agents-context" title="Expanding enterprise custom agents context" icon="sparkles" >}}
 {{< /cards >}}
 
-{{< seeking-further-assistance-details >}}
+{{% seeking-further-assistance-details %}}
