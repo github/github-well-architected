@@ -108,9 +108,9 @@ Finally, we have Services, Support, and Partners ready to assist you at every st
 
 ## Related Links
 
-- [GitHub Docs](https://docs.github.com/)
+- [GitHub Docs](https://docs.github.com)
 - [GitHub Skills](https://skills.github.com/)
-- [GitHub Security Features](https://github.com/features/security)
+- [GitHub Advanced Security](https://docs.github.com/get-started/learning-about-github/about-github-advanced-security)
 - [GitHub Enterprise](https://github.com/enterprise)
 
 This framework is a living document, designed to evolve with advancements in technology, changes in best practices, and the feedback from the community. It serves as a flexible guide, supplementing GitHub's official documentation, and can be adapted to meet the unique needs of each organization.

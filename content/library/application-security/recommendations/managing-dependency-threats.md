@@ -174,7 +174,7 @@ When a legitimate package needs lifecycle scripts (like building native modules)
 ```
 
 {{< callout type="info" >}}
-Consider adding your `.npmrc` and `.yarnrc.yml` configurations to a [dotfiles repository](https://docs.github.com/en/codespaces/setting-your-user-preferences/personalizing-github-codespaces-for-your-account#dotfiles) to ensure secure defaults follow you across local machines, cloud environments, and GitHub Codespaces.
+Consider adding your `.npmrc` and `.yarnrc.yml` configurations to a [dotfiles repository](https://docs.github.com/codespaces/setting-your-user-preferences/personalizing-github-codespaces-for-your-account#dotfiles) to ensure secure defaults follow you across local machines, cloud environments, and GitHub Codespaces.
 {{< /callout >}}
 
 #### For GitHub Actions workflows
@@ -190,7 +190,7 @@ Configure your workflows to install dependencies with lifecycle scripts disabled
 ```
 
 {{< callout type="info" >}}
-**For high-security environments:** Organizations accepting pull requests from external contributors or with strict compliance requirements can use [larger hosted runners](https://docs.github.com/enterprise-cloud@latest/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners) with custom images that include system-level `.npmrc` and `.yarnrc.yml` files. This enforces script disabling at the runner level, providing defense-in-depth even if workflow configuration is bypassed.
+**For high-security environments:** Organizations accepting pull requests from external contributors or with strict compliance requirements can use [larger hosted runners](https://docs.github.com/enterprise-cloud@latest/actions/concepts/runners/larger-runners) with custom images that include system-level `.npmrc` and `.yarnrc.yml` files. This enforces script disabling at the runner level, providing defense-in-depth even if workflow configuration is bypassed.
 {{< /callout >}}
 
 #### When to allow lifecycle scripts
@@ -235,7 +235,7 @@ One subtle risk in supply chain attacks is that malicious code might commit chan
 
 #### Configure commit signing
 
-[Configure commit signing using a GPG, SSH, or S/MIME key](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits). For maximum protection against automated attacks, use a signing method that requires user interaction. Examples include using a passphrase-protected key, biometric authentication, or a hardware security key.
+[Configure commit signing using a GPG, SSH, or S/MIME key](https://docs.github.com/authentication/managing-commit-signature-verification/signing-commits). For maximum protection against automated attacks, use a signing method that requires user interaction. Examples include using a passphrase-protected key, biometric authentication, or a hardware security key.
 
 {{< callout type="info" >}}
 **Why user interaction matters:** The key defense here isn't just the cryptographic signature - it's the human verification step. A malicious script running on your machine can access your signing key, but it can't press your fingerprint to the sensor or type your passphrase. This human-in-the-loop requirement is what blocks automated attacks from creating commits on your behalf.
@@ -255,7 +255,7 @@ Create a ruleset for your default branch:
 
 1. Navigate to **Settings** → **Rules** → **Rulesets**
 2. Add a new ruleset targeting your default branch
-3. Examples of [protection rules](https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets) to configure:
+3. Examples of [protection rules](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets) to configure:
    - Require pull requests before merging
    - Require signed commits
    - Require status checks to pass (including security scans)
@@ -276,7 +276,7 @@ Build trust across the supply chain by establishing cryptographic provenance for
 For packages you maintain:
 
 1. Link your GitHub repository as a trusted publisher in your package registry settings (npm, PyPI, RubyGems, NuGet, crates.io, etc.)
-2. Update your release workflow to use [OIDC authentication](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments) instead of long-lived tokens
+2. Update your release workflow to use [OIDC authentication](https://docs.github.com/actions/how-tos/secure-your-work/security-harden-deployments) instead of long-lived tokens
 3. Publish with provenance attestations (e.g., `npm publish --provenance`) to create cryptographic proof on the specific commit of the source repository
 4. Create [linked artifact storage records](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/linked-artifacts) with the [`actions/attest`](https://github.com/actions/attest) action
 
@@ -304,15 +304,15 @@ Build a comprehensive automated detection system that catches vulnerabilities at
 
 **Dependency vulnerabilities:**
 
-Enable [Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) to automatically detect vulnerabilities and create pull requests for updates. Consider grouping patch updates for expedited review, assigning security team reviewers, and scheduling daily scans. Use [auto-triage rules](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-auto-triage-rules/about-dependabot-auto-triage-rules) to reduce alert fatigue by automatically dismissing low-risk alerts or alerts for dependencies that don't affect your usage. For comprehensive guidance on managing security alerts at scale, see [Prioritizing security alert remediation](./prioritizing-alerts).
+Enable [Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-security-updates) to automatically detect vulnerabilities and create pull requests for updates. Consider grouping patch updates for expedited review, assigning security team reviewers, and scheduling daily scans. Use [auto-triage rules](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-auto-triage-rules) to reduce alert fatigue by automatically dismissing low-risk alerts or alerts for dependencies that don't affect your usage. For comprehensive guidance on managing security alerts at scale, see [Prioritizing security alert remediation](./prioritizing-alerts).
 
 Add the [dependency review action](https://github.com/actions/dependency-review-action) to your pull request workflows and require it as a status check to prevent potential vulnerabilities from being introduced. Configure it to fail on high-severity vulnerabilities, block problematic licenses, and warn on low [OpenSSF Scorecard](https://securityscorecards.dev/) scores.
 
 **Code vulnerabilities and secrets:**
 
-Enable [code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning) to detect vulnerabilities and coding errors in your source code. Configure CodeQL or third-party tools to run on pull requests and block merges when issues are found.
+Enable [code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/code-scanning/code-scanning) to detect vulnerabilities and coding errors in your source code. Configure CodeQL or third-party tools to run on pull requests and block merges when issues are found.
 
-Enable [secret scanning](https://docs.github.com/enterprise-cloud@latest/code-security/secret-scanning/introduction/about-secret-scanning) to detect accidentally committed credentials. Configure push protection to prevent secrets from being pushed in the first place, and establish a response runbook for when alerts are triggered.
+Enable [secret scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/secret-security/secret-scanning) to detect accidentally committed credentials. Configure push protection to prevent secrets from being pushed in the first place, and establish a response runbook for when alerts are triggered.
 
 **Prioritize alerts with production context:**
 
@@ -357,12 +357,12 @@ The most secure approach (reviewing every dependency change manually and disabli
 ### Common challenges
 
 - **Packages requiring lifecycle scripts**: Some packages (like `node-gyp` for native extensions) legitimately need scripts. Create a documented exception list and use `npm rebuild <package>` selectively after installation.
-- **Alert fatigue**: Dependabot can generate many alerts. Use [auto-triage rules](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-auto-triage-rules/about-dependabot-auto-triage-rules) to dismiss low-risk alerts and prioritize what matters.
+- **Alert fatigue**: Dependabot can generate many alerts. Use [auto-triage rules](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-auto-triage-rules) to dismiss low-risk alerts and prioritize what matters.
 - **Transitive dependencies**: You don't control dependencies of your dependencies. Use `npm audit`, Dependabot, dependency review, and code scanning to gain visibility. Consider replacing direct dependencies that bring in vulnerable transitives.
 - **Attestations not universally available**: Not all packages support attestations yet. Use attestation availability as one factor in dependency selection and gradually work toward full coverage.
 - **Keeping lockfiles current**: Lockfiles prevent unexpected updates but can become stale. Regularly update dependencies through Dependabot or scheduled audits to ensure security patches aren't missed while maintaining reproducible builds.
 - **Breaking changes in security updates**: Security updates sometimes include breaking changes that require code modifications. Establish separate processes for security updates (expedited) vs. feature updates (standard review), and allocate time for security debt remediation.
-- **Workflow security risks**: The `pull_request_target` trigger runs with elevated permissions and access to secrets, even for pull requests from forks. Prefer the regular `pull_request` trigger, define least-privilege workflow permissions, and enable [CodeQL workflow analysis](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning) to detect vulnerabilities. See the [GitHub Actions 2026 security roadmap](https://github.blog/news-insights/product-news/whats-coming-to-our-github-actions-2026-security-roadmap/) for upcoming capabilities addressing these risks.
+- **Workflow security risks**: The `pull_request_target` trigger runs with elevated permissions and access to secrets, even for pull requests from forks. Prefer the regular `pull_request` trigger, define least-privilege workflow permissions, and enable [code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/code-scanning/code-scanning) to detect vulnerabilities. See the [GitHub Actions 2026 security roadmap](https://github.blog/news-insights/product-news/whats-coming-to-our-github-actions-2026-security-roadmap/) for upcoming capabilities addressing these risks.
 
 ## Seeking further assistance
 
@@ -374,14 +374,14 @@ The most secure approach (reviewing every dependency change manually and disabli
 
 Specifically, you may find the following links helpful:
 
-- [About Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates)
-- [About dependency review](https://docs.github.com/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review)
+- [Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-security-updates)
+- [Dependency review](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependency-review)
 - [Signing commits](https://docs.github.com/enterprise-cloud@latest/authentication/managing-commit-signature-verification/signing-commits)
 - [About rulesets](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets)
 - [npm trusted publishers](https://docs.npmjs.com/trusted-publishers)
 - [Verifying npm package provenance](https://docs.npmjs.com/viewing-package-provenance)
-- [Using artifact attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations)
-- [About supply chain security](https://docs.github.com/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/about-supply-chain-security)
+- [Using artifact attestations](https://docs.github.com/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations)
+- [Supply chain security](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/supply-chain-security)
 - [Our plan for a more secure npm supply chain](https://github.blog/security/supply-chain-security/our-plan-for-a-more-secure-npm-supply-chain/) - GitHub's response to the Shai-Hulud attack
 - [The second half of software supply chain security on GitHub](https://github.blog/security/supply-chain-security/the-second-half-of-software-supply-chain-security-on-github/) - Build provenance and artifact attestations
 - [Securing the open source supply chain: The essential role of CVEs](https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-the-essential-role-of-cves/) - Understanding vulnerability data and automation

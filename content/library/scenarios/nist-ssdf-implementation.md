@@ -94,7 +94,7 @@ The full NIST SSDF v1.1 specification is available at: <a href="https://nvlpubs.
 
 **Automate security checks in CI/CD**: Integrate security scanning, dependency checking, and policy enforcement directly into GitHub Actions workflows. Automated checks provide consistent enforcement and reduce human error.
 
-**Establish clear governance boundaries**: Use organization-level policies, repository rulesets, and custom properties to enforce security requirements consistently across repositories. Centralized governance reduces administrative overhead and ensures consistent application of security practices. For more detailed recommendations around repository rulesets and custom properties, see [Managing Repositories at Scale](https://wellarchitected.github.com/library/governance/recommendations/managing-repositories-at-scale/).
+**Establish clear governance boundaries**: Use organization-level policies, repository rulesets, and custom properties to enforce security requirements consistently across repositories. Centralized governance reduces administrative overhead and ensures consistent application of security practices. For more detailed recommendations around repository rulesets and custom properties, see [Managing Repositories at Scale](https://learn.github.com/well-architected/governance/recommendations/managing-repositories-at-scale/).
 
 **Maintain comprehensive audit trails**: Enable and preserve audit logs, workflow run histories, and security alert data. These artifacts provide evidence of security practices and support incident response and compliance reporting.
 
@@ -244,12 +244,12 @@ Combine GitHub-native security features with Actions-based automation.
 
 **Enable organization-wide security features**:
 
-1. **Security configurations**: Use GitHub's [security configurations](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/about-security-configurations) feature to enable, enforce, and set as default the following security features across all repositories:
+1. **Security configurations**: Use GitHub's [security configurations](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/organization-security#about-security-configurations) feature to enable, enforce, and set as default the following security features across all repositories:
    - **Secret scanning and push protection**: Prevent credential exposure by detecting and blocking secrets before they are committed
    - **Code scanning**: Automated SAST scanning using CodeQL to detect vulnerable coding patterns
    - **Dependabot alerts and security updates**: Automatically detect and remediate vulnerable dependencies
 
-   Security configurations provide centralized management and enforcement, reducing administrative overhead while ensuring comprehensive coverage across your repositories. For detailed guidance on creating and applying security configurations, refer to the [GitHub documentation](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/creating-a-custom-security-configuration-for-your-enterprise).
+   Security configurations provide centralized management and enforcement, reducing administrative overhead while ensuring comprehensive coverage across your repositories. For detailed guidance on creating and applying security configurations, refer to the [GitHub documentation](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/create-custom-configuration).
 
 2. **Immutable releases**: Prevent modifications to published releases
    - Enable immutable releases on repositories to ensure release artifacts cannot be altered after publication
@@ -274,7 +274,7 @@ Use GitHub repository rulesets to define and enforce software security policies.
 2. **Require code scanning results**: In your rulesets, define the security alert severity that should block pull request merges
 3. **Status checks**: Use required status checks to enforce any additional criteria such as linters, unit tests, or custom security checks
 
-For more detailed examples of repository rulesets, see [Rulesets Best Practices](https://wellarchitected.github.com/library/governance/recommendations/managing-repositories-at-scale/rulesets-best-practices/).
+For more detailed examples of repository rulesets, see [Rulesets Best Practices](https://learn.github.com/well-architected/governance/recommendations/managing-repositories-at-scale/rulesets-best-practices/).
 
 #### PO.5: Implement and maintain secure environments
 
@@ -381,7 +381,7 @@ Combine GitHub-native access controls with your identity provider.
 Use artifact attestations to enable build provenance verification.
 
 1. **Artifact attestations**: Generate cryptographic attestations for build artifacts using GitHub's [artifact attestation](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations) feature
-2. **Immutable releases**: Leverage GitHub's [immutable releases](https://docs.github.com/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/immutable-releases) feature to prevent post-release modifications
+2. **Immutable releases**: Leverage GitHub's [immutable releases](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/immutable-releases) feature to prevent post-release modifications
 
 **Artifact attestation workflow**:
 
@@ -636,7 +636,7 @@ Use GitHub policies and dependency management features to enforce secure softwar
     - Simplified credential rotation and revocation
     - Reduced blast radius if a repository is compromised
 
-3. **Dependabot alerts**: Enable Dependabot [alerts](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-alerts/about-dependabot-alerts) and automated [security updates](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) for known vulnerabilities in dependencies.
+3. **Dependabot alerts**: Enable Dependabot [alerts](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-alerts) and automated [security updates](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-security-updates) for known vulnerabilities in dependencies.
 
 4. **Dependency review**: Use the [dependency review](https://github.com/actions/dependency-review-action) action to block new vulnerable dependencies and open-source software with non-compliant licenses. Refer to the example workflow file in section PW.5.
 
@@ -650,7 +650,7 @@ Use GitHub policies and dependency management features to enforce secure softwar
 
 Use security configurations to enable and enforce security scanning, then use repository rulesets to prevent vulnerable code from being merged.
 
-1. **Security configurations**: Refer to section PO.3 for detailed guidance on using GitHub's [security configurations](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/creating-a-custom-security-configuration-for-your-enterprise) to enable and enforce code scanning, secret scanning, and Dependabot across all repositories.
+1. **Security configurations**: Refer to section PO.3 for detailed guidance on using GitHub's [security configurations](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/create-custom-configuration) to enable and enforce code scanning, secret scanning, and Dependabot across all repositories.
 
 2. **Repository rulesets for code scanning enforcement**: Use [repository rulesets](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) to require code scanning results before code is merged. Configure the severity threshold for code scanning results that will fail a status check and block PRs from merging. This prevents net-new vulnerabilities from being introduced unless an authorized user intentionally bypasses the requirement. All bypass activity is captured by GitHub's audit log and reviewable in the ruleset insights tab, providing visibility for emergency deployments.
 
@@ -663,7 +663,7 @@ Use security configurations to enable and enforce security scanning, then use re
 
    This configuration ensures that pull requests introducing high or critical severity vulnerabilities cannot be merged without explicit bypass authorization, which is logged and auditable.
 
-3. **Repository rulesets for dependency review**: Enforce a required workflow that includes [Dependency Review](https://docs.github.com/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review), which catches and blocks PR merges when changes introduce net-new vulnerable dependencies or add dependencies with restricted licenses. Configure dependency review as a required workflow in your repository rulesets to ensure consistent enforcement.
+3. **Repository rulesets for dependency review**: Enforce a required workflow that includes [Dependency Review](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependency-review), which catches and blocks PR merges when changes introduce net-new vulnerable dependencies or add dependencies with restricted licenses. Configure dependency review as a required workflow in your repository rulesets to ensure consistent enforcement.
 
    Example dependency review workflow:
 
@@ -826,7 +826,7 @@ jobs:
 
 **Implementation details**:
 
-1. **Security Overview**: Use the multi-level [Security Overview](https://docs.github.com/enterprise-cloud@latest/code-security/security-overview/about-security-overview) dashboard to monitor vulnerability status:
+1. **Security Overview**: Use the multi-level [Security Overview](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/security-overview) dashboard to monitor vulnerability status:
    - **Enterprise level**: Aggregate security posture across all organizations
    - **Organization level**: View alert trends, coverage gaps, and enablement status across repositories
    - **Repository level**: Detailed alert status and remediation progress
@@ -846,11 +846,11 @@ jobs:
 1. **Security alerts**: Review and triage alerts in the Security tab
 2. **Dependabot security updates**: Automatically generate PRs for dependency updates
 3. **Repository custom properties**: Use [custom properties](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/managing-custom-properties-for-repositories-in-your-organization) to classify repositories by business criticality, enabling risk-based prioritization of alerts
-4. **Security campaigns**: Use [security campaigns](https://docs.github.com/enterprise-cloud@latest/code-security/securing-your-organization/fixing-security-alerts-at-scale) to prioritize and coordinate remediation of specific alert types across repositories
-5. **Copilot Autofix**: Use [Copilot Autofix](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/managing-code-scanning-alerts/about-autofix-for-codeql-code-scanning) to automatically generate fix suggestions for vulnerabilities identified by CodeQL
+4. **Security campaigns**: Use [security campaigns](https://docs.github.com/enterprise-cloud@latest/code-security/tutorials/secure-your-organization/best-practice-fix-alerts-at-scale) to prioritize and coordinate remediation of specific alert types across repositories
+5. **Copilot Autofix**: Use [Copilot Autofix](https://docs.github.com/enterprise-cloud@latest/code-security/responsible-use/security-and-quality-ai-features) to automatically generate fix suggestions for vulnerabilities identified by CodeQL
 
 {{< callout type="info" >}}
-For more detailed guidance per alert type, refer to [Prioritizing Security Alert Remediation](https://wellarchitected.github.com/library/application-security/recommendations/prioritizing-alerts/).
+For more detailed guidance per alert type, refer to [Prioritizing Security Alert Remediation](https://learn.github.com/well-architected/library/application-security/recommendations/prioritizing-alerts/).
 {{< /callout >}}
 
 #### RV.3: Analyze vulnerabilities to identify their root causes

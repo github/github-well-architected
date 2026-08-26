@@ -84,7 +84,7 @@ Before you begin, review these essential resources:
 | [GitHub Enterprise Cloud documentation](https://docs.github.com/enterprise-cloud@latest) | Platform documentation |
 | [GitHub Enterprise Importer](https://docs.github.com/migrations/using-github-enterprise-importer) | Migration tool guide |
 | [Azure DevOps Integration](https://learn.microsoft.com/en-us/azure/devops/cross-service/github-integration) | Integration options |
-| [Well-Architected Framework](https://wellarchitected.github.com/) | Best practices |
+| [Well-Architected Framework](https://learn.github.com/well-architected/) | Best practices |
 
 ## Seeking further assistance
 <!-- The shortcode below will fully populate this section -->
@@ -113,7 +113,7 @@ GEI is recommended for most migrations.
 | Automation | _Supports interactive and scripted migrations_ |
 | Reliability | _Provides error handling and retry mechanisms_ |
 
-> Review [GEI limitations on migrated data.](https://docs.github.com/migrations/using-github-enterprise-importer/migrating-from-azure-devops-to-github-enterprise-cloud/about-migrations-from-azure-devops-to-github-enterprise-cloud#limitations-on-migrated-data)
+> Review [GEI limitations on migrated data.](https://docs.github.com/migrations/ado/understand-migrations-from-azure-devops-to-github#limitations-on-migrated-data)
 
 #### Git-based Migration
 
@@ -174,17 +174,17 @@ Understanding the current environment is fundamental for a successful migration.
 - Document the current permissions and access patterns of repositories.
 - Document all integrations and external tools in use.
 - Document current usage patterns and workflows for transition planning.
-- [Design plans for policy and governance of the target environment](https://wellarchitected.github.com/library/governance/checklist/).
+- [Design plans for policy and governance of the target environment](https://learn.github.com/well-architected/library/governance/checklist/).
 
 ### Target Environment Design and Configuration
 
 Find additional guidance in the [Target Environment Setup guide](./setup).
 
-Making sure that the target GitHub Enterprise Cloud environment is set up for success is critical for a successful migration process. Learn more about GitHub Enterprise Administration and Governance on [GitHub Resources](https://resources.github.com/learn/pathways/administration-governance/essentials/administration-governance-github-enterprise-cloud/) and [GitHub Well Architected](https://wellarchitected.github.com/).
+Making sure that the target GitHub Enterprise Cloud environment is set up for success is critical for a successful migration process. Learn more about GitHub Enterprise Administration and Governance on [Essentials of governance and administration with GitHub Enterprise](https://learn.github.com/well-architected/library/governance/recommendations/governance-administration-essentials/) and [GitHub Well Architected](https://learn.github.com/well-architected/).
 
 - Administrators should plan for learning about GitHub Enterprise Cloud and its features.
   - [Microsoft Learn](https://learn.microsoft.com/en-us/training/paths/github-administration-products/) has options available for self-paced learning.
-- Map source environment repository structures to [target organizations/repositories](https://docs.github.com/migrations/overview/planning-your-migration-to-github#designing-your-organization-structure-for-the-migration-destination).
+- Map source environment repository structures to [target organizations/repositories](https://docs.github.com/migrations/overview/planning-your-migration-to-github#defining-your-origin-and-destination).
 - Plan the structure of the target environment.
 - Plan for handling large files and repositories.
 - Plan for handling release tags and release artifacts.

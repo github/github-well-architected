@@ -662,7 +662,7 @@ Enterprise team membership and cost center ULBs can be managed at scale through 
 
 ### Budget evaluation order
 
-Refer to [Budget evaluation order](https://docs.github.com/enterprise-cloud@latest/copilot/tutorials/budgets/optimizing-your-budget-configuration#budget-evaluation-order)
+Refer to [How billing flows through budgets](https://docs.github.com/enterprise-cloud@latest/copilot/concepts/billing/budgets-for-usage-based-billing#how-billing-flows-through-budgets)
 for the sequence GitHub uses to evaluate AI credit controls and budgets.
 
 Treat the applicable budgets as concurrent guardrails. Remaining capacity at
@@ -682,16 +682,16 @@ budgets to avoid unintended interruptions.
 
 - [AI usage report](https://docs.github.com/billing/reference/billing-reports#ai-usage-report)
 - [Auto model selection](https://docs.github.com/copilot/concepts/models/auto-model-selection)
-- [Budget evaluation order](https://docs.github.com/enterprise-cloud@latest/copilot/tutorials/budgets/optimizing-your-budget-configuration#budget-evaluation-order)
 - [FinOps Framework](https://learn.microsoft.com/en-us/cloud-computing/finops/framework/finops-framework)
 - [GitHub REST API: Billing budgets](https://docs.github.com/enterprise-cloud@latest/rest/billing/budgets?apiVersion=2026-03-10)
+- [How billing flows through budgets](https://docs.github.com/enterprise-cloud@latest/copilot/concepts/billing/budgets-for-usage-based-billing#how-billing-flows-through-budgets)
 - [Included usage controls for cost centers](https://docs.github.com/copilot/concepts/billing/budgets-for-usage-based-billing#included-usage-controls-for-cost-centers)
 - [Models comparison](https://docs.github.com/copilot/reference/ai-models/model-comparison)
 - [Models and pricing for GitHub Copilot](https://docs.github.com/copilot/reference/copilot-billing/models-and-pricing)
 - [Monitoring your GitHub Copilot usage and entitlements](https://docs.github.com/copilot/how-tos/manage-and-track-spending/monitor-ai-usage)
 - [Optimizing your budget configuration](https://docs.github.com/enterprise-cloud@latest/copilot/tutorials/budgets/optimizing-your-budget-configuration)
-- [Prepare for usage-based billing](https://docs.github.com/copilot/how-tos/manage-and-track-spending/prepare-for-usage-based-billing)
 - [Setting an AI credit session limit](https://docs.github.com/copilot/how-tos/copilot-cli/use-copilot-cli/set-session-limit)
 - [Understanding Copilot budgeting](https://support.github.com/product-guides/github-copilot/get-started/understanding-copilot-budgeting)
 - [Update your IDE, client, and extension](https://docs.github.com/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises#update-your-ide-client-and-extension)
+- [Usage-based billing for organizations and enterprises](https://docs.github.com/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises)
 - [Viewing usage in your IDE](https://docs.github.com/copilot/how-tos/manage-and-track-spending/monitor-ai-usage#viewing-usage-in-your-ide)

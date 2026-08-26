@@ -88,7 +88,7 @@ A few key strategies can help you maximize the benefits from your investment in 
 
 ## Assumptions and preconditions
 
-1. [GitHub Enterprise Cloud (GHEC)](https://docs.github.com/en/enterprise-cloud@latest/admin/overview/about-github-enterprise-cloud)
+1. [GitHub Enterprise Cloud (GHEC)](https://docs.github.com/enterprise-cloud@latest/admin/overview/about-github-enterprise-cloud)
 2. Either GitHub Copilot Enterprise or GitHub Copilot Business ([GitHub Copilot plans](https://github.com/features/copilot/plans))
 
 ## Recommended deployment
@@ -101,7 +101,7 @@ An example GitHub Copilot launch plan should include the following minimum eleme
 
 #### Pre-launch
 
-- Set up [GitHub Copilot policies](https://docs.github.com/en/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-copilot-in-your-enterprise) for your Enterprise and/or Organization(s)
+- Set up [GitHub Copilot policies](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-copilot-in-your-enterprise) for your Enterprise and/or Organization(s)
 - Establish a user onboarding process that enables self-service access to GitHub Copilot to reduce manual overhead
 - Communicate the launch date of GitHub Copilot to your organization
 - Create a channel of communication for technical challenges and feedback
@@ -111,7 +111,7 @@ An example GitHub Copilot launch plan should include the following minimum eleme
 #### Launch week (week 0)
 
 - Communicate the opportunity, benefits, and availability of GitHub Copilot to your organization
-- Provide on-demand [training](https://learn.microsoft.com/en-us/training/modules/introduction-to-github-copilot/) and [resources](https://docs.github.com/en/enterprise-cloud@latest/copilot/get-started/quickstart) for users to get started with GitHub Copilot
+- Provide on-demand [training](https://learn.microsoft.com/en-us/training/modules/introduction-to-github-copilot/) and [resources](https://docs.github.com/enterprise-cloud@latest/copilot/get-started/quickstart) for users to get started with GitHub Copilot
 
 #### Post-launch (weeks 1-4)
 
@@ -122,7 +122,7 @@ An example GitHub Copilot launch plan should include the following minimum eleme
 #### Post-launch (weeks 5-8)
 
 - Monitor GitHub Copilot adoption and activity metrics
-- Develop a GitHub Copilot reporting mechanism to track KPIs and derive meaningful insights about GitHub Copilot by using the [Copilot usage metrics API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage-metrics?apiVersion=2022-11-28) and [Copilot User Management API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28)
+- Develop a GitHub Copilot reporting mechanism to track KPIs and derive meaningful insights about GitHub Copilot by using the [Copilot usage metrics API](https://docs.github.com/enterprise-cloud@latest/rest/copilot/copilot-usage-metrics?apiVersion=2022-11-28) and [Copilot User Management API](https://docs.github.com/enterprise-cloud@latest/rest/copilot/copilot-user-management?apiVersion=2022-11-28)
 - Build on your GitHub Copilot Expert Hub with advanced training and resources specific to your organization
 - Gather feedback from users and iterate on your GitHub Copilot program
 
@@ -143,10 +143,10 @@ However, it is impractical to expect every user across large organizations to be
 GitHub offers many free resources to help users get started with GitHub Copilot:
 
 - [GitHub Copilot Fundamentals Course via Microsoft Learn](https://learn.microsoft.com/en-us/training/paths/copilot/)
-- [GitHub Copilot Learning Pathway](https://resources.github.com/learn/pathways/copilot/essentials/essentials-of-github-copilot/)
+- [GitHub Copilot Learning Pathway](https://learn.github.com/learning-pathways/github-copilot)
 - [GitHub Copilot Youtube Playlist](https://www.youtube.com/playlist?list=PL0lo9MOBetEHEHi9h0k_lPn0XZdEeYZDS)
 - [GitHub Copilot Blog Posts](https://github.blog/?s=copilot)
-- [GitHub Copilot Quickstart Documentation](https://docs.github.com/en/enterprise-cloud@latest/copilot/get-started/quickstart)
+- [GitHub Copilot Quickstart Documentation](https://docs.github.com/enterprise-cloud@latest/copilot/get-started/quickstart)
 
 To best prepare your existing team and future hires, consider offering a mix of instructor-led and on-demand Copilot enablement resources.
 
@@ -154,7 +154,7 @@ To best prepare your existing team and future hires, consider offering a mix of 
 
 Building an internal GitHub Copilot community can help users share best practices, success stories, and helpful resources. An internal GitHub Copilot community can also help users connect with others who are using GitHub Copilot in similar ways, and can provide a forum for users to ask questions and share feedback.
 
-A devoted GitHub repository or organization, along with GitHub native features like [GitHub Discussions](https://docs.github.com/en/enterprise-cloud@latest/discussions/quickstart), can be used to denote answers to frequently asked questions, foster collaboration, and collect innovative ideas from your GitHub Copilot community.
+A devoted GitHub repository or organization, along with GitHub native features like [GitHub Discussions](https://docs.github.com/enterprise-cloud@latest/discussions/quickstart), can be used to denote answers to frequently asked questions, foster collaboration, and collect innovative ideas from your GitHub Copilot community.
 
 Be sure to include other helpful resources for your GitHub Copilot community, such as:
 
@@ -184,7 +184,7 @@ GitHub Copilot licenses can be assigned in a few different ways, each with their
 3) Specific teams in an organization
 4) Specific teams in an enterprise
 
-While assigning licenses out of a single organization can simplify license management, it restricts the granularity of Copilot telemetry data from the [Copilot usage metrics API](https://docs.github.com/en/enterprise-cloud@latest/rest/copilot/copilot-usage-metrics?apiVersion=2022-11-28#get-copilot-organization-usage-metrics).
+While assigning licenses out of a single organization can simplify license management, it restricts the granularity of Copilot telemetry data from the [Copilot usage metrics API](https://docs.github.com/enterprise-cloud@latest/rest/copilot/copilot-usage-metrics?apiVersion=2022-11-28#get-copilot-organization-usage-metrics).
 If you would like to track GitHub Copilot usage across your GitHub Organizations, consider assigning licenses to specific teams or individuals in those organizations.
 
 <!-- PLACEHOLDER FOR COPILOT USAGE METRICS API ENDPOINT FOR TEAMS TRADE-OFFS -->
@@ -197,7 +197,7 @@ When a user receives a seat from multiple organizations in the same enterprise, 
 
 When you've enabled GitHub Copilot in an organization or enterprise, you can set up a self-serve workflow to allow users to request licenses.
 This allows you to allocate licenses to people who want them, and means people can get started with Copilot quickly.
-For examples of license automation, see [Setting up a self-serve process for GitHub Copilot licenses](https://docs.github.com/en/enterprise-cloud@latest/copilot/tutorials/roll-out-at-scale/assign-licenses/set-up-self-serve-licenses) and [Reminding inactive users to use their GitHub Copilot license](https://docs.github.com/en/enterprise-cloud@latest/copilot/tutorials/roll-out-at-scale/assign-licenses/remind-inactive-users).
+For examples of license automation, see [Setting up a self-serve process for GitHub Copilot licenses](https://docs.github.com/enterprise-cloud@latest/copilot/tutorials/roll-out-at-scale/assign-licenses/set-up-self-serve-licenses) and [Reminding inactive users to use their GitHub Copilot license](https://docs.github.com/enterprise-cloud@latest/copilot/tutorials/roll-out-at-scale/assign-licenses/remind-inactive-users).
 
 ### Automating license revocation
 
