@@ -250,7 +250,7 @@ With those caveats in mind, here is a practical checklist for teams ready to ado
 - [APM documentation](https://microsoft.github.io/apm/)
 - [APM Governance Guide](https://microsoft.github.io/apm/enterprise/governance-guide/) (detailed policy spec, enforcement points, bypass contract)
 - [APM + gh-aw integration guide](https://microsoft.github.io/apm/integrations/gh-aw/) (the `shared/apm.md` import pattern)
-- [APM review panel reference implementation](https://github.com/microsoft/apm/tree/main/.github/skills/apm-review-panel) (credit: Daniel Meppiel)
+- [APM review panel reference implementation](https://github.com/microsoft/apm/tree/main/.agents/skills/apm-review-panel) (credit: Daniel Meppiel)
 - [gh-aw documentation](https://github.github.com/gh-aw/)
 
 ## Seeking further assistance

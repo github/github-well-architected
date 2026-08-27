@@ -37,10 +37,9 @@ Use this checklist to help guide your migration:
 
 Before you begin, review these migration-specific resources to support your work:
 
-- **GitHub documentation**
-  - [Migrating repositories with GitHub Enterprise Importer](https://docs.github.com/migrations/using-github-enterprise-importer/migrating-repositories-with-github-enterprise-importer/migrating-repositories-with-github-enterprise-importer)
-  - [Reclaiming mannequins](https://docs.github.com/migrations/using-github-enterprise-importer/completing-your-migration-with-github-enterprise-importer/reclaiming-mannequins-for-github-enterprise-importer)
-  - [Troubleshooting your migration](https://docs.github.com/migrations/using-github-enterprise-importer/completing-your-migration-with-github-enterprise-importer/troubleshooting-your-migration-with-github-enterprise-importer)
+- [Migrate your repositories from Azure DevOps to GitHub](https://docs.github.com/migrations/ado/migrate-your-repositories-from-azure-devops-to-github)
+- [Reclaiming mannequins](https://docs.github.com/migrations/using-github-enterprise-importer/completing-your-migration-with-github-enterprise-importer/reclaiming-mannequins-for-github-enterprise-importer)
+- [Troubleshooting your migration](https://docs.github.com/migrations/troubleshooting/troubleshooting-your-migration-with-github-enterprise-importer)
 
 ## Pre-migration checklist
 
@@ -50,12 +49,12 @@ Before you begin, review these migration-specific resources to support your work
 
   | Component | Purpose | Status |
   |-----------|---------|---------|
-  | [Authentication](https://docs.github.com/enterprise-cloud@latest/admin/identity-and-access-management) | Immediate user access | |
+  | [Authentication](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam) | Immediate user access | |
   | [Teams and permissions](https://docs.github.com/organizations/organizing-members-into-teams/about-teams) | Prevent access issues | |
   | [Repository policies](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) | Security compliance | |
-  | [Integration settings](https://docs.github.com/enterprise-cloud@latest/get-started/exploring-integrations/about-using-integrations) | Service continuity | |
+  | [Integration settings](https://docs.github.com/enterprise-cloud@latest/integrations/concepts/about-integrations) | Service continuity | |
   | [Repository rulesets](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) | Code integrity | |
-  | [Audit logging](https://docs.github.com/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/about-the-audit-log-for-your-enterprise) | Compliance tracking | |
+  | [Audit logging](https://docs.github.com/enterprise-cloud@latest/admin/concepts/security-and-compliance/audit-log-for-an-enterprise) | Compliance tracking | |
 
 - [ ] Perform environment validation tests:
   - Confirm user access and permissions using test accounts
@@ -129,7 +128,7 @@ Before you begin, review these migration-specific resources to support your work
 
 ### Repository migration
 
-Execute the migration using GitHub Enterprise Importer. For complete instructions, see [Migrating repositories from Azure DevOps to GitHub Enterprise Cloud](https://docs.github.com/migrations/using-github-enterprise-importer/migrating-from-azure-devops-to-github-enterprise-cloud/migrating-repositories-from-azure-devops-to-github-enterprise-cloud).
+Execute the migration using GitHub Enterprise Importer. For complete instructions, see [Migrating repositories from Azure DevOps to GitHub Enterprise Cloud](https://docs.github.com/migrations/ado/migrate-your-repositories-from-azure-devops-to-github).
 
 ```bash
 # Basic migration command (all parameters are required)
@@ -270,7 +269,7 @@ After successful migration, you'll need to map migrated users (represented by ma
   - Set up pull request validation pipelines
   - Update environment deployment approvals
 
-- [ ] Set up build triggers for [GitHub events](https://docs.github.com/actions/reference/events-that-trigger-workflows)
+- [ ] Set up build triggers for [GitHub events](https://docs.github.com/actions/reference/workflows-and-actions/events-that-trigger-workflows)
   - Configure branch and path filters as needed
   - Define additional triggers based on your workflow requirements
 

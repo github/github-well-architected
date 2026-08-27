@@ -180,7 +180,7 @@ Engineering system success refers to the ability of teams to achieve their engin
 
 Success requires a structured, data-driven approach by iteratively identifying barriers, implementing targeted interventions, and continuously monitoring progress. It emphasizes systems thinking, sustainability, and balancing short-term wins with long-term impacts.
 
-This principle is adapted from the three steps in the [Engineering System Success Playbook](https://resources.github.com/engineering-system-success-playbook/), which guides improvement across four primary engineering system zones: quality, velocity, developer happiness, and business outcomes.
+This principle is adapted from the three steps in the [Engineering System Success Playbook](https://github.com/resources/insights/engineering-system-success-playbook), which guides improvement across four primary engineering system zones: quality, velocity, developer happiness, and business outcomes.
 
 ### Start
 

@@ -100,7 +100,7 @@ This article provides a prescriptive approach to expanding the available context
 Before implementing this solution, the following must be in place:
 
 - **GitHub Enterprise Custom Agents enabled.** Your organization has [GitHub Enterprise Custom Agents](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents) configured and the `.github-private` repository created.
-- **Model Context Protocol (MCP) configured.** The [Model Context Protocol](https://docs.github.com/enterprise-cloud@latest/copilot/concepts/agents/coding-agent/mcp-and-coding-agent) is enabled in your GitHub Enterprise settings, providing access to the GitHub MCP server.
+- **Model Context Protocol (MCP) configured.** The [Model Context Protocol](https://docs.github.com/enterprise-cloud@latest/copilot/concepts/agents/cloud-agent/mcp-and-cloud-agent) is enabled in your GitHub Enterprise settings, providing access to the GitHub MCP server.
 - **Administrative access.** You have admin access to the `.github-private` repository and permissions to configure environment secrets in target repositories.
 - **GitHub Enterprise Cloud.** This solution is designed for GitHub Enterprise Cloud, including EMU and Data Residency environments. It leverages features specific to these platforms.
 - **Understanding of custom agents.** Team members responsible for implementing this solution understand how custom agents are defined and invoked.
@@ -249,7 +249,7 @@ This configuration must be repeated for each repository where you want to use cu
 Test that your custom agent can successfully access the expanded context:
 
 1. Navigate to a repository where you configured the `copilot` environment secret
-2. [Assign a task](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/use-copilot-agents/coding-agent/create-a-pr#asking-copilot-to-create-a-pull-request-from-the-agents-tab-or-panel) to your custom agent using the GitHub Copilot interface
+2. [Assign a task](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/use-copilot-agents/cloud-agent/start-copilot-sessions) to your custom agent using the GitHub Copilot interface
 3. Monitor the agent's activity in the [agent panel](https://github.com/copilot/agents)
 4. Look for log messages indicating **"Get file contents from GitHub"** or similar
 5. Verify the agent's responses reflect the guidance from your knowledge files
@@ -430,10 +430,10 @@ Use kebab-case for filenames: `secure-coding-standards.md`
 Specifically, you may find the following links helpful:
 
 - [Prepare for GitHub Enterprise Custom Agents](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents)
-- [Model Context Protocol (MCP) and Coding Agent](https://docs.github.com/enterprise-cloud@latest/copilot/concepts/agents/coding-agent/mcp-and-coding-agent)
-- [Creating a personal access token](https://docs.github.com/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-- [Using environments for deployment](https://docs.github.com/enterprise-cloud@latest/actions/deployment/targeting-different-environments/using-environments-for-deployment)
-- [Customizing the built-in GitHub MCP server](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp#customizing-the-built-in-github-mcp-server)
+- [Model Context Protocol (MCP) and GitHub Copilot cloud agent](https://docs.github.com/enterprise-cloud@latest/copilot/concepts/agents/cloud-agent/mcp-and-cloud-agent)
+- [Managing your personal access tokens](https://docs.github.com/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+- [Managing environments for deployment](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments)
+- [Customizing the built-in GitHub MCP server](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/copilot-on-github/customize-copilot/configure-mcp-servers#customizing-the-built-in-github-mcp-server)
 
 ### External Resources
 

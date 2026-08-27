@@ -81,7 +81,7 @@ github:
 
 ## Scenario overview
 
-Agents — [Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent), [Copilot code review agent](https://docs.github.com/en/copilot/concepts/agents/code-review), and third-party agents like [Anthropic Claude](https://docs.github.com/en/copilot/concepts/agents/anthropic-claude) and [OpenAI Codex](https://docs.github.com/en/copilot/concepts/agents/openai-codex) — are becoming significant contributors to enterprise codebases. GitHub lets teams assign tasks to agents from issues, PRs, and Visual Studio Code in a single workflow. In many organizations, agents already rank among the top contributors by pull request volume.
+Agents — [Copilot cloud agent](https://docs.github.com/copilot/concepts/agents/cloud-agent/about-cloud-agent), [Copilot code review agent](https://docs.github.com/copilot/concepts/agents/code-review), and third-party agents like [Anthropic Claude](https://docs.github.com/copilot/concepts/agents/anthropic-claude) and [OpenAI Codex](https://docs.github.com/copilot/concepts/agents/openai-codex) — are becoming significant contributors to enterprise codebases. GitHub lets teams assign tasks to agents from issues, PRs, and Visual Studio Code in a single workflow. In many organizations, agents already rank among the top contributors by pull request volume.
 
 This introduces new governance challenges. Agents act faster and at broader scale than any individual. They interact with external services through MCP, use skills to extend their capabilities, and execute code in environments that may hold secrets and infrastructure triggers. A single misconfigured enterprise policy or shared agent definition can affect multiple repositories quickly.
 
@@ -177,7 +177,7 @@ For enterprises managing multiple business units, the question is not _whether_ 
 
 - Your enterprise uses a **GitHub Enterprise Cloud** environment.
 - You have **enterprise owner** access to configure policies that cascade to organizations.
-- **GitHub Copilot Business or Enterprise** licenses are assigned. See [comparing Copilot plans](https://docs.github.com/en/copilot/get-started/plans#comparing-copilot-plans) for current feature availability by plan.
+- **GitHub Copilot Business or Enterprise** licenses are assigned. See [Copilot plans overview](https://docs.github.com/copilot/get-started/plans#copilot-plans-overview) for current feature availability by plan.
 - **GitHub Actions** is enabled for your enterprise and organizations. The cloud agent runs on Actions runners and consumes Actions minutes.
 - You have a **SIEM platform** (e.g., Splunk, Microsoft Sentinel, Datadog) capable of ingesting GitHub audit log streams.
 - Your enterprise already has [foundational code security practices](../../application-security/checklist) in place (CI checks, pull review, secret scanning). Agent governance is an additive layer, not a replacement.
@@ -190,16 +190,16 @@ For enterprises managing multiple business units, the question is not _whether_ 
 
 Navigate to your enterprise settings and click **AI controls**. This centralized pane has three policy surfaces in the sidebar: **Agents**, **Copilot**, and **MCP**. Configure each:
 
-#### Agents → [Copilot cloud agent](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/manage-copilot-coding-agent)
+#### Agents → [Copilot cloud agent](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/enable-copilot-cloud-agent)
 
 - In most enterprises, start with "Let organizations decide" and enable for a pilot group first.
 - Configure an organization for enterprise custom agents. See section [enterprise custom agents](#enterprise-custom-agents).
 
 {{< callout type="info" >}}
-Third-party agents have access to the same repositories where the Copilot agent is enabled. See [Enabling or disabling third-party cloud agents](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/manage-policies#enabling-or-disabling-third-party-coding-agents-in-your-repositories).
+Third-party agents have access to the same repositories where the Copilot agent is enabled. See [Enabling or disabling third-party cloud agents](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-organization/manage-policies#enabling-or-disabling-third-party-coding-agents-in-your-repositories).
 {{< /callout >}}
 
-#### Copilot → [Policies](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-enterprise-policies)
+#### Copilot → [Policies](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-enterprise-policies)
 
 - Set model access enforcement. Explicitly select which models are allowed. Review the allowlist regularly — enable newly GA models after any required review, and evaluate models' behaviors and use cases to ensure they meet your organization's needs. Deprecated models may be removed; ensure newer or alternative models are enabled before retirement dates.
 - Enable all Copilot capabilities. Toggle off only if you have a specific requirement to restrict a capability.
@@ -216,13 +216,13 @@ Consistent agent behavior requires layered configuration, and over-centralizing 
 
 #### Repository custom instructions
 
-Create a library of shared [custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions) starters. Publish these in a shared repository for teams to reference and consume for their own repository. The following types are supported:
+Create a library of shared [custom instructions](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions) starters. Publish these in a shared repository for teams to reference and consume for their own repository. The following types are supported:
 
 | Type | File | Scope |
 |------|------|-------|
 | Repository-wide | `.github/copilot-instructions.md` | All requests in the repository |
 | Path-specific | `.github/instructions/NAME.instructions.md` | Files matching the `applyTo` glob pattern |
-| Agent-specific | `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`) | See [supported agent-specific file locations](https://docs.github.com/en/copilot/reference/custom-instructions-support) |
+| Agent-specific | `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`) | See [supported agent-specific file locations](https://docs.github.com/copilot/reference/custom-instructions-support) |
 | Skill definition | `SKILL.md` | Provides specialized domain knowledge and workflows for agents |
 
 For example, your instructions might include:
@@ -242,24 +242,24 @@ Support for agent-specific instruction files (e.g., `AGENTS.md`, `CLAUDE.md`, `G
 
 #### Organization custom instructions
 
-Use [organization custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-organization-instructions) to define a baseline prompt for all users in an organization. Organization owners can configure this in **Organization settings → Copilot → Custom instructions**. Note that organization instructions currently apply to Copilot cloud agent and code review agent on GitHub.com.
+Use [organization custom instructions](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-organization-instructions) to define a baseline prompt for all users in an organization. Organization owners can configure this in **Organization settings → Copilot → Custom instructions**. Note that organization instructions currently apply to Copilot cloud agent and code review agent on GitHub.com.
 
 Treat these instructions as an organizational baseline — keep them narrow and focused on specific, non-negotiable standards (e.g., security, compliance). Broad or generic org-level instructions add context to every request, consuming tokens without improving results. Layer repository and path-specific instructions for team-level controls where the real effectiveness gains happen.
 
 #### Enterprise custom agents
 
-Define enterprise-level agents to deliver consistent and repeatable expertise, behavior, and tool access across all organizations. [Setup enterprise custom agents](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents) by creating a `.github-private` repository in a designated organization. Then:
+Define enterprise-level agents to deliver consistent and repeatable expertise, behavior, and tool access across all organizations. [Setup enterprise custom agents](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents) by creating a `.github-private` repository in a designated organization. Then:
 
 1. Navigate to enterprise → **AI controls** → Custom agents section.
 2. Select the source organization containing your `.github-private` repository.
 3. Click **Create ruleset** in the "Protect agent files using rulesets" section.
 
-Consider delegating day-to-day agent management to a team of AI managers while maintaining enterprise-owner control over security-sensitive configurations. See [Establish AI managers](https://docs.github.com/en/copilot/tutorials/roll-out-at-scale/establish-ai-managers).
+Consider delegating day-to-day agent management to a team of AI managers while maintaining enterprise-owner control over security-sensitive configurations. See [Establish AI managers](https://docs.github.com/copilot/tutorials/roll-out-at-scale/govern-at-scale/establish-ai-managers).
 
 Note that agents defined in `.github-private` are org-scoped by default. To make them available enterprise-wide, configure the source organization in enterprise AI controls. Some organizations may intentionally keep certain agents org-scoped rather than promoting them enterprise-wide.
 
 {{< callout type="info" >}}
-Before deploying a custom agent enterprise-wide, test it in a sandbox repository or with a limited user group. Validate its behavior, then expand. See [Preparing custom agents](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents) for rollout guidance.
+Before deploying a custom agent enterprise-wide, test it in a sandbox repository or with a limited user group. Validate its behavior, then expand. See [Preparing custom agents](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents) for rollout guidance.
 {{< /callout >}}
 
 #### MCP server governance
@@ -268,40 +268,40 @@ The [GitHub MCP Registry](https://github.com/mcp) provides a curated list of com
 
 1. Maintain an internal list of reviewed and approved MCP servers with their endpoints, allowed scopes, and review status.
 2. Use [rulesets](./managing-repositories-at-scale/rulesets-best-practices) to protect MCP configuration files (`.github/copilot/mcp.json` or `.mcp.json`) in repositories.
-3. [Configure an MCP registry](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry) to curate a discoverable set of pre-approved servers. If your policy requires strict control, set the [MCP allowlist policy](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-server-access) to "Registry only." For enterprises where teams need to experiment, use "Allow all" with rulesets on `.github/copilot/mcp.json` and `.mcp.json` (step 2) so changes require review.
+3. [Configure an MCP registry](https://docs.github.com/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry) to curate a discoverable set of pre-approved servers. If your policy requires strict control, set the [MCP allowlist policy](https://docs.github.com/copilot/how-tos/administer-copilot/manage-mcp-usage/restrict-based-on-registry) to "Registry only." For enterprises where teams need to experiment, use "Allow all" with rulesets on `.github/copilot/mcp.json` and `.mcp.json` (step 2) so changes require review.
 
-Registry enforcement matches on server name, can be bypassed, and [does not apply to the cloud agent](https://docs.github.com/en/copilot/concepts/mcp-management#supported-surfaces) — treat it as a governance signal and discoverability layer for IDEs, not a hard security boundary. Rulesets on `mcp.json` (step 2) are the primary technical control against unauthorized MCP endpoints across all surfaces except for cloud agent.
+Registry enforcement matches on server name, can be bypassed, and [does not apply to the cloud agent](https://docs.github.com/copilot/reference/supported-surfaces-for-policies) — treat it as a governance signal and discoverability layer for IDEs, not a hard security boundary. Rulesets on `mcp.json` (step 2) are the primary technical control against unauthorized MCP endpoints across all surfaces except for cloud agent.
 
 {{< callout type="warning" >}}
-MCP registry and allowlist enforcement [does not cover all Copilot surfaces](https://docs.github.com/en/copilot/concepts/mcp-management#supported-surfaces). It applies to IDEs (e.g., Visual Studio Code, JetBrains) but **not** to the cloud agent. The cloud agent firewall also [does not apply to MCP servers](#cloud-agent).
+MCP registry and allowlist enforcement [does not cover all Copilot surfaces](https://docs.github.com/copilot/reference/supported-surfaces-for-policies). It applies to IDEs (e.g., Visual Studio Code, JetBrains) but **not** to the cloud agent. The cloud agent firewall also [does not apply to MCP servers](#cloud-agent).
 {{< /callout >}}
 
 #### Agent environment standardization
 
-[Customize the agent's development environment](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-environment) by creating a `.github/workflows/copilot-setup-steps.yml` in each repository. This workflow runs before the agent starts work, giving you deterministic control over the agent's environment. For runner selection, organization admins can set defaults centrally rather than configuring per-repository.
+[Configure the development environment](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/customize-the-agent-environment) by creating a `.github/workflows/copilot-setup-steps.yml` in each repository. This workflow runs before the agent starts work, giving you deterministic control over the agent's environment. For runner selection, organization admins can set defaults centrally rather than configuring per-repository.
 
-For additional runtime customization, [hooks](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-hooks) let you inject shell commands at key points during agent execution (e.g., formatting, linting, or logging).
+For additional runtime customization, [hooks](https://docs.github.com/copilot/concepts/agents/hooks) let you inject shell commands at key points during agent execution (e.g., formatting, linting, or logging).
 
 For consistency across similar repositories, share `copilot-setup-steps.yml` examples with company-specific tooling by application type that teams can adapt. Note that reusable workflows are not supported for this file, and composite actions may help share common setup steps. Each repository maintains its own copy. Protect this file with rulesets so changes require review. Organization admins can also [set a default runner and optionally lock it](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-organization/configure-runner-for-coding-agent) so the agent runs on a consistent runner across all repositories.
 
 #### Use ephemeral runners for agent execution
 
-Use [GitHub-hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners) for agent execution. Each job gets a fresh VM that is destroyed after the run, eliminating persistent state and credential leakage between sessions. If you require self-hosted runners, make sure they are ephemeral.
+Use [GitHub-hosted runners](https://docs.github.com/actions/concepts/runners/github-hosted-runners) for agent execution. Each job gets a fresh VM that is destroyed after the run, eliminating persistent state and credential leakage between sessions. If you require self-hosted runners, make sure they are ephemeral.
 
 ### 3. Enforce security controls and human review gates
 
 #### Cloud agent
 
-Copilot cloud agent has [built-in security protections](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent#built-in-security-protections). In the repository's settings, configure additional controls:
+Copilot cloud agent has [built-in security protections](https://docs.github.com/copilot/concepts/agents/cloud-agent/risks-and-mitigations). In the repository's settings, configure additional controls:
 
-- **Firewall.** The agent firewall is enabled by default, restricting the agent's internet access to an allowlist. Organization admins can [manage firewall settings across all repositories](https://docs.github.com/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-firewall), enforcing the firewall org-wide so individual repositories cannot disable it, controlling the recommended allowlist, and adding org-wide custom allowlist entries.
-- **Recommended allowlist.** Enabled by default, this permits access to OS package repositories, container registries, language package registries, certificate authorities, and other common development dependencies — not only GitHub services. Review the [full list](https://docs.github.com/en/copilot/reference/copilot-allowlist-reference#copilot-cloud-agent-recommended-allowlist). Customize the allowlist to include any internal registries or services your agents need.
+- **Firewall.** The agent firewall is enabled by default, restricting the agent's internet access to an allowlist. Organization admins can [manage firewall settings across all repositories](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall), enforcing the firewall org-wide so individual repositories cannot disable it, controlling the recommended allowlist, and adding org-wide custom allowlist entries.
+- **Recommended allowlist.** Enabled by default, this permits access to OS package repositories, container registries, language package registries, certificate authorities, and other common development dependencies — not only GitHub services. Review the [full list](https://docs.github.com/copilot/reference/copilot-allowlist-reference#copilot-cloud-agent-recommended-allowlist). Customize the allowlist to include any internal registries or services your agents need.
 
 {{< callout type="warning" >}}
-The cloud agent firewall is limited to [processes started by the agent via its Bash tool](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-firewall#limitations). It does not apply to MCP servers or processes started in agent environment setup. Treat it as one layer of defense, not a comprehensive network boundary.
+The cloud agent firewall is limited to [processes started by the agent via its Bash tool](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall#limitations). It does not apply to MCP servers or processes started in agent environment setup. Treat it as one layer of defense, not a comprehensive network boundary.
 {{< /callout >}}
 
-- **Validation tools.** Configure cloud agent to automatically run [code scanning, secret scanning, dependency checks, and Copilot code review](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/configuring-agent-settings) on its changes.
+- **Validation tools.** Configure cloud agent to automatically run [built-in code quality and security validation tools](https://docs.github.com/copilot/how-tos/use-copilot-agents/cloud-agent/configuring-agent-settings) on its changes.
 
 #### Code review agent
 
@@ -320,13 +320,13 @@ applyTo: '**'
 - Suggest improvements for naming, readability, and minor convention deviations — but do not block merge.
 ```
 
-See [Use custom instructions](https://docs.github.com/en/copilot/tutorials/use-custom-instructions) and [github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main/instructions) examples.
+See [Use custom instructions for Copilot code review](https://docs.github.com/copilot/tutorials/customize-code-review) and [github/awesome-copilot](https://github.com/github/awesome-copilot/tree/main/instructions) examples.
 
 #### Protect agentic primitive files with rulesets
 
 Agent configuration files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md`), skill configuration files (`SKILL.md`), MCP configuration files (`mcp.json`), and the `.github-private` repository for enterprise custom agents define what agents can do and which tools they can access. Unauthorized modifications can change agent behaviors.
 
-Apply [rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) to these files so changes require human review before taking effect.
+Apply [rulesets](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) to these files so changes require human review before taking effect.
 
 ### 4. Build agent observability and audit pipeline
 
@@ -334,7 +334,7 @@ Enterprise owners have two complementary surfaces for monitoring agent activity:
 
 #### Audit log streaming: for retention, correlation, and anomaly detection
 
-[Stream audit logs](https://docs.github.com/en/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise) to your SIEM platform for long-term retention and correlation. Audit logs capture specific agent and management activities — session creation, commits, PR activity, and policy changes — not the step-by-step session transcript. [Agentic audit log events](https://docs.github.com/en/copilot/reference/agentic-audit-log-events) such as `action`, `actor_is_agent`, `agent_session_id`, and `user` are the key fields for correlations and anomaly detection.
+[Stream audit logs](https://docs.github.com/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise) to your SIEM platform for long-term retention and correlation. Audit logs capture specific agent and management activities — session creation, commits, PR activity, and policy changes — not the step-by-step session transcript. [Audit log events for agents](https://docs.github.com/copilot/reference/enterprise-administrators/agentic-audit-log-events) such as `action`, `actor_is_agent`, `agent_session_id`, and `user` are the key fields for correlations and anomaly detection.
 
 **What to monitor in your SIEM:**
 
@@ -342,7 +342,7 @@ Enterprise owners have two complementary surfaces for monitoring agent activity:
 |--------|-----------------------|----------------|
 | Agent sessions per user per day | `agent_session_id`, `user` | Detect anomalous usage or compromised accounts |
 | MCP policy changes | `copilot.mcp_*` actions | Identify unauthorized changes to approved tool integrations |
-| Agent changes to high-risk files (workflows, MCP config, agent instructions) | `git.push`, `pull_request.*` with `actor_is_agent` | High-risk modifications that could affect CI/CD pipelines or agent behavior. Correlate audit events with [webhook payloads](https://docs.github.com/en/webhooks/webhook-events-and-payloads#push) for file-level detail |
+| Agent changes to high-risk files (workflows, MCP config, agent instructions) | `git.push`, `pull_request.*` with `actor_is_agent` | High-risk modifications that could affect CI/CD pipelines or agent behavior. Correlate audit events with [webhook payloads](https://docs.github.com/webhooks/webhook-events-and-payloads#push) for file-level detail |
 | Changes to environment secrets used by agents | `environment.*` actions | Could alter what agents can access or authenticate to |
 | Bypass events on rulesets | `repository_ruleset.*` with `actor_is_agent` | Detect attempts to circumvent governance controls |
 
@@ -354,7 +354,7 @@ Session transcripts give you what audit logs cannot: the agent's reasoning, the 
 - **Spot-check agent sessions.** Schedule periodic transcript reviews for repos that hold secrets, infrastructure-as-code, or CI/CD workflows. Look for patterns: agents modifying files outside their scope, retrying failed commands in loops, or ignoring custom instruction guardrails.
 - **Validate new configurations.** After changing custom instructions, `copilot-setup-steps.yml`, or MCP server access, review a few transcripts to confirm agents behave as expected.
 
-Enterprise administrators can review sessions from the last 28 days in **AI controls → Agent sessions**. Each repository also has an **Agents** tab where maintainers can watch past and current sessions in progress. See [Monitoring agentic activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity).
+Enterprise administrators can review sessions from the last 28 days in **AI controls → Agent sessions**. Each repository also has an **Agents** tab where maintainers can watch past and current sessions in progress. See [Monitoring agentic activity](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity).
 
 {{< callout type="info" >}}
 Session transcripts are available only through the GitHub UI — they cannot be streamed to a SIEM or retrieved via API.
@@ -364,12 +364,12 @@ Agent-generated code, custom instructions, and MCP configurations should be revi
 
 ### 5. Manage agent-related costs
 
-Copilot agents consume both [GitHub Actions minutes and premium requests](https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-copilot/about-billing-for-github-copilot#allowance-usage-for-copilot-coding-agent). Standard runners consume your monthly Actions allowance at no additional cost; larger runners incur a per-minute charge. Agent sessions can run for up to 59 minutes. Without spending limits, agent-driven spending can accumulate quickly and be difficult to attribute to specific cost owners.
+Copilot agents consume both [GitHub Actions minutes and AI credits](https://docs.github.com/copilot/concepts/agents/cloud-agent/about-cloud-agent#copilot-cloud-agent-usage-costs). Standard runners consume your monthly Actions allowance at no additional cost; larger runners incur a per-minute charge. Agent sessions can run for up to 59 minutes. Without spending limits, agent-driven spending can accumulate quickly and be difficult to attribute to specific cost owners.
 
 **What makes agent cost governance different:**
 
 - **Actions minutes add up.** Each agent session consumes GitHub Actions minutes for the duration of the agent's work. Monitor Actions usage to ensure agent workloads do not impact your CI/CD capacity.
-- **Model selection amplifies cost.** Different models have different [request multipliers](https://docs.github.com/en/copilot/concepts/billing/copilot-requests). Factor model choice into your cost governance.
+- **Model selection amplifies cost.** Different models have different [pricing](https://docs.github.com/copilot/reference/copilot-billing/models-and-pricing). Factor model choice into your cost governance.
 
 For detailed guidance on budget configuration, cost center allocation, user-level budgets, and cost attribution — see [Managing AI credits with FinOps principles](./managing-ai-credits).
 
@@ -418,26 +418,26 @@ Review quality depends heavily on custom instructions. Without instructions, rev
 
 ### External resources
 
-- [Managing enterprise Copilot policies](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-enterprise-policies) — model access enforcement and capability toggles
-- [Establish AI managers](https://docs.github.com/en/copilot/tutorials/roll-out-at-scale/establish-ai-managers) — delegating day-to-day agent management with custom roles
-- [Adding repository custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions) — `.github/copilot-instructions.md` and path-specific instruction files
-- [Adding organization custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-organization-instructions) — baseline prompts for all users in an organization
-- [Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support) — which agent-specific instruction are supported in which environments
-- [Managing Copilot coding agent for your enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/manage-copilot-coding-agent) — enable or disable the cloud agent and configure third-party agent defaults
-- [Preparing custom agents for your enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents) — setting up `.github-private` and rolling out enterprise custom agents
+- [Managing enterprise Copilot policies](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-enterprise-policies) — model access enforcement and capability toggles
+- [Establish AI managers](https://docs.github.com/copilot/tutorials/roll-out-at-scale/govern-at-scale/establish-ai-managers) — delegating day-to-day agent management with custom roles
+- [Adding repository custom instructions](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions) — `.github/copilot-instructions.md` and path-specific instruction files
+- [Adding organization custom instructions](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-organization-instructions) — baseline prompts for all users in an organization
+- [Support for different types of custom instructions](https://docs.github.com/copilot/reference/custom-instructions-support) — which agent-specific instruction are supported in which environments
+- [Enabling Copilot cloud agent in your enterprise](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/enable-copilot-cloud-agent) — enable or disable the cloud agent and configure third-party agent defaults
+- [Preparing custom agents for your enterprise](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/prepare-for-custom-agents) — setting up `.github-private` and rolling out enterprise custom agents
 - [github/awesome-copilot](https://github.com/github/awesome-copilot) — curated collection of custom instructions, agents, and Copilot configuration examples
-- [About MCP and Copilot](https://docs.github.com/en/copilot/concepts/context/mcp) — conceptual overview of Model Context Protocol integration in GitHub Copilot
-- [Configure an MCP registry](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry) — curating a discoverable set of pre-approved MCP servers
-- [Configure MCP server access](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-server-access) — allowlist policies for MCP server usage
+- [About MCP and Copilot](https://docs.github.com/copilot/concepts/context/mcp) — conceptual overview of Model Context Protocol integration in GitHub Copilot
+- [Configure an MCP registry](https://docs.github.com/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry) — curating a discoverable set of pre-approved MCP servers
+- [Restrict MCP server access to a custom registry](https://docs.github.com/copilot/how-tos/administer-copilot/manage-mcp-usage/restrict-based-on-registry) — allowlist policies for MCP server usage
 - [Model Context Protocol specification](https://modelcontextprotocol.io/) — protocol documentation for understanding MCP capabilities and security considerations
 - [GitHub MCP Server Policies and Governance](https://github.com/github/github-mcp-server/blob/main/docs/policies-and-governance.md) — control mechanisms for the GitHub MCP server in third-party host applications
-- [About Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent) — capabilities, built-in security protections, and operational model of the cloud agent
-- [Copilot code review agent](https://docs.github.com/en/copilot/concepts/agents/code-review) — automatic and on-demand code review powered by Copilot
-- [Customizing the cloud agent environment](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-environment) — configuring `copilot-setup-steps.yml` to standardize agent runtime environments
-- [About hooks](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-hooks) — injecting shell commands at key points during agent execution
-- [Customizing the agent firewall](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-firewall) — managing the agent network allowlist at org and repo level
-- [Configuring agent settings](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/configuring-agent-settings) — enabling code scanning, secret scanning, and dependency checks on agent changes
-- [Monitoring agentic activity](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity) — enterprise session monitoring UI for real-time agent oversight
-- [Agentic audit log events](https://docs.github.com/en/copilot/reference/agentic-audit-log-events) — reference for agent-specific audit log fields used for SIEM correlation and anomaly detection
-- [Streaming the audit log for your enterprise](https://docs.github.com/en/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise) — configuring audit log streaming to external SIEM platforms
-- [Managing your GitHub Copilot usage and spending](https://docs.github.com/en/billing/using-the-new-billing-platform/managing-billing-for-your-products/managing-your-github-copilot-usage-and-spending) — budget configuration, spending limits, and alerting thresholds in the billing platform
+- [About Copilot cloud agent](https://docs.github.com/copilot/concepts/agents/cloud-agent/about-cloud-agent) — capabilities, built-in security protections, and operational model of the cloud agent
+- [Copilot code review agent](https://docs.github.com/copilot/concepts/agents/code-review) — automatic and on-demand code review powered by Copilot
+- [Configure the development environment](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/customize-the-agent-environment) — configuring `copilot-setup-steps.yml` to standardize agent runtime environments
+- [About hooks](https://docs.github.com/copilot/concepts/agents/hooks) — injecting shell commands at key points during agent execution
+- [Customizing the agent firewall](https://docs.github.com/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall) — managing the agent network allowlist at org and repo level
+- [Configuring agent settings](https://docs.github.com/copilot/how-tos/use-copilot-agents/cloud-agent/configuring-agent-settings) — enabling built-in code quality and security validation tools on agent changes
+- [Monitoring agentic activity](https://docs.github.com/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/monitor-agentic-activity) — enterprise session monitoring UI for real-time agent oversight
+- [Audit log events for agents](https://docs.github.com/copilot/reference/enterprise-administrators/agentic-audit-log-events) — reference for agent-specific audit log fields used for SIEM correlation and anomaly detection
+- [Streaming the audit log for your enterprise](https://docs.github.com/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise) — configuring audit log streaming to external SIEM platforms
+- [Manage and monitor spending for GitHub Copilot](https://docs.github.com/copilot/how-tos/manage-and-track-spending) — tracking Copilot usage, AI credit consumption, and company spending

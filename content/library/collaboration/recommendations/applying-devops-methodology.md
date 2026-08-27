@@ -70,7 +70,7 @@ github:
   - partners
 ---
 
-DevOps methodology revolutionizes how development and operations teams work together to deliver software quickly and reliably. This article delves into the key principles and evolving roles within DevOps, helping organizations enhance productivity and collaboration. For a deeper dive into DevOps practices and resources, be sure to check out the extensive materials available on [GitHub's DevOps Resources](https://github.com/resources/articles/devops).
+DevOps methodology revolutionizes how development and operations teams work together to deliver software quickly and reliably. This article delves into the key principles and evolving roles within DevOps, helping organizations enhance productivity and collaboration. For a deeper dive into DevOps practices and resources, be sure to check out the extensive materials available on [GitHub's DevOps resources](https://github.com/resources/articles?topic=devops).
 
 ## What is DevOps?
 
@@ -135,6 +135,6 @@ By closing the development-operations gap and fostering better collaboration, or
 <!-- Optionally add any external resources that are related to your article or that could provide additional information or context for your readers.
 This could include links to tutorials, blog posts, or other articles. -->
 
-- [GitHub's DevOps Resources](https://github.com/resources/articles/devops)
+- [GitHub's DevOps resources](https://github.com/resources/articles?topic=devops)
 - [What is DevOps? A guide to common methods and misconceptions](https://github.blog/enterprise-software/devops/devops-definition/)
 - [The evolving role of operations in DevOps](https://github.blog/enterprise-software/devops/the-evolving-role-of-operations-in-devops/)

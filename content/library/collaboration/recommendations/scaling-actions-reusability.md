@@ -191,7 +191,7 @@ Establishing a dedicated GitHub organization for shared workflows and actions pr
 
 - Set up branch rulesets to enforce code review and CI checks
   {{< callout type="info" >}}
-  GitHub branch rulesets provide more flexible and powerful options for protecting branches than the legacy branch protection rules. For detailed implementation instructions, refer to the [GitHub documentation on branch rulesets](https://docs.github.com/en/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets).
+  GitHub branch rulesets provide more flexible and powerful options for protecting branches than the legacy branch protection rules. For detailed implementation instructions, refer to the [GitHub documentation on branch rulesets](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets).
   {{< /callout >}}
   Key ruleset configurations to consider:
   - Require status checks to pass before merging
@@ -225,7 +225,7 @@ Establishing a dedicated GitHub organization for shared workflows and actions pr
   ```
 
   {{< callout type="info" >}}
-  For a complete reference on Dependabot configuration options, including advanced settings like version constraints, commit message formatting, and custom labels, refer to the [GitHub Dependabot configuration documentation](https://docs.github.com/en/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/dependabot-options-reference).
+  For a complete reference on Dependabot configuration options, including advanced settings like version constraints, commit message formatting, and custom labels, refer to the [GitHub Dependabot configuration documentation](https://docs.github.com/enterprise-cloud@latest/code-security/reference/supply-chain-security/dependabot-options-reference).
   {{< /callout >}}
 
 1. **Discoverability Features**
@@ -235,7 +235,7 @@ Establishing a dedicated GitHub organization for shared workflows and actions pr
    - Configure custom repository properties to enhance filtering and discovery
 
    {{< callout type="info" >}}
-   Custom repository properties allow you to define organization-specific metadata that can be used for filtering repositories in the repository search interface. For detailed implementation instructions, refer to the [GitHub documentation on custom properties](https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-organization-settings/managing-custom-properties-for-repositories-in-your-organization).
+   Custom repository properties allow you to define organization-specific metadata that can be used for filtering repositories in the repository search interface. For detailed implementation instructions, refer to the [GitHub documentation on custom properties](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/managing-custom-properties-for-repositories-in-your-organization).
    {{< /callout >}}
 
    Example custom properties to consider:
@@ -578,7 +578,6 @@ priate mitigation strategies, you can maximize the benefits of centralized workf
 
 ### Additional Resources
 
-- [GitHub Actions: Reusing workflows](https://docs.github.com/en/enterprise-cloud@latest/actions/sharing-automations/reusing-workflows) - Official documentation on workflow reusability
-- [Creating composite actions](https://docs.github.com/en/enterprise-cloud@latest/actions/creating-actions/creating-a-composite-action) - Guide on building composite actions
-- [Innersource principles for shared workflows](https://resources.github.com/innersource/fundamentals/) - GitHub's guide to innersource practices
-- [Security best practices for GitHub Actions](https://docs.github.com/en/enterprise-cloud@latest/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions) - Essential security considerations
+- [GitHub Actions: Reusing workflows](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/reuse-automations/reuse-workflows) - Official documentation on workflow reusability
+- [Creating a composite action](https://docs.github.com/enterprise-cloud@latest/actions/tutorials/create-actions/create-a-composite-action) - Guide on building composite actions
+- [Secure use reference for GitHub Actions](https://docs.github.com/enterprise-cloud@latest/actions/reference/security/secure-use) - Essential security considerations
