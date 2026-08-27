@@ -39,7 +39,7 @@ Organizations should establish a comprehensive measurement strategy that capture
 
 Effective implementation requires that users receive appropriate access to GenAI tools governed by enterprise guardrails. Track metrics such as license activation rate and onboarding completion.
 
-For Copilot, [GitHub Enterprise settings](https://docs.github.com/en/enterprise-cloud@latest/copilot/managing-copilot/managing-copilot-for-your-enterprise/managing-policies-and-features-for-copilot-in-your-enterprise) helps Copilot stay compliant with organizational policies, and the [User Management REST API](https://docs.github.com/en/rest/copilot/copilot-user-management?apiVersion=2022-11-28) provides quantitative tracking of license activations.
+For Copilot, [GitHub Enterprise settings](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-enterprise-policies) helps Copilot stay compliant with organizational policies, and the [User Management REST API](https://docs.github.com/rest/copilot/copilot-user-management?apiVersion=2022-11-28) provides quantitative tracking of license activations.
 
 **Implementation Control Checklist:**
 
@@ -59,7 +59,7 @@ Track feature utilization and engagement patterns through both qualitative and q
 We measure by asking for users' direct feedback on GenAI impact on their professional efficiency. This may come in the form of focus sessions, 1:1s, structured questionnaires or polls, and incorporating into existing [developer experience surveys](https://github.com/github/copilot-survey-engine).
 
 **Quantitative Measurement:**
-Track feature utilization and engagement patterns to identify adoption trends and potential barriers. For Copilot, the [Metrics REST API](https://docs.github.com/en/rest/copilot/copilot-metrics?apiVersion=2022-11-28) provides detailed insights on usage patterns, allowing organizations to monitor and analyze adoption pattern:
+Track feature utilization and engagement patterns to identify adoption trends and potential barriers. For Copilot, the [Metrics REST API](https://docs.github.com/rest/copilot/copilot-usage-metrics?apiVersion=2026-03-10) provides detailed insights on usage patterns, allowing organizations to monitor and analyze adoption pattern:
 
 - Code suggestion and acceptance rate
 - IDE-specific usage
@@ -108,4 +108,4 @@ Common business challenges where Copilot may assist:
 <!-- Optionally add any external resources that are related to your article or that could provide additional information or context for your readers.
 This could include links to tutorials, blog posts, or other articles. -->
 
-Read more about measuring GenAI impact in the [Engineering System Success Playbook](https://resources.github.com/engineering-system-success-playbook/).
+Read more about measuring GenAI impact in the [Engineering System Success Playbook](https://github.com/resources/insights/engineering-system-success-playbook).

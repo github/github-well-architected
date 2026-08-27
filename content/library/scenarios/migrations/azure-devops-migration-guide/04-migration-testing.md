@@ -41,12 +41,8 @@ Use this checklist to help guide your migration testing:
 
 Before you begin, review these resources to support your migration testing:
 
-- **GitHub documentation**
-  - [Performing a test migration](https://docs.github.com/migrations/using-github-enterprise-importer/preparing-to-migrate-with-github-enterprise-importer/performing-a-test-migration-with-github-enterprise-importer)
-  - [Troubleshooting migrations](https://docs.github.com/migrations/using-github-enterprise-importer/completing-your-migration-with-github-enterprise-importer/troubleshooting-your-migration-with-github-enterprise-importer)
-- **Well-Architected Framework**
-  - [Testing strategy](https://wellarchitected.github.com/reliability/testing/)
-  - [Risk management](https://wellarchitected.github.com/reliability/risk-mitigation/)
+- [Performing a dry run migration for every repository](https://docs.github.com/migrations/overview/planning-your-migration-to-github#performing-a-dry-run-migration-for-every-repository)
+- [Troubleshooting migrations](https://docs.github.com/migrations/troubleshooting/troubleshooting-your-migration-with-github-enterprise-importer)
 
 ## Test environment setup
 
@@ -133,7 +129,7 @@ gh extension install github/gh-gei
   - Organization member management
   - Workflow management access
 - [ ] Run basic commands
-- [ ] Review the [limitations of GitHub Enterprise Importer](https://docs.github.com/migrations/using-github-enterprise-importer/migrating-from-azure-devops-to-github-enterprise-cloud/about-migrations-from-azure-devops-to-github-enterprise-cloud#limitations-on-migrated-data) to understand what data will be migrated
+- [ ] Review the [limitations of GitHub Enterprise Importer](https://docs.github.com/migrations/ado/understand-migrations-from-azure-devops-to-github#limitations-on-migrated-data) to understand what data will be migrated
 
 ### 2. Additional tools
 

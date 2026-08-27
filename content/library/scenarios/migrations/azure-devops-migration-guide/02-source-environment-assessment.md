@@ -37,7 +37,7 @@ Use this checklist to help guide your assessment:
 Before you start, review these resources to support your assessment:
 
 - **GitHub documentation**
-  - [About migrations from Azure DevOps to GitHub Enterprise Cloud](https://docs.github.com/enterprise-cloud@latest/migrations/using-github-enterprise-importer/migrating-from-azure-devops-to-github-enterprise-cloud/about-migrations-from-azure-devops-to-github-enterprise-cloud)
+  - [Understand migrations from Azure DevOps to GitHub](https://docs.github.com/enterprise-cloud@latest/migrations/ado/understand-migrations-from-azure-devops-to-github)
   - [Building a migration inventory](https://docs.github.com/migrations/overview/planning-your-migration-to-github#building-a-basic-inventory-of-the-repositories-you-want-to-migrate)
 - **Microsoft Learn**
   - [About GitHub integration with Azure DevOps](https://learn.microsoft.com/en-us/azure/devops/cross-service/github-integration?view=azure-devops)
@@ -99,8 +99,8 @@ Analyzing repositories helps you plan migration batches and identify challenges 
 
 The GitHub Enterprise Importer (GEI) tool provides a starting point. Before running the tool, ensure you have credentials configured for Azure DevOps and GitHub:
 
-- [Personal Access Tokens Guidance for GitHub](https://docs.github.com/migrations/using-github-enterprise-importer/migrating-from-azure-devops-to-github-enterprise-cloud/managing-access-for-a-migration-from-azure-devops#personal-access-tokens-for-github)
-- [Personal Access Tokens Guidance for Azure DevOps](https://docs.github.com/migrations/using-github-enterprise-importer/migrating-from-azure-devops-to-github-enterprise-cloud/managing-access-for-a-migration-from-azure-devops#personal-access-tokens-for-azure-devops)
+- [Personal Access Tokens Guidance for GitHub](https://docs.github.com/migrations/ado/manage-access#create-a-personal-access-token-classic-on-github)
+- [Personal Access Tokens Guidance for Azure DevOps](https://docs.github.com/migrations/ado/manage-access#create-a-personal-access-token-on-azure)
 
 With configured credentials, use this command to generate an inventory report of your Azure DevOps environment:
 
@@ -199,9 +199,9 @@ Use this table to map your Azure DevOps permissions to their GitHub equivalents:
 | Azure DevOps | GitHub |
 |--------------|--------|
 | Project Collection Administrators | [Organization Owner](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization) |
-| Project Administrators | [Repository Admin role](https://docs.github.com/organizations/managing-user-access-to-your-organizations-repositories/repository-roles-for-an-organization) via [Organization Teams](https://docs.github.com/organizations/organizing-members-into-teams/about-teams) |
-| Contributors | [Repository Write role](https://docs.github.com/organizations/managing-user-access-to-your-organizations-repositories/repository-roles-for-an-organization) via [Organization Teams](https://docs.github.com/organizations/organizing-members-into-teams/about-teams) |
-| Readers | [Repository Read role](https://docs.github.com/organizations/managing-user-access-to-your-organizations-repositories/repository-roles-for-an-organization) via [Organization Teams](https://docs.github.com/organizations/organizing-members-into-teams/about-teams) |
+| Project Administrators | [Repository Admin role](https://docs.github.com/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) via [Organization Teams](https://docs.github.com/organizations/organizing-members-into-teams/about-teams) |
+| Contributors | [Repository Write role](https://docs.github.com/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) via [Organization Teams](https://docs.github.com/organizations/organizing-members-into-teams/about-teams) |
+| Readers | [Repository Read role](https://docs.github.com/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) via [Organization Teams](https://docs.github.com/organizations/organizing-members-into-teams/about-teams) |
 | Branch Policies | [Repository Rulesets](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) |
 
 {{< callout type="info" >}}
@@ -227,8 +227,8 @@ Understanding your security and compliance requirements ensures your GitHub envi
   - Authentication methods - Ensures proper identity management transition
   - Authorization policies - Maintains access control consistency
   - [IP allow lists](https://docs.github.com/enterprise-cloud@latest/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/managing-allowed-ip-addresses-for-your-organization) - Preserves network security boundaries
-  - [Secret scanning](https://docs.github.com/enterprise-cloud@latest/code-security/secret-scanning/about-secret-scanning) - Enhances security with GitHub's advanced capabilities _(requires GitHub Secret Protection for private repositories)_
-  - [Code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning) - Leverages GitHub's security features _(requires GitHub Code Security for private repositories)_
+  - [Secret scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/secret-security/secret-scanning) - Enhances security with GitHub's advanced capabilities _(requires GitHub Secret Protection for private repositories)_
+  - [Code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/code-scanning/code-scanning) - Leverages GitHub's security features _(requires GitHub Code Security for private repositories)_
   - Security notifications - Ensures proper alerting workflows
 
 ### Compliance assessment
@@ -237,7 +237,7 @@ Understanding your security and compliance requirements ensures your GitHub envi
   - Audit logging needs - Ensures regulatory compliance continuity
   - Retention policies - Maintains data governance requirements
   - Access controls - Preserves security compliance
-  - [Security hardening](https://docs.github.com/enterprise-cloud@latest/admin/configuration/hardening-security-for-your-enterprise) - Implements GitHub security best practices
+  - [Security hardening](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise) - Implements GitHub security best practices
   - Approval workflows - Maintains governance controls
 
 ## Migration impact analysis
@@ -278,7 +278,7 @@ Understanding performance factors helps optimize the migration process:
 ### API and rate limits
 
 - **Service boundaries**
-  - [ ] [GitHub API rate limits](https://docs.github.com/enterprise-cloud@latest/rest/overview/rate-limits-for-the-rest-api) _(plans migration pace)_
+  - [ ] [GitHub API rate limits](https://docs.github.com/enterprise-cloud@latest/rest/using-the-rest-api/rate-limits-for-the-rest-api) _(plans migration pace)_
   - [ ] [Azure DevOps API rate limits](https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops) _(prevents interruptions)_
   - [ ] Concurrent migration capacity _(optimizes throughput)_
   - [ ] Migration tool throttling _(ensures reliability)_
@@ -304,7 +304,7 @@ Understanding performance factors helps optimize the migration process:
 
 After completing your environment assessment:
 
-1. Review the [GitHub Well-Architected Framework](https://wellarchitected.github.com/library/governance/checklist/) for governance planning
+1. Review the [Checklist for Governance](https://learn.github.com/well-architected/library/governance/checklist/) for governance planning
 2. Proceed to [Target Environment Setup](./setup) to prepare your GitHub Enterprise Cloud environment
 
 {{< callout type="info" >}}

@@ -70,7 +70,7 @@ See our CONTRIBUTING doc for submission details and additional writing style gui
 
 ## Scenario overview
 
-When making the decision to deploy self-hosted runners for GitHub Actions, organizations must consider how to best manage and scale those runners. The [Actions Runner Controller (ARC)](https://docs.github.com/en/enterprise-cloud@latest/actions/concepts/runners/actions-runner-controller) is an open-source project that provides a Kubernetes-based solution for deploying and managing self-hosted runners. This article outlines recommendations for deploying ARC in a scalable and maintainable manner.
+When making the decision to deploy self-hosted runners for GitHub Actions, organizations must consider how to best manage and scale those runners. The [Actions Runner Controller (ARC)](https://docs.github.com/enterprise-cloud@latest/actions/concepts/runners/actions-runner-controller) is an open-source project that provides a Kubernetes-based solution for deploying and managing self-hosted runners. This article outlines recommendations for deploying ARC in a scalable and maintainable manner.
 
 {{< callout type="warning" >}}
 Users are responsible for the security of their clusters and the workloads running on them. Securing a Kubernetes cluster, the underlying nodes, and the network resources is a complex task that requires expert-level knowledge. Ensure appropriate network segmentation and monitoring are in place, and follow zero-trust principles when granting access to resources. ARC does not provide any additional built-in security features beyond those provided by Kubernetes and the underlying infrastructure.
@@ -116,7 +116,7 @@ ARC does not support preemption or spot instances, and it assumes that once a ru
 While the default runner image provided by GitHub is suitable for many use cases, creating a custom image is essential for production workloads. It minimizes job startup and execution times, reduces the potential for rate limiting, and ensures that required tools and dependencies are available.
 
 - **Review the core requirements.**
-  All self-hosted runner solutions must meet the [documented requirements](https://docs.github.com/en/enterprise-cloud@latest/actions/reference/runners/self-hosted-runners).
+  All self-hosted runner solutions must meet the [documented requirements](https://docs.github.com/enterprise-cloud@latest/actions/reference/runners/self-hosted-runners).
 
 - **Create an Actions archive cache.**
   Review how GitHub-hosted runners [create an archive cache](https://www.kenmuse.com/blog/building-github-actions-runner-images-with-an-action-archive-cache/) with the most frequently used Actions to speed up job execution and avoid repeated downloads.
@@ -125,7 +125,7 @@ While the default runner image provided by GitHub is suitable for many use cases
   Review the steps for implementing a [tool cache](https://www.kenmuse.com/blog/building-github-actions-runner-images-with-a-tool-cache/) to make platform tools and binaries available locally on the runner. This eliminates the need to download the tools during the job, reducing execution time and network traffic.
 
 - **Keep the runner version up-to-date.**
-  The runner image should be regularly updated to take advantage of the latest features and security fixes. If you're using GitHub Enterprise Cloud, self-hosted runners cannot be more than [30 days](https://docs.github.com/en/enterprise-cloud@latest/actions/reference/runners/self-hosted-runners#runner-software-updates-on-self-hosted-runners) behind the latest version. If you're using GitHub Enterprise Server, you must use *at least* the version provided with your instance. Runners are generally backwards compatible with older versions of the server platform.
+  The runner image should be regularly updated to take advantage of the latest features and security fixes. If you're using GitHub Enterprise Cloud, self-hosted runners cannot be more than [30 days](https://docs.github.com/enterprise-cloud@latest/actions/reference/runners/self-hosted-runners#runner-software-updates-on-self-hosted-runners) behind the latest version. If you're using GitHub Enterprise Server, you must use *at least* the version provided with your instance. Runners are generally backwards compatible with older versions of the server platform.
 
 ### Configure Kubernetes for ARC
 
@@ -184,7 +184,7 @@ While the default runner image provided by GitHub is suitable for many use cases
   Tools like Flex and ArgoCD are not supported or recommended.
 
 - **Use the latest version of ARC.**
-  Regularly update ARC to the latest version (carefully following the [published instructions](https://docs.github.com/en/enterprise-cloud@latest/actions/tutorials/use-actions-runner-controller/deploy-runner-scale-sets#upgrading-arc)) to benefit from new features and security patches. This is also required to ensure organizations are on a supported release. Avoid using `helm upgrade`, Flex, ArgoCD, or other approaches that do not follow the documented upgrade process.
+  Regularly update ARC to the latest version (carefully following the [published instructions](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/manage-runners/use-actions-runner-controller/deploy-runner-scale-sets#upgrading-arc)) to benefit from new features and security patches. This is also required to ensure organizations are on a supported release. Avoid using `helm upgrade`, Flex, ArgoCD, or other approaches that do not follow the documented upgrade process.
 
 - **Avoid non-Linux runners.**
   ARC is optimized for Linux-based runners. GitHub does not support using ARC with Windows or macOS based runners, and Windows containers have [additional limitations and considerations](https://kubernetes.io/docs/concepts/windows/intro/).
@@ -231,7 +231,7 @@ ARC scales by requesting pods in Kubernetes according to the provided `template.
 
 ### Docker-in-Docker (DinD) considerations
 
-[Docker-in-Docker](https://docs.github.com/en/actions/tutorials/use-actions-runner-controller/deploy-runner-scale-sets#using-docker-in-docker-mode) uses a `privileged` native sidecar container running as `root` to host the Docker daemon and manage the containers. This configuration supports containerized Actions and building/runner images using the Docker command line.
+[Docker-in-Docker](https://docs.github.com/actions/how-tos/manage-runners/use-actions-runner-controller/deploy-runner-scale-sets#using-docker-in-docker-mode) uses a `privileged` native sidecar container running as `root` to host the Docker daemon and manage the containers. This configuration supports containerized Actions and building/runner images using the Docker command line.
 
 {{< callout type="info" >}}
 Docker-in-Docker must be run as a `privileged` container to have permission to create and manage the containers; the runner container should remain unprivileged. This is required even when using the `docker:dind-rootless` image to run Docker as a non-root user.
@@ -251,7 +251,7 @@ Docker-in-Docker must be run as a `privileged` container to have permission to c
 
 ### Kubernetes mode considerations
 
-[Kubernetes mode](https://docs.github.com/en/enterprise-cloud@latest/actions/tutorials/use-actions-runner-controller/deploy-runner-scale-sets#using-kubernetes-mode) uses [container hooks](https://github.com/actions/runner-container-hooks) to enable the runner to create a worker pod using the Kubernetes API to host the job and service containers. This requires the runner pod to have elevated privileges. Using the `containerMode` `kubernetes` requires a persistent volume claim (PVC) for file storage. Alternatively, [`kubernetes-novolume`](https://docs.github.com/en/enterprise-cloud@latest/actions/tutorials/use-actions-runner-controller/deploy-runner-scale-sets#configuring-kubernetes-mode-with-container-lifecycle-hooks) can be used. Kubernetes APIs are used to manage files rather than PVCs, requiring the runner container to run as `root` and trading performance for easier configuration.
+[Kubernetes mode](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/manage-runners/use-actions-runner-controller/deploy-runner-scale-sets#using-kubernetes-mode) uses [container hooks](https://github.com/actions/runner-container-hooks) to enable the runner to create a worker pod using the Kubernetes API to host the job and service containers. This requires the runner pod to have elevated privileges. Using the `containerMode` `kubernetes` requires a persistent volume claim (PVC) for file storage. Alternatively, [`kubernetes-novolume`](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/manage-runners/use-actions-runner-controller/deploy-runner-scale-sets#configuring-kubernetes-mode-with-container-lifecycle-hooks) can be used. Kubernetes APIs are used to manage files rather than PVCs, requiring the runner container to run as `root` and trading performance for easier configuration.
 
 {{< callout type="info" >}}
 This configuration requires the runner pod to run with elevated privileges to create and manage pods within the cluster, giving it access to pods and secrets using the Kubernetes APIs. When the `containerMode` is specified, ARC will create a [role](https://github.com/actions/actions-runner-controller/blob/master/charts/gha-runner-scale-set/templates/kube_mode_role.yaml), [service account](https://github.com/actions/actions-runner-controller/blob/master/charts/gha-runner-scale-set/templates/kube_mode_serviceaccount.yaml), and [binding](https://github.com/actions/actions-runner-controller/blob/master/charts/gha-runner-scale-set/templates/kube_mode_role_binding.yaml) for this purpose. When a custom `template.spec` is provided, these resources are not created automatically and must be created and managed separately.
@@ -284,8 +284,8 @@ Kubernetes does not contain a Docker runtime, so this mode does not support Acti
 
 Specifically, you may find the following links helpful:
 
-- [Actions Runner Controller](https://docs.github.com/en/actions/concepts/runners/actions-runner-controller)
-- [Deploying runner scale sets with Actions Runner Controller](https://docs.github.com/en/actions/tutorials/use-actions-runner-controller/deploy-runner-scale-sets)
+- [Actions Runner Controller](https://docs.github.com/actions/concepts/runners/actions-runner-controller)
+- [Deploying runner scale sets with Actions Runner Controller](https://docs.github.com/actions/how-tos/manage-runners/use-actions-runner-controller/deploy-runner-scale-sets)
 
 ### External Resources
 

@@ -20,11 +20,11 @@ This checklist is intended to facilitate a successful migration to GitHub by pro
 
 ## Migration Tools
 
-For a detailed reference based on source and destination environments, see [Migration tools comparison on GitHub Docs](https://docs.github.com/en/enterprise-cloud@latest/migrations/overview/migration-paths-to-github).
+For a detailed reference based on source and destination environments, see [Migration tools comparison on GitHub Docs](https://docs.github.com/enterprise-cloud@latest/migrations/overview/migration-paths-to-github).
 
-- [**GitHub Enterprise Importer**](https://docs.github.com/en/enterprise-cloud@latest/migrations/using-github-enterprise-importer/understanding-github-enterprise-importer/about-github-enterprise-importer): Recommended for migrations to GitHub.com and GitHub Enterprise Cloud, allows for migrations of source repository content along with associated metadata, such as Pull Requests and Issues.
-  - **Important**: Learn about [limitations of GitHub Enterprise Importer on GitHub Docs](https://docs.github.com/en/migrations/using-github-enterprise-importer/migrating-between-github-products/about-migrations-between-github-products#limitations-of-github-enterprise-importer) to plan for additional considerations for your migration.
-- [**ghe-migrator**](https://docs.github.com/en/enterprise-cloud@latest/migrations/using-ghe-migrator/about-ghe-migrator): Recommended for migrations to GitHub Enterprise Server, allows for migrations of source repository content along with associated metadata.
+- [**GitHub Enterprise Importer**](https://docs.github.com/enterprise-cloud@latest/migrations/using-github-enterprise-importer/understanding-github-enterprise-importer/about-github-enterprise-importer): Recommended for migrations to GitHub.com and GitHub Enterprise Cloud, allows for migrations of source repository content along with associated metadata, such as Pull Requests and Issues.
+  - **Important**: Learn about [limitations of GitHub Enterprise Importer on GitHub Docs](https://docs.github.com/migrations/using-github-enterprise-importer/migrating-between-github-products/about-migrations-between-github-products#limitations-of-github-enterprise-importer) to plan for additional considerations for your migration.
+- [**ghe-migrator**](https://docs.github.com/enterprise-cloud@latest/migrations/using-ghe-migrator/about-ghe-migrator): Recommended for migrations to GitHub Enterprise Server, allows for migrations of source repository content along with associated metadata.
 - **Git-based migration**: For source-only repository content migrations without metadata.
 
 ## Project Planning
@@ -49,23 +49,23 @@ Understanding the current environment is fundamental for a successful migration.
 - Document the current organizational and team structure.
 - Document inventory structure to applications and services.
 - Document dependencies for repositories.
-- [Assess and document existing repository data like sizes, commit history, submodule usage, and Git LFS usage.](https://docs.github.com/en/migrations/overview/planning-your-migration-to-github#building-a-basic-inventory-of-the-repositories-you-want-to-migrate)
+- [Assess and document existing repository data like sizes, commit history, submodule usage, and Git LFS usage.](https://docs.github.com/migrations/overview/planning-your-migration-to-github#building-a-basic-inventory-of-the-repositories-you-want-to-migrate)
 - Document branch policies to recreate in the target environment.
 - Document the current permissions and access patterns of repositories.
 - Document all integrations and external tools in use.
 - Identify the need for reverse proxy or app gateway strategy to consume webhook and audit log data.
 - Document current usage patterns and workflows for transition planning.
-- [Design plans for policy and governance of the target environment](https://wellarchitected.github.com/library/governance/checklist/).
+- [Design plans for policy and governance of the target environment](https://learn.github.com/well-architected/library/governance/checklist/).
 
 ## Target Environment Design and Configuration
 
-Making sure that the target GitHub Enterprise Cloud environment is set up for success is critical for a successful migration process. Learn more about GitHub Enterprise Administration and Governance on [GitHub Resources](https://resources.github.com/learn/pathways/administration-governance/essentials/administration-governance-github-enterprise-cloud/) and [Governance Design Principles](https://wellarchitected.github.com/library/governance/design-principles/).
+Making sure that the target GitHub Enterprise Cloud environment is set up for success is critical for a successful migration process. Learn more about GitHub Enterprise Administration and Governance on [Essentials of governance and administration with GitHub Enterprise](https://learn.github.com/well-architected/library/governance/recommendations/governance-administration-essentials/) and [Governance Design Principles](https://learn.github.com/well-architected/library/governance/design-principles/).
 
-- Map source environment repository structures to [target organizations/repositories](https://docs.github.com/en/migrations/overview/planning-your-migration-to-github#designing-your-organization-structure-for-the-migration-destination).
+- Map source environment repository structures to [target organizations/repositories](https://docs.github.com/migrations/overview/planning-your-migration-to-github#defining-your-origin-and-destination).
 - Plan the structure of the target environment.
 - Plan for handling large files and repositories.
 - Plan for handling release tags and release artifacts.
-- Set up identity access in the target environment. See [Identity and access management](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-iam/understanding-iam-for-enterprises) for more information on Enterprise identity management configuration options.
+- Set up identity access in the target environment. See [Identity and access management](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/understanding-iam-for-enterprises) for more information on Enterprise identity management configuration options.
 - Configure enterprise, organization, and team structure.
 - Configure governance and policy settings.
 - Conduct security assessments on the target environment.
@@ -79,7 +79,7 @@ Thorough testing and preparation are essential for successful migrations, as the
 - [Choose migration tools](#migration-tools).
 - Prepare any dependencies for migration tools, as required, such as infrastructure needs, firewall/network configurations, and authentication methods.
 - Correct any issues on existing repository data or make plans for mitigation (such as large files, commit history, metadata sizing, submodules, and Git LFS usage) based on migration method.
-- [Perform dry-run migrations to identify issues.](https://docs.github.com/en/migrations/overview/planning-your-migration-to-github#performing-a-dry-run-migration-for-every-repository)
+- [Perform dry-run migrations to identify issues.](https://docs.github.com/migrations/overview/planning-your-migration-to-github#performing-a-dry-run-migration-for-every-repository)
 - Identify integration and external tools compatibility issues.
 - Configure reverse proxy or app gateway as needed for integration of webhooks and audit log data.
 - Run pilot migrations, document and address issues.
@@ -99,7 +99,7 @@ Executing the migration is a critical phase that requires coordination and monit
 - Create a dedicated migration support channel for issue resolution
 - Execute the migration plan runbook.
 - Track migration status and fix errors.
-- [Link identity attribution](https://docs.github.com/en/enterprise-cloud@latest/migrations/using-github-enterprise-importer/completing-your-migration-with-github-enterprise-importer/reclaiming-mannequins-for-github-enterprise-importer) (when using GitHub Enterprise Importer).
+- [Link identity attribution](https://docs.github.com/enterprise-cloud@latest/migrations/using-github-enterprise-importer/completing-your-migration-with-github-enterprise-importer/reclaiming-mannequins-for-github-enterprise-importer) (when using GitHub Enterprise Importer).
 
 ## Post-Migration Activities
 

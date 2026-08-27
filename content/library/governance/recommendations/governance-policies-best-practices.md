@@ -78,9 +78,9 @@ For additional topic-specific guidance, see also:
 
 Use these key strategies as a baseline to implement GitHub's best practices for governance:
 
-1. [Restrict Actions execution to specific repositories](https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization#managing-github-actions-permissions-for-your-organization) and not let repo users and owners to arbitrarily create and execute actions workflow. Set this at the **Organization level**.
+1. [Restrict Actions execution to specific repositories](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization#managing-github-actions-permissions-for-your-organization) and not let repo users and owners to arbitrarily create and execute actions workflow. Set this at the **Organization level**.
 
-2. [Use Actions created by GitHub](https://docs.github.com/en/actions/learn-github-actions/finding-and-customizing-actions) and Verified Creators **wherever applicable**. This settings can be enforced at **Enterprise level**.
+2. [Use Actions created by GitHub](https://docs.github.com/actions/how-tos/write-workflows/choose-what-workflows-do/find-and-customize-actions) and Verified Creators **wherever applicable**. This settings can be enforced at **Enterprise level**.
 
 3. Default Workflow token permission should be **read-only**: Following the principle of least privilege, it is recommended to set the default workflow token permissions to read-only. Default is read/write, which should be avoided because if a token is compromised, malicious actors can run exploits within the GitHub platform through actions execution.
 

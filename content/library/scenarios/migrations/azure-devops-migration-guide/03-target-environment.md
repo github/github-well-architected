@@ -38,18 +38,18 @@ Use this checklist to help guide your setup:
 Before configuring your target environment, review these resources:
 
 - **GitHub documentation**
-  - [Enterprise configuration guide](https://docs.github.com/enterprise-cloud@latest/admin/configuration/configuring-your-enterprise)
-  - [Identity and access management](https://docs.github.com/enterprise-cloud@latest/admin/identity-and-access-management/managing-iam-for-your-enterprise)
+  - [Enterprise configuration guide](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings)
+  - [Understanding IAM for enterprises](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/understanding-iam-for-enterprises)
   - [Organization security features](https://docs.github.com/enterprise-cloud@latest/organizations/keeping-your-organization-secure)
-- [Essentials of administration and governance with GitHub Enterprise Cloud](https://resources.github.com/learn/pathways/administration-governance/essentials/administration-governance-github-enterprise-cloud/)
+- [Essentials of governance and administration with GitHub Enterprise](https://learn.github.com/well-architected/library/governance/recommendations/governance-administration-essentials/)
 - **Microsoft Learn**
   - [GitHub administration and product features](https://learn.microsoft.com/en-us/training/paths/github-administration-products/)
   - [GitHub foundations - part 1](https://learn.microsoft.com/en-us/training/paths/github-foundations/)
   - [GitHub foundations - part 2](https://learn.microsoft.com/en-us/training/paths/github-foundations-2/)
 - **Well-Architected Framework**
-  - [Getting started with GitHub Well-Architected](https://wellarchitected.github.com/library/overview/getting-started-checklist/)
-  - [Governance checklist](https://wellarchitected.github.com/library/governance/checklist/)
-  - [Security pillar](https://wellarchitected.github.com/pillars/security/)
+  - [Getting started with GitHub Well-Architected](https://learn.github.com/well-architected/library/overview/getting-started-checklist/)
+  - [Governance checklist](https://learn.github.com/well-architected/library/governance/checklist/)
+  - [Security pillar](https://learn.github.com/well-architected/library/application-security/)
 
 ## Enterprise configuration
 
@@ -57,7 +57,7 @@ Before configuring your target environment, review these resources:
 
 Setting up proper authentication and access controls is essential for a successful migration.
 
-- [ ] [Configure enterprise settings](https://docs.github.com/enterprise-cloud@latest/admin/configuration/configuring-your-enterprise)
+- [ ] [Configure enterprise settings](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings)
 
   | Setting | Purpose |
   |---------|----------|
@@ -91,7 +91,7 @@ GitHub Enterprise Cloud with Data Residency requires Managed Users.
 ### Provider setup
 
 - [ ] Configure identity provider integration:
-  - **[Microsoft Entra ID](https://learn.microsoft.com/en-us/azure/active-directory/saas-apps/github-enterprise-cloud-enterprise-account-tutorial)**
+  - **[Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/saas-apps/github-enterprise-cloud-enterprise-account-tutorial)**
   - **SCIM provisioning** for automated user management
   - **Team synchronization** to map IdP groups to GitHub teams
 
@@ -178,7 +178,7 @@ This will help you understand how to properly structure teams and permissions ba
 
 - [ ] Configure team membership management based on your authentication strategy:
   - **For organizations with SAML SSO**:
-    - Set up [team synchronization](https://docs.github.com/enterprise-cloud@latest/admin/identity-and-access-management/using-saml-for-enterprise-iam/managing-team-synchronization-for-organizations-in-your-enterprise) to map IdP groups to GitHub teams
+    - Set up [team synchronization](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/managing-team-synchronization-for-organizations-in-your-enterprise) to map IdP groups to GitHub teams
     - Define synchronization schedules and conflict resolution policies
   - **For Enterprise Managed Users**:
     - Use [identity provider groups](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/provisioning-user-accounts-with-scim/managing-team-memberships-with-identity-provider-groups) to manage team memberships
@@ -196,7 +196,7 @@ This will help you understand how to properly structure teams and permissions ba
   - Establish monitoring alerts
   - Test log delivery
 
-- [ ] Configure [audit log retention](https://docs.github.com/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/about-the-audit-log-for-your-enterprise):
+- [ ] Configure [audit log retention](https://docs.github.com/enterprise-cloud@latest/admin/concepts/security-and-compliance/audit-log-for-an-enterprise):
   - Set retention period (based on compliance requirements)
   - Implement backup policies
   - Define access controls for logs
@@ -210,7 +210,7 @@ This will help you understand how to properly structure teams and permissions ba
 
 ### Policy configuration
 
-- [ ] Configure [repository policies](https://docs.github.com/enterprise-cloud@latest/admin/policies/enforcing-policies-for-your-enterprise/enforcing-repository-management-policies-in-your-enterprise):
+- [ ] Configure [repository policies](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-repository-management-policies-in-your-enterprise):
   - Visibility settings (private, internal, public)
   - Fork policies
   - Issue creation and management
@@ -266,7 +266,7 @@ This will help you understand how to properly structure teams and permissions ba
 ### Actions and workflow configuration
 
 {{< callout type="info" >}}
-Without enabling GitHub Actions, functionality like [GitHub Copilot Coding Agent](https://docs.github.com/enterprise-cloud@latest/copilot/using-github-copilot/coding-agent/about-assigning-tasks-to-copilot) cannot work.
+Without enabling GitHub Actions, functionality like [Copilot cloud agent](https://docs.github.com/enterprise-cloud@latest/copilot/concepts/agents/cloud-agent/about-cloud-agent) cannot work.
 {{< /callout >}}
 
 - [ ] Set up Actions environments:
@@ -275,7 +275,7 @@ Without enabling GitHub Actions, functionality like [GitHub Copilot Coding Agent
   - Required reviewers
   - Deployment gates
 
-- [ ] Consider creating Actions [reusable workflows](https://docs.github.com/actions/how-tos/sharing-automations/reusing-workflows):
+- [ ] Consider creating Actions [reusable workflows](https://docs.github.com/actions/how-tos/reuse-automations/reuse-workflows):
   - CI build workflows
   - Test automation workflows
   - Release automation workflows
@@ -314,5 +314,5 @@ Without enabling GitHub Actions, functionality like [GitHub Copilot Coding Agent
 
 After completing your target environment setup:
 
-1. Review the [GitHub Well-Architected Framework Security Pillar](https://wellarchitected.github.com/pillars/security/)
+1. Review the [GitHub Well-Architected Framework Security Pillar](https://learn.github.com/well-architected/library/application-security/)
 2. Proceed to [Migration Testing](./test)

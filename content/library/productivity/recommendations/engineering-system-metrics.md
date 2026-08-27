@@ -148,4 +148,4 @@ Strike a pragmatic balance between measurement effort and benefits by implementi
 <!-- Optionally add any external resources that are related to your article or that could provide additional information or context for your readers.
 This could include links to tutorials, blog posts, or other articles. -->
 
-Explore further on four zones and twelve metrics in the [Engineering System Success Playbook](https://resources.github.com/engineering-system-success-playbook/).
+Explore further on four zones and twelve metrics in the [Engineering System Success Playbook](https://github.com/resources/insights/engineering-system-success-playbook).

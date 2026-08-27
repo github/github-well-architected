@@ -179,7 +179,7 @@ Recommended rules include (see [Available rules for rulesets](https://docs.githu
 
 - **Block force pushes & deletions** - These protect against accidental or malicious destruction of commit history, ensuring code changes remain auditable and recoverable. Force pushes can overwrite colleagues' work and break CI/CD pipelines that rely on stable commit references.
 - **Require a pull request before merging** - This establishes a minimal review gate that creates visibility into all changes, enables automated checks to run, and provides an opportunity for knowledge sharing even if formal approval isn't required at this tier.
-- **Require workflows to pass (e.g. central security/compliance workflow once stable inclusive of [Dependency Review](https://docs.github.com/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review))** - Automated security scanning catches common vulnerabilities before they enter the main branch, reducing remediation costs. Dependency Review specifically prevents introduction of known-vulnerable packages that could compromise the entire software supply chain.
+- **Require workflows to pass (e.g. central security/compliance workflow once stable inclusive of [Dependency Review](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependency-review))** - Automated security scanning catches common vulnerabilities before they enter the main branch, reducing remediation costs. Dependency Review specifically prevents introduction of known-vulnerable packages that could compromise the entire software supply chain.
 
 ### 3. Production tier ruleset
 
@@ -194,7 +194,7 @@ Applied where repository supports a production application (e.g. custom property
   - **Require approval of the most recent reviewable push** - Guarantees that approvals correspond to the latest reviewed commit.
   - **Require conversation resolution before merging** - Ensures reviewer feedback is addressed and reduces the risk of overlooked issues.
   - **Automatically request [Copilot code review](https://docs.github.com/enterprise-cloud@latest/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review?tool=webui)** - Adds an automated review layer to surface potential issues quickly and at scale.
-- **Require code scanning results (severity threshold tuned to avoid overly cautious blocks)** - Integrates automated security scanning (e.g. [CodeQL](https://docs.github.com/enterprise-cloud@latest/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning-with-codeql)) to catch vulnerabilities prior to merging while tuning thresholds to reduce noisy false positives.
+- **Require code scanning results (severity threshold tuned to avoid overly cautious blocks)** - Integrates automated security scanning (e.g. [CodeQL](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/code-scanning/codeql/codeql-code-scanning)) to catch vulnerabilities prior to merging while tuning thresholds to reduce noisy false positives.
 
 ### 4. Sensitive / regulated tier ruleset
 

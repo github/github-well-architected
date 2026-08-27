@@ -38,11 +38,11 @@ Before you begin, review these post-migration resources to support your work:
 
 - **GitHub documentation**
   - [About GitHub Enterprise Cloud](https://docs.github.com/enterprise-cloud@latest/admin/overview/about-github-enterprise-cloud)
-  - [Governance and policy recommendations](https://wellarchitected.github.com/library/governance/recommendations/governance-policies-best-practices/)
 - **Well-Architected Framework**
-  - [Governance Checklist](https://wellarchitected.github.com/library/governance/checklist/)
-  - [Security Best Practices](https://wellarchitected.github.com/library/application-security/recommendations/actions-security/)
-  - [Repository Rulesets](https://wellarchitected.github.com/library/governance/recommendations/rulesets-best-practices/)
+  - [Governance and policy recommendations](https://learn.github.com/well-architected/library/governance/recommendations/governance-policies-best-practices/)
+  - [Governance Checklist](https://learn.github.com/well-architected/library/governance/checklist/)
+  - [Security Best Practices](https://learn.github.com/well-architected/library/application-security/recommendations/actions-security/)
+  - [Repository Rulesets](https://learn.github.com/well-architected/library/governance/recommendations/managing-repositories-at-scale/rulesets-best-practices/)
 
 ## Repository governance
 

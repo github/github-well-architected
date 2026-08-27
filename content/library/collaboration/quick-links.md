@@ -11,9 +11,9 @@ A curated list of resources and tools to enhance **Collaboration** within your o
 
 ## Effective Communication
 
-- [Communicating on GitHub](https://docs.github.com/en/enterprise-cloud@latest/get-started/using-github/communicating-on-github)
+- [Communicating on GitHub](https://docs.github.com/enterprise-cloud@latest/get-started/using-github/communicating-on-github)
 - [Microsoft Teams](https://www.microsoft.com/en-us/microsoft-teams/group-chat-software)
-- [Communicate effectively using Microsoft Teams](https://www.linkedin.com/learning/microsoft-teams-essential-training-23397024/communicate-effectively-with-microsoft-teams)
+- [Communicate effectively with Microsoft Teams](https://www.linkedin.com/learning/microsoft-teams-essential-training-23929395/communicate-effectively-with-microsoft-teams)
 
 ## Inclusivity
 
@@ -36,5 +36,4 @@ A curated list of resources and tools to enhance **Collaboration** within your o
 ## Flexibility
 
 - [GitHub Engineering](https://github.blog/engineering/)
-- [Grow your cognitive flexibility](https://learn.microsoft.com/en-us/training/modules/grow-cognitive-flexibility/)
 - [GitHub Marketplace](https://github.com/marketplace)

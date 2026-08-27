@@ -183,7 +183,7 @@ This assessment checklist focuses on evaluating and enhancing the **Application 
 - **Repository Structure:**
   - Assess the organization and structure of repositories for clarity and scalability.
   - Determine whether repositories follow a naming convention, and ensure all repositories have a description.
-  - Check for the use of [custom properties](https://docs.github.com/en/enterprise-cloud@latest/organizations/managing-organization-settings/managing-custom-properties-for-repositories-in-your-organization) to dynamically manage and enforce.
+  - Check for the use of [custom properties](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/managing-custom-properties-for-repositories-in-your-organization) to organize repositories and target them with rulesets.
   - Verify that repositories are appropriately segmented as to avoid monolithic structures unnecessarily, or determine the necessity of such an architecture.
   - Check for the use of branch protection rules to maintain code quality.
 
