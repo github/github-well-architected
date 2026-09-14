@@ -6,7 +6,10 @@ title: 'Recommendations for effective continuous integration (CI)'
 publishDate: 2026-07-29
 weight: 4
 params:
-  authors: [{ name: 'Collin McNeese', handle: 'collinmcneese' }]
+  authors: [
+    { name: 'Collin McNeese', handle: 'collinmcneese' },
+    { name: 'Tiago Pascoal', handle: 'tspascoal' }
+    ]
 
 # Classifications of the framework to drive key concepts, design principles, and architectural best practices
 pillars:
@@ -34,9 +37,9 @@ features:
 
 ## Recommendation overview
 
-Continuous Integration (CI) is a core practice in software development, yet many teams struggle with builds that take too long, fail unexpectedly, or provide unclear feedback. Fighting CI to get a green build should not be the norm. Well-designed CI pipelines help developers ship confidently and quickly.
+Well-designed Continuous Integration (CI) helps developers understand whether a change is safe to merge. It catches problems and provides signal early in the development process and provides enough information to act on the failure.
 
-Whether you're just starting with CI or looking to optimize existing pipelines, this guide will help you build workflows that developers find reliable and efficient.
+Whether you are setting up CI for the first time or trying to improve existing pipelines, this guide walks through the patterns that tend to make the biggest difference.
 
 {{< callout type="info" >}}
 Assumptions and preconditions:
@@ -49,15 +52,16 @@ Assumptions and preconditions:
 
 ## Key design strategies and checklist
 
+Use this as a starting point when reviewing an existing workflow or planning a new one.
+
 - [ ] Foundation
   - [ ] Tests are isolated, deterministic, and fast
   - [ ] Flaky tests are tracked and prioritized for fixing
-  - [ ] Test suite follows the testing pyramid
+  - [ ] Test execution is organized into clear groups with intentional dependencies
   - [ ] Error messages are clear and actionable
 - [ ] Practices
-  - [ ] Jobs are ordered from fastest to slowest
+  - [ ] Fast checks gate expensive jobs, and independent jobs run in parallel
   - [ ] Dependencies are cached appropriately
-  - [ ] Parallelization and sequential ordering of jobs is considered
   - [ ] Job summaries and annotations provide rich feedback
   - [ ] Workflows use path filters and concurrency controls
   - [ ] Permissions follow principle of least privilege
@@ -65,7 +69,7 @@ Assumptions and preconditions:
   - [ ] Dependabot keeps actions updated
   - [ ] OIDC is used for cloud authentication where possible
 - [ ] Advanced
-  - [ ] Matrix builds test across required platforms/versions
+  - [ ] Matrix builds test across required platforms and versions
   - [ ] The runtime environment is customized to avoid repeated setup steps
   - [ ] Reusable workflows standardize patterns across repositories
   - [ ] Workflow templates provide approved starting points
@@ -80,24 +84,26 @@ Before writing a single workflow file, understanding the principles behind effec
 
 ### What is continuous integration, really?
 
-Before CI became common practice, developers worked in isolation for days or weeks, then faced a painful "integration day" when everyone's changes collided. Bugs found at that point were expensive to fix: the code was no longer fresh in anyone's mind, changes interacted in unexpected ways, and root-causing a failure meant digging through days of commits.
+Before CI became common practice, developers often worked in isolation for periods of time. Eventually, everyone's changes had to come together in what could be a painful integration exercise.
 
-CI addresses this by integrating frequently, ideally with every commit. Each integration runs automated checks that provide rapid feedback, so when something breaks, you know exactly which small change caused it. This shifts the discovery of problems from "days later when everything is tangled together" to "minutes later when you're still thinking about that code."
+CI addresses this by integrating frequently. Each integration runs automated checks and provides feedback quickly. When something breaks, you have a much better chance of knowing which small change caused it.
 
-Understanding CI as fundamentally about **reducing integration risk through rapid feedback** helps you make better decisions about what checks to run and when to run them. Every CI decision should be evaluated against this principle: does this help catch problems earlier and with less effort?
+Understanding CI as fundamentally about **reducing integration risk through rapid feedback** helps you make better decisions about what checks to run and when to run them.
 
-This aligns directly with the [Design for Feedback](../design-principles#design-for-feedback) principle. Feedback is only valuable when it arrives quickly enough to act on. CI is one of the most important feedback mechanisms in software development, and its effectiveness depends on how fast and clear that feedback is.
+This aligns directly with the [Design for Feedback](../design-principles#design-for-feedback) principle. Feedback helps more often when it arrives quickly enough to be acted upon. CI is one of the most important feedback mechanisms in software development, and its value depends on both speed and clarity.
 
 ### Fail fast
 
-The fail-fast philosophy structures your pipeline so that the checks most likely to fail, and fastest to run, execute first. Linting catches typos in seconds. Type checking catches interface mismatches in a few more. Only after these quick sanity checks pass should you invest time in compilation and testing.
+The fail-fast approach puts the checks most likely to fail, and fastest to run, at the front of the pipeline.
+
+Linting and type checking can typically run very fast, so only after those checks pass should the workflow spend time compiling code and running a larger test suite.
 
 | Approach | Pipeline order | Time to failure |
 | ---------- | ---------------- | ----------------- |
-| ❌ **Anti-pattern** | Install deps (2m) → Build (5m) → Test (10m) → Lint (30s) | 17 minutes to learn about a typo |
-| ✅ **Fail-fast** | Lint (30s) → Install deps (2m) → Build (5m) → Test (10m) | 30 seconds to learn about a typo |
+| ❌ **Anti-pattern** | Install dependencies (2m) → Build (5m) → Test (10m) → Lint (30s) | 17 minutes to learn about a typo |
+| ✅ **Fail-fast** | Lint (30s) → Install dependencies (2m) → Build (5m) → Test (10m) | 30 seconds to learn about a typo |
 
-**Fast feedback also keeps developers in flow.** When feedback arrives quickly, developers can fix the issue while still mentally engaged with the code.
+Fast feedback also helps developers stay in the flow. When feedback arrives quickly, they can fix the issue while the relevant code is still fresh in their mind.
 
 {{< callout type="info" >}}
 **Run validation locally first**: Encourage developers to run lint and type checks locally before pushing, where possible. This catches errors even faster than CI and reduces wait time for feedback.
@@ -105,68 +111,50 @@ The fail-fast philosophy structures your pipeline so that the checks most likely
 
 ### Designing tests that support fast feedback
 
-CI is only as good as the tests it runs. A sophisticated pipeline running a poorly designed test suite will still frustrate developers, just with more elaborate infrastructure.
+CI is only as useful as the tests it runs. An advanced pipeline running a poorly designed test suite can still frustrate developers, just with more infrastructure around the problem.
 
-- **Isolated tests** don't depend on execution order or shared state. When tests share a database and one test forgets to clean up, the next test mysteriously fails even though the code is correct. Isolated tests can also run in parallel, significantly reducing total test time.
-- **Deterministic tests** always produce the same result for the same code. Flaky tests (tests that sometimes pass and sometimes fail without code changes) are arguably worse than no tests at all. They train developers to ignore failures and retry until green, which means real failures get ignored too. When you see a flaky test, treat it as a high-priority bug.
-- **Fast tests** get run. Slow tests get skipped. A unit test that takes 500ms might seem acceptable, but multiply that by 1,000 tests and your suite takes 8 minutes. Strive for milliseconds per unit test, and reserve slower tests for when they're truly necessary.
-- **Clear test names** serve as documentation. When `test_user_creation` fails, you're stuck reading the test code. When `test_creating_user_without_email_returns_400_error` fails, you already know what's broken.
+- **Isolated tests** do not depend on execution order or shared state. If tests share a database and one test forgets to clean up, the next test can fail even though the code is correct. Isolated tests can also run in parallel, which can reduce total test time.
+- **Deterministic tests** produce the same result for the same code. Flaky tests are arguably worse than no tests because they train developers to ignore failures and retry until the build is green. When you see a flaky test, treat it as a high-priority bug.
+- **Clear test names** serve as documentation. When `test_user_creation` fails, someone still has to read the test to understand what went wrong. When `test_creating_user_without_email_returns_400_error` fails, the starting point is much clearer.
 
 Common sources of test flakiness include:
 
 | Source | What happens | Solution |
 | --- | --- | --- |
 | Time-dependent assertions | "5 seconds from now" varies between runs | Use frozen clocks or time mocking libraries |
-| Race conditions | Async operations complete unpredictably | Use proper synchronization primitives, avoid arbitrary sleeps |
-| External service calls | Network issues, rate limits, outages | Mock external services in unit tests |
-| Shared mutable state | Previous test pollutes next test's data | Reset state in setup/teardown, use database transactions |
-| File system assumptions | Paths differ across operating systems | Use temp directories, normalize paths |
-
-### The testing flow
-
-The testing pyramid helps you think about how to balance different types of tests for maximum effectiveness with reasonable cost.
-
-```text
-       /\          E2E (few, slow, high confidence)
-      /  \
-     /----\        Integration (some, moderate speed)
-    /      \
-   /--------\      Unit (many, fast, focused)
-  /          \
-```
-
-- **Unit tests** exercise individual functions or classes in isolation with all dependencies mocked. They run fast and pinpoint failures precisely. When a unit test fails, you know exactly which function broke. Their speed and precision make them ideal for running on every commit.
-- **Integration tests** verify that multiple components work together correctly. They might use a real database or call actual service endpoints. This realism catches issues that mocking would hide, but it costs time and failures can be less precise because more code is involved.
-- **End-to-end tests** simulate real user workflows through the actual UI. They catch problems that only manifest when all the pieces come together, but they're slow (browser automation, real services, network latency), expensive to maintain (brittle when UI changes), and vague when they fail (the whole application is involved). Reserve them for critical user journeys and run them less frequently.
-
-The pyramid is wide at the bottom because you want many fast, precise tests catching most issues early, with fewer slow, broad tests providing confidence that everything integrates correctly. The exact proportions depend on your application. An API with no UI might have a flatter pyramid, but the principle holds to prefer faster, more focused tests when possible.
+| Race conditions | Async operations complete unpredictably | Use proper synchronization primitives and avoid arbitrary sleeps |
+| External service calls | Network issues, rate limits, or outages affect the result | Mock external services when the network call is not what the test verifies |
+| Shared mutable state | A previous test pollutes the next test's data | Reset state in setup and teardown, or use database transactions |
+| File system assumptions | Paths differ across operating systems | Use temporary directories and normalize paths |
 
 ### Feedback that helps developers learn
 
-A CI status that simply shows ✅ or ❌ forces developers to dig through logs hunting for clues. Effective CI feedback tells developers what failed, why it failed, and ideally how to fix it.
+A CI status that only shows ✅ or ❌ forces developers to dig through logs looking for clues. Effective CI feedback should tell developers what failed, why it failed, and ideally where they should start fixing it.
 
 Consider the difference between these two experiences:
 
-- **Scenario A**: CI shows ❌. Developer clicks through pages of logs, searches for "error," finds a cryptic stack trace, spends more time understanding the failure.
-- **Scenario B**: CI shows ❌ with a summary: "Test `UserService.createUser` failed: Expected status 201 but got 400. Request body was missing required field 'email'. See line 45 of user.test.js."
+- **Scenario A**: CI shows ❌. The developer clicks through pages of logs, searches for "error," finds a cryptic stack trace, and spends more time understanding the failure than fixing it.
+- **Scenario B**: CI shows ❌ with a summary: "Test `UserService.createUser` failed. Expected status 201 but received 400 because the request body was missing the required field `email`. See line 45 of `user.test.js`."
 
-This connects to broader organizational learning. Teams that treat CI as a source of learning rather than just a gate to pass through tend to improve faster. See [Design for Continuous Learning](../design-principles#design-for-continuous-learning) for more on building learning into your engineering culture.
+The second result is much more useful. It reduces the amount of investigation required before someone can act.
+
+This connects to broader organizational learning. Teams that treat CI as a source of learning, rather than just a gate to pass through, tend to improve faster. See [Design for Continuous Learning](../design-principles#design-for-continuous-learning) for more on building learning into your engineering culture.
 
 ## Part 2: Practices - GitHub Actions fundamentals
 
-With a solid conceptual foundation, let's apply these principles using GitHub Actions. This section covers the essential patterns every team should understand.
-
-CI is fundamentally about automation to replace manual, error-prone processes with consistent, repeatable workflows. As you implement these practices, keep the [Design for Automation](../design-principles#design-for-automation) principle in mind.
+CI is fundamentally about using automation to replace manual, error-prone processes with consistent and repeatable workflows. As you implement these practices using GitHub Actions, keep the [Design for Automation](../design-principles#design-for-automation) principle in mind.
 
 {{< callout type="info" >}}
-**New to GitHub Actions?** Check out the [GitHub Actions learning paths](https://learn.github.com/learning?product=GitHub+Actions&contentType=Learning+path) on GitHub Learn for hands-on, structured learning.
+**New to GitHub Actions?** Check out the [GitHub Actions learning paths](https://learn.github.com/courses?product=GitHub+Actions&contentType=Learning+path) on GitHub Learn for hands-on, structured learning.
 {{< /callout >}}
 
-### Workflow structure and dependencies
+### Structuring jobs for fast feedback
 
-A GitHub Actions workflow consists of one or more **jobs**, each containing a sequence of **steps**. By default, jobs run in parallel on separate runners. This is great for speed, but it means your expensive 10-minute test job starts immediately even if a 30-second lint job is about to fail.
+A GitHub Actions workflow consists of one or more **jobs**, and each job contains a sequence of **steps**. Steps run sequentially by default but can also run in parallel within a job and share its runner, jobs run in parallel on separate runners but users declare job dependencies to control the job execution graph.
 
-The `needs` keyword creates dependencies between jobs, implementing the fail-fast philosophy at the workflow level. A job won't start until all jobs it `needs` have completed successfully.
+Translating the fail-fast approach from Part 1 does not mean placing every job in a single sequence. Instead, use a fast, high-signal job to gate expensive work, then let independent jobs run in parallel after that gate passes, where needed.
+
+The `needs` keyword makes a job wait for one or more other jobs to complete successfully. Use it only where the dependency avoids meaningful wasted work or where a job genuinely requires output from another job.
 
 ```yaml
 name: CI
@@ -196,8 +184,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
 
-  # Stage 2: Build and Test
-  # Only runs if linting passes - no point compiling code with syntax errors.
+  # Stage 2: Independent jobs fan out after fast validation succeeds.
   build:
     needs: lint
     runs-on: ubuntu-latest
@@ -211,23 +198,38 @@ jobs:
       - run: npm ci
       - name: Build
         run: npm run build
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6
+        with:
+          node-version: '24'
+      - run: npm ci
       - name: Test
         run: npm test
 ```
 
-**Sequential ordering trades some average-case speed for avoiding wasted runs.** Lint, build, and test execute one after another rather than simultaneously. For a team with a high first-attempt success rate, parallel execution might be faster on average. But for teams where early-stage failures are common (new projects, rapid development, less experienced contributors), fail-fast prevents wasted compute and reduces feedback time for the common case.
+> [!NOTE]
+> The above logic is for example purposes only to show dependency sequencing.  This specific logic would be likely be much better run in fewer jobs, reducing the overhead for this configuration.
 
-{{< callout type="info" >}}
-**Parallel steps within a job**: Actions supports running steps concurrently inside a single job using `background`, `wait`, `wait-all`, `cancel`, and `parallel` keywords. This doesn't replace the `needs`-based fail-fast pattern above, but it's a useful option when steps within one job (starting a database, warming a cache, running two independent scripts) don't depend on each other and don't need separate runners.
-{{< /callout >}}
+In this example, `lint` is the only sequential gate. The `build` and `test` jobs wait for it, then run independently because they do not depend on any other job.
+
+This structure trades some successful-run latency for avoiding wasted work when validation fails. If early failures are uncommon, running independent jobs immediately, or even reducing the number of jobs to include more steps, may provide faster results.
+
+Use workflow duration, time to first feedback, and compute consumption to decide where the trade-off is worthwhile. When one job needs to fan out across operating systems, runtime versions, or test shards, combine this structure with [matrix builds](#matrix-builds).
 
 ### Caching dependencies
 
-Each GitHub-hosted job starts on a fresh virtual machine, while self-hosted runners may retain state between jobs unless you clean them. Without caching on ephemeral runners, you'd re-download every dependency for every run. This could mean gigabytes of packages, multiple times per hour, across dozens of developers. Caching stores downloaded packages between runs, reducing repeated download time.
+Each GitHub-hosted job starts on a fresh virtual machine. Self-hosted runners may retain state between jobs unless you clean them. Without caching on ephemeral runners, every job downloads every dependency again.
 
-For complete caching syntax and options, see [Caching dependencies to speed up workflows](https://docs.github.com/enterprise-cloud@latest/actions/using-workflows/caching-dependencies-to-speed-up-workflows).
+Caching stores downloaded packages between runs and reduces repeated download time. For complete caching syntax and options, see [Caching dependencies to speed up workflows](https://docs.github.com/enterprise-cloud@latest/actions/using-workflows/caching-dependencies-to-speed-up-workflows).
 
-The setup actions for most languages include built-in caching that handles the details automatically:
+The setup actions for most languages include built-in caching:
 
 ```yaml
 - uses: actions/setup-python@v7
@@ -236,134 +238,131 @@ The setup actions for most languages include built-in caching that handles the d
     cache: 'pip' # caching pip dependencies
 ```
 
-This works well because the action hashes your dependency file or lockfile to generate the cache key. When that file changes, the key changes and the action creates a fresh cache. When it is stable, later runs can restore the existing download cache.
+This works well because the action hashes your dependency file or lockfile to generate the cache key. When that file changes, the key changes and the action creates a fresh cache. When the file is stable, later runs can restore the existing download cache.
 
-For more control (caching build outputs, using complex cache keys, or caching paths the setup actions don't know about), use the `actions/cache` action directly. The key concepts are:
+For more control, such as caching build outputs or using cache keys that the setup actions do not know about, use the `actions/cache` action directly.
+
+The main concepts are:
 
 - **`key`**: Uniquely identifies the cache, typically using `hashFiles()` on lockfiles
-- **`restore-keys`**: Fallback prefixes for partial cache matches when exact key isn't found
-- **`path`**: Directories to cache
+- **`restore-keys`**: Provides fallback prefixes for partial cache matches when an exact key is not found
+- **`path`**: Identifies the directories to cache
 
-See the [actions/cache documentation](https://github.com/actions/cache) for full syntax and examples.
+See the [actions/cache documentation](https://github.com/actions/cache) for the complete syntax and examples.
+
+Caching is useful, but it is worth checking the actual timings. A cache that is difficult to invalidate, or takes longer to restore than downloading the dependencies, may not be helping much.
 
 ### Providing rich feedback
 
-GitHub Actions offers several mechanisms beyond log output to make failures clear and actionable. For complete syntax, see [Workflow commands for GitHub Actions](https://docs.github.com/enterprise-cloud@latest/actions/reference/workflows-and-actions/workflow-commands).
+GitHub Actions can provide detailed information for investigating a workflow run or surfacing context for reviewing a change. While there are many ways to provide feedback, this section focuses on **workflow command output** and **pull request comments** as primary mechanisms.
 
-- **Job summaries** render Markdown in the Actions UI, perfect for test results, coverage reports, or build metrics. Write Markdown content to `$GITHUB_STEP_SUMMARY` and it appears at the top of the workflow run.
-- **Annotations** highlight specific files and lines in the PR diff, so developers see the problem exactly where it occurs. Use the `::error file={path},line={line}::` or `::warning` workflow commands, or upload SARIF files from linters for automatic annotation.
-- **Log grouping** organizes verbose output into collapsible sections using `::group::` and `::endgroup::` commands. When installation logs span 500 lines, grouping keeps them out of the way while still accessible for debugging.
+#### Workflow command output
 
-### Optimizing trigger conditions
+GitHub Actions provides several mechanisms beyond standard log output to make failures easier to understand.
 
-Not every change needs every check. Running the full test suite when someone fixes a typo in the README wastes compute time and delays feedback for changes that actually matter.
+- [**Job summaries**](https://docs.github.com/actions/reference/workflows-and-actions/workflow-commands#adding-a-job-summary) render Markdown in the Actions UI. They work well for test results, coverage reports, and build metrics. Write Markdown content to `$GITHUB_STEP_SUMMARY` and it appears on the workflow run page.
+- [**Annotations**](https://docs.github.com/actions/reference/workflows-and-actions/workflow-commands#example-creating-an-annotation-for-an-error) highlight specific files and lines in the pull request diff. Use the `::error file={path},line={line}::` or `::warning` workflow commands, or upload SARIF files from linters for automatic annotations.
+- [**Log grouping**](https://docs.github.com/actions/reference/workflows-and-actions/workflow-commands#grouping-log-lines) organizes verbose output into collapsible sections using `::group::` and `::endgroup::`. When installation logs span many lines, grouping keeps them out of the way while keeping them available for debugging.
 
-For complete trigger syntax, see [Events that trigger workflows](https://docs.github.com/enterprise-cloud@latest/actions/reference/workflows-and-actions/events-that-trigger-workflows).
+#### Pull request comments
 
-- **Path filters** let you skip workflows when only certain files change. Use `paths` to include specific paths, or `paths-ignore` to exclude them (like `**.md` or `docs/**`). If a filtered workflow is configured as a required status check, a skipped run leaves the check pending and blocks merging; keep required workflows unfiltered or use an always-running required check.
-- **Concurrency controls** cancel outdated workflow runs when new commits arrive. Set a `concurrency` group based on workflow and branch, with `cancel-in-progress: true`. If a developer pushes three commits in quick succession, only the latest one runs—no wasted resources on superseded commits.
+Create [pull request comments](https://docs.github.com/enterprise-cloud@latest/rest/issues/comments#create-an-issue-comment) via the REST API from an Actions run to provide results that reviewers should see in the context of the pull request. These types of comments may be for steps they might need to take based on the job outcome, information from the job which would be relevant to their review, or other context that is useful outside the workflow run itself.
 
-### Security fundamentals
-
-CI pipelines often have elevated permissions: access to secrets, ability to publish packages, and authority to deploy to production. This makes them attractive targets and means security mistakes can have serious consequences.
-
-For comprehensive guidance on securing your CI/CD pipelines, see [Securing GitHub Actions Workflows](../../application-security/recommendations/actions-security), which covers authentication, repository rules, least privilege, and supply chain protection in depth.
-
-#### Minimal permissions
-
-Minimal permissions limit the blast radius of compromised workflows. The `GITHUB_TOKEN` defaults are inherited from enterprise, organization, and repository settings and can be permissive or restricted. Explicitly declaring the permissions a workflow needs ensures it can't do more than intended:
-
-```yaml
-permissions:
-  contents: read
-  pull-requests: write
-```
-
-#### Pinned action versions
-
-Pinned action versions add an additional protection layer against supply chain attacks. Pinning to a specific commit SHA (not just a version tag) ensures you're running exactly the code you reviewed:
-
-```yaml
-steps:
-  # Pinned to specific commit, not just the v7 tag
-  uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-```
-
-#### Keeping actions updated with Dependabot
-
-While pinning provides security, you still need to update actions regularly to receive security patches and improvements. [Dependabot can automatically create pull requests](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot) when new versions of actions are available, letting you review and merge updates on your schedule rather than running outdated code indefinitely.
-
-Enable Dependabot for GitHub Actions by adding a `.github/dependabot.yml` file:
-
-```yaml
-version: 2
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-```
-
-This creates a sustainable balance: you get the security of pinned versions while still receiving timely updates through a controlled review process.
-
-#### Using OpenID Connect instead of long-lived secrets
-
-Long-lived credentials stored as secrets create ongoing risk. If a secret is exposed, attackers can use it until someone notices and rotates it. [OpenID Connect (OIDC)](https://docs.github.com/enterprise-cloud@latest/actions/security-guides/security-hardening-for-github-actions#using-openid-connect-to-access-cloud-resources) provides a better approach for cloud authentication.
-
-With OIDC, workflows request short-lived tokens directly from your cloud provider (AWS, Azure, GCP, and others). These tokens expire quickly (often within an hour), and no permanent credentials are stored in GitHub. The cloud provider verifies that the request came from a specific repository, branch, or environment before issuing the token.
+For example, a workflow can use the GitHub CLI to post rich test results:
 
 ```yaml
 jobs:
-  deploy:
+  comment:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write  # Required for OIDC
-      contents: read
+      pull-requests: write
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: aws-actions/configure-aws-credentials@e6de054238d6b7531b4efff3b6587d9aade6a06c # v6.2.3
-        with:
-          role-to-assume: arn:aws:iam::123456789012:role/my-github-actions-role
-          aws-region: us-east-1
-      # No AWS_ACCESS_KEY_ID or AWS_SECRET_ACCESS_KEY needed
-      - run: aws s3 sync ./dist s3://my-bucket
+      - name: Test suite
+        id: test-suite
+        run: |
+          echo "Running test suite..."
+          # Replace the following line with your actual test command, using output to set the result
+          echo "result=CI results: 128 tests passed. Coverage increased to 85% (+2%)." >> $GITHUB_OUTPUT
+      - name: Post test result
+        run: |
+          gh api "repos/${GH_REPO}/issues/${PR_NUMBER}/comments" \
+            --method POST \
+            -f body="$BODY"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BODY: ${{ steps.test-suite.outputs.result }}
 ```
 
-OIDC eliminates secret rotation burden, reduces exposure window if workflows are compromised, and provides better audit trails since each token request is logged by the cloud provider.
+> [!TIP]
+> Use automated comments selectively to avoid overwhelming the pull request conversation.
+
+### Optimizing trigger conditions
+
+Not every change needs every check. Running the full test suite because someone fixed a typo in the README wastes compute and delays feedback for changes that actually matter.
+
+For complete trigger syntax, see [Events that trigger workflows](https://docs.github.com/enterprise-cloud@latest/actions/reference/workflows-and-actions/events-that-trigger-workflows).
+
+- **Path filters** let you skip workflows when only certain files change. Use `paths` to include specific paths, or `paths-ignore` to exclude paths such as `**.md` or `docs/**`.
+
+  It is important to note that if a filtered workflow is configured as a required status check, a skipped run leaves the check pending and can block merging. Keep workflows with required checks unfiltered, or use an always-running required check.
+
+- **Concurrency controls** cancel outdated workflow runs when new commits arrive. Set a `concurrency` group based on the workflow and branch, with `cancel-in-progress: true`.
+
+  If a developer pushes multiple commits in quick succession, only the latest one needs to run in some cases. The previous runs are already testing code that is no longer current.
+
+### Security fundamentals
+
+CI pipelines often have elevated permissions which may access secrets, publish packages, or deploy to production, making them attractive targets and increasing the potential impact of security mistakes.
+
+[Securing GitHub Actions Workflows](../../application-security/recommendations/actions-security) is a dedicated resource for this area, covering topics like least-privilege `GITHUB_TOKEN` permissions, pinning and updating third-party actions, OIDC authentication, and guarding against other supply chain risks.
 
 ## Part 3: Advanced - Scaling and optimization
 
-Once you've mastered the fundamentals, these advanced patterns help you scale CI across large codebases, multiple platforms, and complex build requirements.
+Once the fundamentals are working well, these patterns can help with larger codebases, multiple platforms, and more complex build requirements.
 
 ### Matrix builds
 
-Many projects need to test across multiple versions, like Node 20, 22, and 24, or Ubuntu, macOS, and Windows. Running these sequentially would multiply your build time by the number of configurations. Matrix builds run them in parallel, testing all configurations in roughly the time of the slowest one.
+Many projects need to test across several variable data points, such as runtime versions or operating systems. Running those configurations sequentially multiplies the build time by the number of configurations. Matrix builds run the combinations in parallel, so the total duration is closer to the slowest individual job.
 
 For complete matrix syntax, see [Using a matrix for your jobs](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations).
 
-Key matrix concepts:
+Matrix builds control how one job fans out across configurations, while `needs` controls when that job can start. A matrix job can depend on the same fast validation gate described in [Structuring jobs for fast feedback](#structuring-jobs-for-fast-feedback), and each generated job will wait for that gate.
 
-- **Matrix variables**: Define arrays of values (versions, operating systems) that create job combinations
-- **`exclude`**: Skip specific combinations that aren't needed (e.g., skip Windows + Node 18 if it rarely catches unique issues)
-- **`include`**: Add specific combinations with extra properties (e.g., experimental Node.js 23 on Ubuntu only)
-- **`fail-fast`**: When `true`, cancels all matrix jobs if one fails (default behavior)
+For large test suites, **sharding** distributes tests across multiple parallel runners. Many test frameworks support sharding natively or through plugins. Check the documentation for your framework for the exact configuration.
 
-For large test suites, **sharding** distributes tests across multiple parallel runners. Many test frameworks support sharding natively or through plugins—check your framework's documentation for the specific flag (e.g., Jest uses `--shard`, Playwright uses `--shard`). Use a matrix with shard numbers (`[1, 2, 3, 4]`) and pass the shard index to your test runner.
+{{< callout type="info" >}}
+**Parallel steps within a job**: Actions supports running steps concurrently inside a single job using `background`, `wait`, `wait-all`, `cancel`, and `parallel` keywords. This does not replace job-level parallelism or `needs`-based orchestration, but it can be useful when steps share a runner and do not depend on each other.
+{{< /callout >}}
 
 ### Customizing the runtime environment
 
-Sometimes you need a specific database version, a particular system library, or an exact reproduction of your production environment. Other times the environment is fine, but you're repeating the same lengthy setup—installing system libraries, compilers, or browser dependencies—on every single run. In these cases, consider customizing the runtime environment itself.
+Sometimes a workflow needs a specific database version, system library, compiler, or production-like environment.
 
-- **Container jobs** give you full control over the execution environment and are the most portable option, working on any GitHub-hosted or self-hosted runner that supports containers. Specify `container: name:tag` on a job to run all steps inside that container image. For frequently used setups, build a Docker image with your dependencies pre-installed and publish it to GitHub Container Registry to avoid repeated installation time. Service containers spin up dependencies under `services:`. Use the service name as the hostname from a container job; from a job running directly on the runner, publish the required ports and connect through `localhost`. See [Running jobs in a container](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/write-workflows/choose-where-workflows-run/run-jobs-in-a-container) and [Using containerized services](https://docs.github.com/enterprise-cloud@latest/actions/tutorials/use-containerized-services).
-- **Custom images for GitHub-hosted runners** bake your dependencies directly into the runner. Use this when you want the speed of a pre-built environment without the overhead of starting a container on top of the runner. See [Using custom images for GitHub-hosted runners](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/manage-runners/larger-runners/use-custom-images).
+Other times, the environment is fine, but the workflow repeats the same lengthy setup on every run. Installing system libraries, compilers, or browser dependencies over and over adds time and creates more opportunities for inconsistent results.
 
-Each trades setup complexity for faster, more consistent CI runs, based on whether you're using GitHub-hosted or self-hosted runners, and how portable the environment needs to be.
+In those cases, it may be worth customizing the runtime environment itself.
+
+- **Container jobs** give you control over the execution environment and are a portable option. Specify `container: name:tag` on a job to run all steps inside that container image. For frequently used setups, build a Docker image with dependencies pre-installed and publish it to GitHub Container Registry. Service containers can start dependencies under `services:`.
+
+  Use the service name as the hostname from a container job. From a job running directly on the runner, publish the required ports and connect through `localhost`.
+
+  See [Running jobs in a container](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/write-workflows/choose-where-workflows-run/run-jobs-in-a-container) and [Using containerized services](https://docs.github.com/enterprise-cloud@latest/actions/tutorials/use-containerized-services).
+
+- **Custom images for GitHub-hosted runners** bake dependencies directly into the runner. Use this when you want the speed of a pre-built environment without starting a container on top of the runner.
+
+  See [Using custom images for GitHub-hosted runners](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/manage-runners/larger-runners/use-custom-images).
+
+Each option trades setup complexity for faster and more consistent CI runs. The right choice depends on whether you are using GitHub-hosted or self-hosted runners, how portable the environment needs to be, and how often the setup is repeated.
 
 ### Reusable workflows and workflow templates
 
-As organizations grow, the same CI patterns appear in dozens of repositories. Copy-pasting workflow files works initially, but updates can become operational overhead. Fix a bug or improve performance in one place, and you need to manually propagate it everywhere.
+As organizations grow, the same CI patterns can be repeated in dozens of repositories. Copying workflow files works at first, but updates can eventually become operational overhead.
 
-**[Workflow templates](https://docs.github.com/actions/how-tos/write-workflows/use-workflow-templates)** provide starting points for repositories. Create each workflow file and its matching `.properties.json` metadata file in your organization's `.github` repository under `.github/workflow-templates/`; eligible repositories then show the template in the Actions tab when developers create workflows. Used templates are copied into each repository, so teams can customize them for their specific needs.
+[Workflow templates](https://docs.github.com/actions/how-tos/write-workflows/use-workflow-templates) provide starting points for repositories. Create each workflow file and its matching `.properties.json` metadata file in your organization's `.github` repository under `.github/workflow-templates/`.
+
+Eligible repositories then show the template in the Actions tab when developers create workflows, creating an easy method to have the templates copied into each repository, so teams can customize them for their specific needs.
 
 Templates work well for:
 
@@ -371,43 +370,48 @@ Templates work well for:
 - Providing approved patterns that teams can adapt
 - Reducing time to first workflow for new projects
 
-**[Reusable workflows](https://docs.github.com/enterprise-cloud@latest/actions/using-workflows/reusing-workflows)** let you define a workflow once and call it from other workflows. Unlike templates, reusable workflows are referenced rather than copied. Callers that use a branch receive future changes automatically, while callers pinned to a tag or commit SHA remain on that version until their reference is updated.
+[Reusable workflows](https://docs.github.com/enterprise-cloud@latest/actions/using-workflows/reusing-workflows) let you define a workflow once and call it from other workflows.
 
-This aligns with [Design for Integration](../design-principles#design-for-integration) to establish standards and eliminate silos across teams and repositories.
+Unlike templates, reusable workflows are referenced rather than copied. Callers that use a branch receive future changes automatically. Callers pinned to a tag or commit id remain on that version until the reference is updated.
 
-Key concepts for reusable workflows:
+This aligns with [Design for Integration](../design-principles#design-for-integration) by establishing standards across repositories without requiring every team to maintain its own version of the same workflow.
+
+Key concepts for reusable workflows include:
 
 - **Define** a reusable workflow with the `workflow_call` trigger in a central repository
-- **Declare inputs and secrets** the caller can pass to customize behavior
+- **Declare inputs and secrets** that the caller can pass to customize behavior
 - **Call** the workflow using `uses: org/repo/.github/workflows/workflow.yml@ref`
-- **Version with tags** (`@v1`, `@v2`) to control when repositories adopt breaking changes
+- **Version with tags** such as `@v1` and `@v2` to control when repositories adopt breaking changes
 
 For more on scaling reusable patterns across your organization, see [Scaling Actions Reusability](../../collaboration/recommendations/scaling-actions-reusability).
 
 ### Composite actions
 
-While reusable workflows encapsulate entire jobs, composite actions encapsulate sequences of steps. They're ideal for repeated setup logic that multiple jobs need—like setting up a language runtime, installing dependencies, and configuring caching.
+Where reusable workflows encapsulate entire jobs, composite actions encapsulate sequences of steps.
 
-For complete syntax, see [Creating a composite action](https://docs.github.com/enterprise-cloud@latest/actions/tutorials/create-actions/create-a-composite-action).
-
-Key concepts:
+They are useful for repeated setup logic that several jobs need, such as setting up a language runtime, installing dependencies, and configuring caching.
 
 - Create an `action.yml` file with `runs.using: 'composite'`
 - Define `inputs` for customizable parameters
-- List steps just like in a workflow (each `run` step must specify `shell`)
-- Reference from workflows using `uses: ./.github/actions/your-action` (local) or `uses: org/repo/path@ref` (remote)
+- List steps just like in a workflow. Each `run` step must specify `shell`
+- Reference the action from workflows using `uses: ./.github/actions/your-action` for a local action, or `uses: org/repo/path@ref` for a remote action
 
-Composite actions are ideal for standardizing setup across multiple jobs in a workflow or across repositories.
+Composite actions are a good fit when you need to standardize setup across multiple jobs in one workflow or across several repositories.
+
+> [!NOTE]
+> [YAML anchors and aliases](https://docs.github.com/actions/reference/workflows-and-actions/reusing-workflow-configurations#yaml-anchors-and-aliases) also provide a mechanism for reusing configuration within a workflow file. Unlike composite actions, they do not support reuse across multiple workflow files or repositories.
+
+For complete syntax, see [Creating a composite action](https://docs.github.com/enterprise-cloud@latest/actions/tutorials/create-actions/create-a-composite-action).
 
 ### Monorepo strategies
 
-Monorepos (single repositories containing multiple packages or applications) can present a scaling challenge with CI. Running all tests for every change is wasteful when most changes only affect one package.
+Monorepos contain multiple packages or applications in a single repository. They can create a scaling problem for CI because running every test for every change is usually unnecessary.
 
 For broader guidance on monorepo design and governance, see [Monorepos](../../scenarios/monorepos). This section focuses specifically on CI strategies.
 
-There are two primary approaches to selective testing in monorepos:
+There are two primary approaches to selective testing in monorepos.
 
-- **Workflow-level path filters** use the native `paths` trigger to run a workflow only when matching files change. This is simple and requires no additional tooling, but each filter controls the entire workflow rather than individual jobs:
+- **Workflow-level path filters** use the native `paths` trigger to run a workflow only when matching files change. This is simple and does not require additional tooling, but each filter controls the entire workflow rather than individual jobs.
 
   ```yaml
   name: Frontend CI
@@ -418,13 +422,17 @@ There are two primary approaches to selective testing in monorepos:
         - 'packages/shared/**'  # Include shared dependencies
   ```
 
-- **Job-level change detection** uses git commands or scripts to determine which packages changed, then conditionally runs jobs. This provides more flexibility for complex dependency graphs but requires more setup. You can use `git diff` to compare against the base branch and set job outputs based on which paths have changes.
+- **Job-level change detection** uses git commands or scripts to determine which packages changed, then conditionally runs jobs. This provides more flexibility for complex dependency graphs but requires additional setup.
+
+  You can use `git diff` to compare against the base branch and set job outputs based on which paths have changed.
 
 #### Key design considerations
 
 - **Include shared dependencies**: If `packages/shared` changes, all packages that depend on it should be tested
-- **Understand your dependency graph**: Changes to a utility package may affect many downstream packages
+- **Understand your dependency graph**: A change to a utility package may affect many downstream packages
 - **Balance granularity with complexity**: More fine-grained filtering saves compute but increases workflow maintenance
+
+Path filtering can be very useful, but it is worth being careful about what the filter means. Skipping unrelated work is good. Skipping a package that depends on a changed shared library is less good.
 
 ### Self-hosted runners and runner groups
 
@@ -432,12 +440,13 @@ GitHub-hosted runners work well for most workloads, but some situations call for
 
 #### Runner groups for workload segmentation
 
-[Runner groups](https://docs.github.com/enterprise-cloud@latest/actions/hosting-your-own-runners/managing-self-hosted-runners/managing-access-to-self-hosted-runners-using-groups) provide granular control over which repositories and workflows can use specific runners. This enables:
+[Runner groups](https://docs.github.com/enterprise-cloud@latest/actions/hosting-your-own-runners/managing-self-hosted-runners/managing-access-to-self-hosted-runners-using-groups) provide granular control over which repositories and workflows can use specific runners.
 
-- **Workload isolation**: Separate runners for production deployments vs. PR checks
-- **Cost allocation**: Track usage by team or project
+This enables:
+
+- **Workload isolation**: Separate runners for production deployments and pull request checks
 - **Security boundaries**: Restrict sensitive runners to specific repositories
-- **Resource optimization**: Dedicate high-memory runners to builds that need them
+- **Resource optimization**: Restrict runners with different resource capabilities, such as CPU, disk, or memory, to builds and repositories that need them
 
 Define runner groups at the organization or enterprise level, then reference them in workflows:
 
@@ -460,14 +469,14 @@ For Kubernetes-based scaling of self-hosted runners, see [Deploying Actions Runn
 
 ### Environment protection rules
 
-As CI workflows mature, they often expand to include deployment steps. [Environment protection rules](https://docs.github.com/enterprise-cloud@latest/actions/deployment/targeting-different-environments/using-environments-for-deployment) provide guardrails for deployments without slowing down CI.
+As CI workflows mature, they often expand to include deployment steps. [Environment protection rules](https://docs.github.com/enterprise-cloud@latest/actions/deployment/targeting-different-environments/using-environments-for-deployment) can help to provide guardrails for deployments.
 
 Environments let you:
 
 - **Require reviewers** before deploying to production
-- **Restrict branches** that can deploy (only `main`, or only tags matching `v*`)
+- **Restrict branches** that can deploy, such as only `main` or tags matching `v*`
 - **Add wait timers** for staged rollouts
-- **Scope secrets** to specific environments (production credentials only available in production environment)
+- **Scope secrets** to specific environments
 - **Define custom protection rules** using deployment protection rules
 
 ```yaml
@@ -482,29 +491,35 @@ jobs:
       # Deployment steps...
 ```
 
-Environment protection rules create a natural boundary between CI (which should be fast and automatic) and CD (which may require approval or additional controls). This separation lets you optimize CI for speed while maintaining appropriate governance for deployments.
+Environment protection rules create a useful boundary between CI and CD. CI should generally be fast and automatic. Deployments may require approval or additional controls.
+
+Keeping those concerns separate lets you optimize CI for speed while maintaining appropriate governance for deployment changes.
 
 {{< callout type="info" >}}
-**Environments without deployments**: Jobs can reference an environment purely to scope secrets and variables, without recording a deployment or requiring an environment URL. Set `deployment: false` when you want environment-scoped configuration for a job (like a CI job that needs staging credentials) without it showing up in your deployment history.
+**Environments without deployments**: Jobs can reference an environment purely to scope secrets and variables, without recording a deployment or requiring an environment URL. Set `deployment: false` when you want environment-scoped configuration for a job, such as a CI job that needs staging credentials, without showing it in your deployment history.
 {{< /callout >}}
 
 ## Measuring CI effectiveness
 
-Tracking metrics helps you identify problems before they become painful and demonstrate the value of CI investments. For a comprehensive framework on engineering metrics, see [Engineering System Metrics](engineering-system-metrics), which covers the broader context of measuring developer productivity and system health.
+Tracking metrics helps identify problems before they become painful. It also gives teams a way to understand whether changes to the CI system are actually helping.
+
+For a broader framework on engineering metrics, see [Engineering System Metrics](engineering-system-metrics).
 
 | Metric | What it tells you | Warning signs |
 | --- | --- | --- |
 | P50/P95 workflow duration | How long developers typically wait | Steady increase over time |
-| Flake rate | How often failures are noise vs. signal | Sustained increase or frequent reruns |
-| Queue time | Whether you have enough runner capacity | Sustained growth or breach of the team's queue-time SLO |
-| First-attempt success rate | How often code passes on first push | Sustained decline from the team's baseline |
+| Flake rate | How often failures are noise instead of signal | Sustained increase or frequent reruns |
+| Queue time | Whether there is enough runner capacity | Sustained growth or a breach of the team's queue-time SLO |
+| First-attempt success rate | How often code passes on the first push | Sustained decline from the team's baseline |
 | Time to first feedback | How quickly developers learn about problems | Breach of the team's feedback-time SLO |
+
+The numbers should help you decide what to improve next, but be careful to observe them in isolation. A longer workflow is not automatically a bad workflow if it is testing something important, while a short workflow is not especially useful if developers do not trust the result.
 
 These metrics connect to the broader [Design for Engineering System Success](../design-principles#design-for-engineering-system-success) principle, which emphasizes balancing quality, velocity, developer happiness, and business outcomes.
 
 ## Related articles in the Well-Architected Framework
 
-This article connects to several other topics in the framework:
+This article connects to several other topics in the framework.
 
 ### Productivity pillar
 
