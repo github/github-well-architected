@@ -9,6 +9,7 @@ next: library/scenarios
 
 Find general updates here on new content, feature enhancements, and improvements that help teams architect and optimize deployments of the tools that support their development communities.
 
+<includeMarkdown>2026-q3.md</includeMarkdown>
 <includeMarkdown>2026-q2.md</includeMarkdown>
 <includeMarkdown>2026-q1.md</includeMarkdown>
 <includeMarkdown>2025-q4.md</includeMarkdown>
