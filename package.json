@@ -47,5 +47,10 @@
   "optionalDependencies": {
     "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
     "lightningcss-linux-x64-gnu": "^1.30.2"
+  },
+  "overrides": {
+    "markdownlint-cli": {
+      "js-yaml": "^5.4.1"
+    }
   }
 }
