@@ -133,7 +133,7 @@ To close coverage gaps and keep features from being switched off:
 - **Review licensing, scan health, and coverage regularly.** Track [GitHub Advanced Security license usage](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-organization-security/manage-usage-and-access/managing-your-github-advanced-security-license-usage) and use [security overview](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/about-security-overview) to find repositories without coverage or with failing scans.
 
 {{< callout type="info" >}}
-Security Configurations are available in GitHub Enterprise Cloud and GitHub Enterprise Server 3.15 and later.
+Security Configurations are available in GitHub Enterprise Cloud and GitHub Enterprise Server 3.15 and later. **Enforce for repository and organization owners** is available in GitHub Enterprise Cloud. Current GitHub Enterprise Server releases [enforce for repository owners only](https://docs.github.com/enterprise-server@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/create-custom-configuration), so organization owners can still change settings. Check your version's documentation.
 {{< /callout >}}
 
 ### Create Repository Rulesets for supplemental enforcement
