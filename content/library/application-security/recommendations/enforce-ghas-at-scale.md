@@ -83,12 +83,13 @@ This article provides recommendations around enforcing GitHub Advanced Security 
 
 When enforcing GHAS at scale, it is important to consider the following key components:
 
-1. **Establish a branching strategy** - A consistent branching strategy across repositories will make it easier to enforce GHAS at scale.
-2. **Manage repositories with custom properties** - Repository custom properties can be used to store metadata about a repository, such as business criticality, or security and compliance requirements.
-3. **Use Security Configurations where possible** - Security Configurations are collections of enablement settings for GitHub's security features that you can apply to any repository within your Organization.
-4. **Create Repository Rulesets for supplemental enforcement** - Repository Rulesets allow you to restrict merges to target branches, for target repositories, until a defined set of conditions are met.
-5. **Consider your desired access permissions** - Ensure that the right people have the right level of access to security alerts.
-6. **Create and monitor an exception process** - Have a clear and auditable process for granting exceptions to security scanning and remediation.
+1. **Baseline your risk first** - Run security risk assessments to measure current exposure and decide where to focus enforcement.
+2. **Establish a branching strategy** - A consistent branching strategy across repositories will make it easier to enforce GHAS at scale.
+3. **Manage repositories with custom properties** - Repository custom properties can be used to store metadata about a repository, such as business criticality, or security and compliance requirements.
+4. **Use Security Configurations where possible** - Security Configurations are collections of enablement settings for GitHub's security features that you can apply to repositories across your Enterprise or Organization, and enforce so that the features stay on.
+5. **Create Repository Rulesets for supplemental enforcement** - Repository Rulesets allow you to restrict merges to target branches, for target repositories, until a defined set of conditions are met.
+6. **Consider your desired access permissions** - Ensure that the right people have the right level of access to security alerts.
+7. **Create and monitor an exception process** - Have a clear and auditable process for granting exceptions to security scanning and remediation, including push protection bypasses and alert dismissals.
 
 ## Assumptions and preconditions
 
@@ -99,6 +100,10 @@ These recommendations assume that you have the following:
 - Access to GitHub Actions
 
 ## Recommended deployment
+
+### Baseline your risk with security risk assessments
+
+Before you enforce anything, measure your current exposure. [Security risk assessments](https://github.com/security/advanced-security/assessments) scan an Organization and report where secrets and code vulnerabilities are concentrated. The [secret risk assessment](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-organization-security/configure-specific-tools/assess-your-secret-risk) is free for organizations on GitHub Team and GitHub Enterprise. Use the results to decide where to enforce first.
 
 ### Establish a branching strategy
 
@@ -118,7 +123,14 @@ Repository custom properties are available in GitHub Enterprise Cloud and GitHub
 
 ### Use Security Configurations where possible
 
-[Security Configurations](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/organization-security) are collections of enablement settings for GitHub's application security features that you can apply to any repository within your Organization. You can create a Security Configuration that includes the GHAS scanning features you want to enforce, and apply it to all repositories based on custom property values.
+[Security Configurations](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/organization-security) are collections of enablement settings for GitHub's application security features that you can apply to repositories in your Enterprise or Organization. You can create a Security Configuration that includes the GHAS scanning features you want to enforce, and apply it to all repositories based on custom property values.
+
+To close coverage gaps and keep features from being switched off:
+
+- **Apply a configuration to every eligible repository** that includes secret scanning, push protection, Dependabot, and code scanning default setup.
+- **Set a configuration as the default for newly created repositories** so new repositories are covered from the start.
+- **Enforce the configuration.** In an [enterprise-level configuration](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-enterprise-security/establish-complete-coverage/create-custom-configuration), the "Enforcement" setting offers **Enforce for repository owners** and [**Enforce for repository and organization owners**](https://github.blog/changelog/2026-09-15-enforce-github-advanced-security-configurations/). Choose the second option so no one below the enterprise can disable required features. Features left unset aren't enforced.
+- **Review licensing, scan health, and coverage regularly.** Track [GitHub Advanced Security license usage](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-at-scale/configure-organization-security/manage-usage-and-access/managing-your-github-advanced-security-license-usage) and use [security overview](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/security-at-scale/about-security-overview) to find repositories without coverage or with failing scans.
 
 {{< callout type="info" >}}
 Security Configurations are available in GitHub Enterprise Cloud and GitHub Enterprise Server 3.15 and later.
@@ -136,15 +148,24 @@ Repository Rulesets are available in GitHub Enterprise Cloud and GitHub Enterpri
 
 ### Enforcing Secret Scanning
 
-The recommended way to enforce secret scanning at scale is to use Security Configurations at the Organization level.
+The recommended way to enforce secret scanning at scale is to use Security Configurations at the Enterprise or Organization level.
 
 Enforcing _secret scanning_ as part of a Security Configuration will raise alerts for secrets found in the Code, Issues, Pull Requests, Discussions, and Wiki tabs of the repository.
 
-Enforcing _push protection_ as part of a Security Configuration will stop new secrets from being pushed to repositories.
+Enforcing _push protection_ as part of a Security Configuration will stop new secrets from being pushed to repositories. Enable [push protection](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-secrets/work-with-leak-prevention/push-protection-in-the-github-ui) on every repository.
 
-By default, anyone with `Write` access to a repository has the ability to bypass push protection. This ability can be restricted by [enabling delegated bypass for push protection](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-secrets/manage-bypass-requests/enable-delegated-bypass).
+Extend detection beyond provider patterns:
+
+- Enable [validity checks](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/secret-security/validity-checks) so responders can prioritize alerts for credentials that are still active.
+- Enable [AI-detected secrets](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-secrets/detect-secret-leaks/enabling-secret-scanning-for-ai-detected-secrets) to find secrets without a known format, such as passwords. [Push protection for AI-detected secrets](https://github.blog/changelog/2026-10-28-push-protection-beyond-predefined-secret-patterns/) is in public preview and off by default; once [enabled](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-secrets/prevent-future-leaks/enable-ai-push-protection), it blocks these secrets at push time alongside pattern-based detectors.
+
+By default, anyone with `Write` access to a repository has the ability to bypass push protection. This ability can be restricted by [enabling delegated bypass for push protection](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-secrets/manage-bypass-requests/enable-delegated-bypass). Under [delegated bypass](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/secret-security/delegated-bypass), most contributors must request a reviewed bypass, but organization owners, security managers, and roles on the bypass list can always bypass, and exempted actors skip push protection entirely. Keep the bypass list short, reserve exemptions for trusted automation, and review both as part of your [exception process](#creating-and-monitoring-an-exception-process).
 
 Users with `Write` access to a repository can add a `secret_scanning.yml` file to the `.github` directory of a repository to exclude certain files or filepaths from secret scanning. To prevent this file from being created across an Organization, configure a [push ruleset](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/creating-rulesets-for-repositories-in-your-organization#creating-a-push-ruleset) that restricts pushes to the path `.github/secret_scanning.yml` across all repositories.
+
+### Monitor for leaks outside your enterprise
+
+Secret scanning protects the repositories that your enterprise owns, but your credentials can also leak outside it. [Public Monitoring](https://docs.github.com/en/code-security/concepts/secret-security/public-monitoring), [generally available for enterprises](https://github.blog/changelog/2026-10-28-public-monitoring-for-enterprises-generally-available/) with GitHub Secret Protection or GitHub Advanced Security, detects secrets that your enterprise members leak in public content anywhere on GitHub. [Verify your enterprise's domains](https://docs.github.com/enterprise-cloud@latest/admin/configuration/configuring-your-enterprise/verifying-or-approving-a-domain-for-your-enterprise) so that Public Monitoring also attributes leaks from accounts that use a work email address but aren't enterprise members. Treat any secret that Public Monitoring reports as compromised, and [rotate and remediate it](https://docs.github.com/en/code-security/tutorials/remediate-leaked-secrets/remediating-a-leaked-secret) promptly; removing it from history is not enough.
 
 ### Enforcing Dependency Scanning
 
@@ -190,8 +211,14 @@ jobs:
           deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later
 ```
 
+{{< callout type="info" >}}
+This example references actions by version tag for readability. In production workflows, pin each action to a full-length commit SHA. For details, see [Securing GitHub Actions Workflows](/library/application-security/recommendations/actions-security).
+{{< /callout >}}
+
 4. Set the configuration parameters for Dependency Review (under the `with:` key) to meet your Organization's requirements. For a full list of configuration options, see the [Dependency Review Action documentation](https://github.com/actions/dependency-review-action#configuration-options).
 5. Ensure that your Repository Ruleset is configured to [require your newly defined workflow to pass before merging](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-workflows-to-pass-before-merging).
+
+For layered defenses against malicious and compromised packages, see [Defending against dependency supply chain attacks](/library/application-security/recommendations/managing-dependency-threats).
 
 ### Enforcing Code Scanning
 
@@ -203,6 +230,14 @@ When enforcing code scanning, there are two popular options:
 With either option, it's important to consider the programming languages used in the repositories that you're targeting. Compiled languages (like C/C++, C#, Java, and Go) are more likely to run into code scanning errors if the scan is run without following the application's proper build steps. Interpreted languages (like Python, Ruby, and JavaScript/TypeScript) are much less likely to run into these issues.
 
 You can use utilities like [this GitHub CLI extension](https://github.com/CallMeGreg/gh-language) to analyze the languages used across a GitHub Organization, and use that information to determine an approach that will best suit your needs.
+
+To get the most from code scanning at scale:
+
+- **Include GitHub Actions workflows.** Default setup can [analyze workflow files with CodeQL](https://github.blog/security/application-security/how-to-secure-your-github-actions-workflows-with-codeql/) to find issues such as workflow injection. Repositories that adopted default setup before this support was added must enable GitHub Actions analysis explicitly in their default setup settings. For workflow hardening guidance, see [Securing GitHub Actions Workflows](/library/application-security/recommendations/actions-security).
+- **Block merges on findings.** Add the [Require code scanning results](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-code-scanning-results) rule to your Repository Rulesets so that pull requests that introduce alerts at or above your chosen severity can't merge.
+- **Cover languages that CodeQL doesn't support.** [AI Scan](https://docs.github.com/en/enterprise-cloud@latest/code-security/concepts/code-scanning/ai-scan) supplements CodeQL. [AI Scan for pull requests](https://github.blog/changelog/2026-10-15-ai-scan-for-pull-requests-generally-available/) is generally available and finds vulnerabilities in pull request changes for languages such as PHP, Shell, and Terraform (HCL); its findings are advisory and can't block merges through rulesets. [AI Scan for repositories](https://github.blog/changelog/2026-10-28-ai-scan-for-repositories-in-public-preview/) is in public preview and scans the default branch on demand. An enterprise AI Scan policy controls whether organizations can enable either feature, and both consume Code Security AI credits.
+- **Speed up remediation.** [Agentic Autofix](https://github.blog/changelog/2026-10-15-agentic-autofix-for-code-scanning-alerts-general-availability/) is generally available on GitHub Enterprise Cloud. Assign a default-branch alert to Copilot, and it validates its fix with CodeQL before opening a draft pull request. An enterprise administrator must first enable the Agentic Autofix policy, and a Copilot billing method must be defined.
+- **Accept reports from outside researchers.** Enable [private vulnerability reporting](https://docs.github.com/en/enterprise-cloud@latest/code-security/how-tos/report-and-fix-vulnerabilities/configure-vulnerability-reporting/configure-for-a-repository) on public repositories so that vulnerabilities are reported privately instead of in public issues.
 
 ### Access permissions
 
@@ -228,7 +263,9 @@ Separate from the default repository roles, there is a pre-defined Organization 
 
 There may be times when it is justified to exempt a Pull Request from security scanning, or to exempt a security alert from remediation. In these cases, it is important to have a clear and auditable process for granting these exceptions.
 
-When configuring a Repository Ruleset, you can grant specific Teams, Roles, or GitHub Apps the ability to [bypass the Ruleset](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository#granting-bypass-permissions-for-your-branch-or-tag-ruleset). This will allow members of the exempted entity to merge code without meeting the conditions of the Ruleset in emergency situations.
+When configuring a Repository Ruleset, you can grant specific Teams, Roles, or GitHub Apps the ability to [bypass the Ruleset](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository#granting-bypass-permissions-for-your-branch-or-tag-ruleset). This will allow members of the exempted entity to merge code without meeting the conditions of the Ruleset in emergency situations.
+
+Apply the same discipline to alert dismissals. With [delegated alert dismissal](https://docs.github.com/en/enterprise-cloud@latest/code-security/concepts/security-at-scale/delegated-alert-dismissal), users with write access must request to dismiss code scanning, secret scanning, or Dependabot alerts, and organization owners, security managers, or a custom role approve or deny each request. Keep Ruleset bypass lists, push protection bypass lists, and push protection exemptions as small as possible, and review them regularly.
 
 When an entity bypasses the requirements of a Ruleset, an event is fired and recorded in the Enterprise's [Audit Log](https://docs.github.com/enterprise-cloud@latest/admin/concepts/security-and-compliance/audit-log-for-an-enterprise). Similarly, when a security alert is opened, resolved, or dismissed, an event is fired and recorded in the Audit Log.
 
