@@ -80,6 +80,8 @@ For additional topic-specific guidance, see also:
 
 Start with this baseline. Apply each control at the highest scope available (enterprise, then organization, then repository), pilot before you enforce, and verify coverage. These guardrails help teams adopt new capabilities, including AI agents, quickly and safely. All baseline controls are generally available; features labeled preview are not.
 
+This baseline targets GitHub Enterprise Cloud. Some controls, such as Enterprise Managed Users and Copilot cloud agent settings, aren't available on GitHub Enterprise Server. On GitHub Enterprise Server, apply the controls your version supports, and use the server hardening and audit log streaming items in the checklist below.
+
 - **[Centralize identity](./governance-administration-essentials):** SAML SSO or Enterprise Managed Users with automated deprovisioning, plus secure two-factor authentication (2FA).
 - **Stop secret leaks:** push protection with delegated bypass on every repository, [Public Monitoring](https://github.blog/changelog/2026-10-28-public-monitoring-for-enterprises-generally-available/), and [rotation of exposed secrets](https://docs.github.com/enterprise-cloud@latest/code-security/tutorials/remediate-leaked-secrets/remediating-a-leaked-secret).
 - **[Eliminate long-lived credentials](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-personal-access-tokens-in-your-enterprise):** restrict classic personal access tokens (PATs), approve fine-grained PATs and GitHub App installations, and prefer GitHub Apps and OIDC.
