@@ -121,6 +121,8 @@ GHEC supports two distinct user access models. Both give you access to the same 
 
 Each model uses a different type of user account that isn't mutually interchangeable. Switching from one to the other later is not simple and requires both migration tools and an additional process to migrate user history.
 
+Whichever model you choose, centralize identity in your IdP so it drives joiners and leavers instead of manual invitations and removals. With EMU, SCIM provisioning does this automatically. In the standard model, [SCIM is available only with organization-level SAML](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/deciding-whether-to-configure-saml-for-your-enterprise-or-your-organizations); if you configure SAML at the enterprise level, automate membership removal separately and configure the unaffiliated users policy.
+
 ### Standard model ("Bring your own account")
 
 The standard model emphasizes connection with the public, open source parts of GitHub.com. As the name suggests, users bring their own personal accounts to work in much the same way they might use their personal phone, laptop, or other device. They own the account and it follows them as they join, contribute, and leave organizations and participate in the GitHub community, not just during their employment at a company or work on a certain project.
@@ -128,6 +130,8 @@ The standard model emphasizes connection with the public, open source parts of G
 Enterprises and their organizations then link these accounts and use SAML identities to authenticate access to their private resources. With a supported IdP and GitHub configuration, you can use [System for Cross-domain Identity Management (SCIM)](https://docs.github.com/enterprise-cloud@latest/organizations/managing-saml-single-sign-on-for-your-organization/about-scim-for-organizations) to further use linked workplace identity associations to grant or terminate access to those protected resources automatically.
 
 Standard enterprises must also decide whether to configure SAML at the enterprise level or independently per organization. Enterprise-level SAML is recommended for most deployments because it provides a single authentication boundary and simplifies administration. Organization-level SAML is appropriate when different organizations genuinely require different IdPs or SAML configurations. For guidance on this decision, see [Deciding whether to configure SAML for your enterprise or your organizations](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/deciding-whether-to-configure-saml-for-your-enterprise-or-your-organizations).
+
+Because users sign in to personal accounts with GitHub credentials, also require two-factor authentication (2FA) with secure methods. For the policy settings, see [governance policies best practices](./governance-policies-best-practices).
 
 The standard model also allows you to add external users as outside collaborators to specific repositories with certain permissions for only those repositories. These external users who use their personal GitHub accounts are exempted from any SAML authentication requirements imposed on normal members.
 
@@ -147,9 +151,11 @@ The EMU model prioritizes centralized enterprise control of a standardized work 
 
 The full lifecycle of these accounts, including authentication and provisioning, is managed by a supported IdP, such as Microsoft Entra ID (formerly Azure Active Directory), Okta, or PingFederate. EMU supports both SAML and [OIDC](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/configuring-authentication-for-enterprise-managed-users/configuring-oidc-for-enterprise-managed-users) for authentication. OIDC is the recommended choice when using Microsoft Entra ID, as it enables Entra ID's [Conditional Access Policy](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/configuring-authentication-for-enterprise-managed-users/about-support-for-your-idps-conditional-access-policy) (CAP) to govern GitHub access alongside other corporate resources. This provides a unified access control posture and removes the need for a separate IP allow list.
 
+Because managed user accounts [authenticate only through your IdP](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/understanding-iam-for-enterprises/abilities-and-restrictions-of-managed-user-accounts#authentication) and have no two-factor methods stored on GitHub, enforce multifactor authentication (MFA) for the GitHub application in your IdP. Also evaluate [proof of presence](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise/configuring-proof-of-presence), which is in [public preview](https://github.blog/changelog/2026-09-24-require-proof-of-presence-for-high-impact-actions/) for EMU enterprises that use Entra ID. It sends members back to your IdP to reauthenticate before high-impact actions, such as creating a token or changing organization security settings, which limits what a stolen session can do.
+
 The enterprise can standardize EMU account information, including username formatting, email addresses, and display names, which supports improved transparency and reporting.
 
-With the strict IdP account backing requirement for work accounts, outside collaborators cannot be invited in the same way as with the standard user model. All users, including external guests, must be provisioned through your IdP. [Guest collaborators](https://docs.github.com/enterprise-cloud@latest/admin/managing-accounts-and-repositories/managing-users-in-your-enterprise/enabling-guest-collaborators) are a distinct account type available in some EMU plans that allows IdP-provisioned external users to access specific repositories without consuming a full enterprise license or receiving member-level organization access. This makes guest collaborators a practical option for contractors, auditors, and vendor partners.
+With the strict IdP account backing requirement for work accounts, outside collaborators cannot be invited in the same way as with the standard user model. All users, including external guests, must be provisioned through your IdP. [Guest collaborators](https://docs.github.com/enterprise-cloud@latest/admin/managing-accounts-and-repositories/managing-users-in-your-enterprise/enabling-guest-collaborators) are a distinct EMU role for IdP-provisioned external users. Unlike regular members, guest collaborators can't access internal repositories in the enterprise, except in organizations where they're added as members. This makes guest collaborators a practical option for contractors, auditors, and vendor partners.
 
 Beyond providing more standardization, the EMU model also adds guardrails against making private content publicly visible, such as accidentally pushing to public GitHub.com repositories. Not only do EMU enterprises prevent public repository creation, but EMU users cannot perform write-type actions such as pushing, starring, or creating issues or pull requests in repositories outside of their enterprise account.
 
@@ -254,7 +260,7 @@ For non-SCIM access management, organization owners can [directly invite users](
 
 ### User offboarding
 
-Automate user removal by using SCIM-based deprovisioning through your IdP. As a safety net, configure the [unaffiliated users policy](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/control-offboarding) to control what happens when a user loses all organization membership within your enterprise. Without this policy, users who are removed from all organizations may remain as enterprise members, consuming a license and retaining access to enterprise-level resources. Combine SCIM deprovisioning with the unaffiliated users policy to ensure that offboarded employees do not retain dormant access.
+Automate user removal by using SCIM-based deprovisioning through your IdP where it is available (EMU, or organization-level SAML in the standard model). As a safety net, configure the [unaffiliated users policy](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/control-offboarding) to control what happens when a user loses all organization membership within your enterprise. Without this policy, users who are removed from all organizations may remain as enterprise members, consuming a license and retaining access to enterprise-level resources. Combine SCIM deprovisioning with the unaffiliated users policy to ensure that offboarded employees do not retain dormant access.
 
 ### Use teams to grant permissions
 
@@ -266,7 +272,7 @@ Grant permissions to teams rather than individuals wherever possible. Team membe
 - **Billing manager**: Can access and manage only billing settings.
 - **Enterprise App manager**: Can [manage enterprise-owned GitHub App installations](https://docs.github.com/enterprise-cloud@latest/admin/managing-accounts-and-repositories/managing-roles-in-your-enterprise/abilities-of-roles#app-managers) without requiring full enterprise owner privileges. Useful for delegating app governance to a platform or integrations team.
 
-Enterprise owners can also create [custom enterprise roles](https://docs.github.com/enterprise-cloud@latest/admin/managing-accounts-and-repositories/managing-roles-in-your-enterprise) with a selected set of enterprise-level permissions. Custom enterprise roles let you delegate specific administrative responsibilities without granting full enterprise owner access. This follows the same least-privilege principle as custom organization and repository roles, applied at the highest governance layer.
+Enterprise owners can also create [custom enterprise roles](https://docs.github.com/enterprise-cloud@latest/admin/managing-accounts-and-repositories/managing-roles-in-your-enterprise) with a selected set of enterprise-level permissions. Custom enterprise roles let you delegate specific administrative responsibilities without granting full enterprise owner access. This follows the same least-privilege principle as custom organization and repository roles, applied at the highest governance layer. Use custom roles instead of adding owners, and keep the number of standing enterprise and organization owners as small as your operations allow.
 
 EMU enterprises must provision all enterprise members and administrative roles through their IdP. Standard enterprises can assign administrative roles on GitHub.com.
 
@@ -274,7 +280,7 @@ EMU enterprises must provision all enterprise members and administrative roles t
 
 - **Member**: The default, non-administrative role in an organization. Members have a number of permissions by default, including the ability to create repositories and project boards, although these can be changed by enterprise or organization policy.
 - **Organization owner**: Complete administrative access over an organization, including full access and control over all repositories. This role should be limited to only the number of users required to support your business needs, since organization owners possess permissions for potentially destructive or sensitive actions. However, there should always be more than one organization owner in each organization for contingency purposes, in case one is unavailable, leaves, or loses access.
-- **Outside collaborator**: Has access to one or more organization repositories but is not a member of the organization. Consultants or temporary employees often occupy this role. Outside collaborators are invited directly per repository using their GitHub account or email address. EMU enterprises cannot add outside collaborators because all users must be provisioned from the connected IdP.
+- **Outside collaborator**: Has access to one or more organization repositories but is not a member of the organization. Consultants or temporary employees often occupy this role. Outside collaborators are invited directly per repository using their GitHub account or email address. Because they aren't organization members, outside collaborators can't read your enterprise's internal repositories, so use this role rather than organization membership for contractors who need only specific repositories. In EMU enterprises, this role is called [repository collaborator](https://docs.github.com/enterprise-cloud@latest/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#outside-collaborators-or-repository-collaborators), and the collaborator must be a managed user account provisioned from your IdP.
 - **Security manager**: An organization-level role that organization owners can assign to any team. When applied, it gives every member of the team permissions to manage security alerts and settings across the organization, as well as read permissions for all repositories. Useful for security teams and auditors.
 - **Billing manager**: Can view and manage the billing information and settings for a specific organization. Useful in multi-organization enterprises where you might not want to grant full enterprise billing manager rights to some users.
 - **GitHub App manager**: Can manage settings of [GitHub App registrations](https://docs.github.com/enterprise-cloud@latest/organizations/managing-programmatic-access-to-your-organization/adding-and-removing-github-app-managers-in-your-organization) owned by an organization, but cannot install or uninstall apps.
@@ -284,7 +290,7 @@ Organization owners can also create [custom organization roles](https://docs.git
 
 ### Repository roles and custom roles
 
-Do not use Admin as a default repository permission. Use Read or Write as a starting point and rely on rulesets to control how code reaches protected branches. For the full set of [repository roles](https://docs.github.com/enterprise-cloud@latest/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) and their capabilities, see GitHub Docs.
+Set the organization [base permission](https://docs.github.com/enterprise-cloud@latest/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/setting-base-permissions-for-an-organization) to None or Read, and grant higher access through teams. Never use Admin as a base permission. If you deliberately set Write as the base permission to promote innersource, as in the green organization of Model 2, rely on rulesets to control how code reaches protected branches. For the full set of [repository roles](https://docs.github.com/enterprise-cloud@latest/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) and their capabilities, see GitHub Docs.
 
 When different levels of access are given through different routes, such as team membership and the base permissions for an organization, the highest access overrides for each specific permission. If a person has been given conflicting access, you'll see a "Mixed roles" warning on the repository access page. You do not necessarily need to resolve conflicting access. This information is there for your awareness so that the conflicting permissions do not cause confusion.
 
@@ -298,9 +304,9 @@ GHEC offers several methods for API and command line access, and it's best pract
 
 Use [fine-grained PATs](https://docs.github.com/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#fine-grained-personal-access-tokens) over classic PATs. Fine-grained PATs provide required expiration dates, granular scopes, and repository-level access control. Set an enterprise [policy to restrict classic PAT access](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-personal-access-tokens-in-your-enterprise) to reduce your attack surface.
 
-For fine-grained PATs, require [administrator approval](https://docs.github.com/enterprise-cloud@latest/organizations/managing-programmatic-access-to-your-organization/setting-a-personal-access-token-policy-for-your-organization) before tokens can access enterprise resources. This provides a governed on-ramp for automation tokens.
+For fine-grained PATs, require [administrator approval](https://docs.github.com/enterprise-cloud@latest/organizations/managing-programmatic-access-to-your-organization/setting-a-personal-access-token-policy-for-your-organization) before tokens can access enterprise resources, and set a [maximum lifetime](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-personal-access-tokens-in-your-enterprise#enforcing-a-maximum-lifetime-policy-for-personal-access-tokens) that matches your credential rotation standard. This provides a governed on-ramp for automation tokens.
 
-For repeated or long-lived API access, use a GitHub App instead of a PAT. Apps provide enterprise-level scalability, short-lived tokens, and are not tied to an individual user's account.
+For recurring or long-lived automation, use a GitHub App or a GitHub Actions workflow instead of a PAT. Apps provide enterprise-level scalability, short-lived scoped tokens, and are not tied to an individual user's account. Workflows can use the automatically generated [`GITHUB_TOKEN`](https://docs.github.com/enterprise-cloud@latest/actions/concepts/security/github_token), which expires when the job finishes or reaches its maximum lifetime.
 
 ### SSH keys and certificate authorities
 
@@ -308,7 +314,7 @@ If you want to centrally manage command line access and avoid per-user PAT manag
 
 ### IP allow lists
 
-If you configure an [IP allow list](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise/restricting-network-traffic-to-your-enterprise-with-an-ip-allow-list), include the IP ranges of all installed integrations. Missing ranges will cause integrations to silently fail. EMU enterprises using OIDC must also add integration IP ranges to their IdP's [conditional access policy](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/configuring-authentication-for-enterprise-managed-users/about-support-for-your-idps-conditional-access-policy) (CAP).
+Restrict network access to your enterprise with an [IP allow list](https://docs.github.com/enterprise-cloud@latest/admin/configuring-settings/hardening-security-for-your-enterprise/restricting-network-traffic-to-your-enterprise-with-an-ip-allow-list). EMU enterprises that use Entra ID with OIDC can use their IdP's allow list through its [conditional access policy](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/configuring-authentication-for-enterprise-managed-users/about-support-for-your-idps-conditional-access-policy) (CAP) instead. Either way, include the IP ranges of all installed integrations. Missing ranges will cause integrations to silently fail.
 
 For GitHub-hosted Actions runners with [four or more vCPUs](https://docs.github.com/enterprise-cloud@latest/actions/concepts/runners/larger-runners#about-larger-runners), you can receive a static IP address unique to your enterprise to add to your allow list or IdP CAP.
 
@@ -324,9 +330,13 @@ If you plan to use the GitHub API in a repeated manner, it is a best practice to
 
 GitHub also supports a robust community of pre-existing integrations using both GitHub App and OAuth interfaces. If you're looking to integrate with other tools in your development toolchain, it's likely there's already an app-based GitHub integration out there for you to install and start using.
 
-Administrators control which apps are installed for organizations, which repositories and permissions they are granted, and can require administrator approval for installations. Enterprise owners can also [install GitHub Apps at the enterprise level](https://docs.github.com/enterprise-cloud@latest/apps/using-github-apps/installing-a-github-app-on-your-enterprise).
+Administrators control which apps are installed for organizations and which repositories and permissions they are granted. Keep [OAuth app access restrictions](https://docs.github.com/enterprise-cloud@latest/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions) enabled so OAuth apps can't access organization resources until an owner approves them, and [require owner approval for GitHub App installations](https://docs.github.com/enterprise-cloud@latest/organizations/managing-programmatic-access-to-your-organization/limiting-oauth-app-and-github-app-access-requests-and-installations) by not allowing repository admins to install apps. Review installed apps and the permissions they hold at least quarterly, and remove apps that are unused or over-scoped. Enterprise owners can also [install GitHub Apps at the enterprise level](https://docs.github.com/enterprise-cloud@latest/apps/using-github-apps/installing-a-github-app-on-your-enterprise).
 
 An enterprise-level installation makes the app available across all organizations without per-organization setup, eliminating the management burden for broadly-needed platform tools. Security scanners, compliance tooling, and developer productivity tools are common examples of apps that benefit from enterprise-level installation. Note that the 100 GitHub App installations per organization limit applies to organization-level installations; apps installed at the enterprise level are not counted against that limit.
+
+### Credential inventory
+
+Use the [enterprise credential inventory](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/respond-to-incidents/reviewing-credentials-in-your-enterprise) to see which credentials can access your enterprise, including PATs, OAuth app and GitHub App tokens, and user SSH keys. Export the inventory for credential-level detail, and review it alongside your PAT and GitHub App reviews to find unused, over-scoped, or unowned credentials. The inventory is read-only, so remediate each credential at the enterprise, organization, app, or user level.
 
 ### Webhooks
 
@@ -357,7 +367,9 @@ You can configure audit log streaming at the enterprise account level to ensure 
 - **Data continuity**: You can pause the stream for up to seven days without losing any audit data.
 - **Data retention**: Keep your exported audit logs and Git events data as long as you need to for reporting and audits, as well as for a quick response in case of a security incident or other urgent data need.
 
-GitHub supports native streaming to Azure Events Hubs, Datadog, and Splunk, and can write directly to AWS S3, Azure Blob Storage, and Google Cloud Storage.
+GitHub supports native streaming to Azure Events Hubs, Datadog, and Splunk, and can write directly to AWS S3, Azure Blob Storage, and Google Cloud Storage. On GitHub Enterprise Server, use [log forwarding](https://docs.github.com/enterprise-server@latest/admin/monitoring-activity-in-your-enterprise/exploring-user-activity-in-your-enterprise/log-forwarding) to send logs to your log management system.
+
+EMU enterprises can also stream Copilot agent session activity, such as prompts, responses, and tool calls, to their SIEM from the audit log streaming settings with [Copilot agent session streaming](https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/) (public preview). For agent audit pipelines, see [Governing agents in GitHub Enterprise](./governing-agents). For the high-risk events to alert on once logs reach your SIEM, see [governance policies best practices](./governance-policies-best-practices).
 
 {{< callout type="warning" >}}
 GitHub strongly recommends that enterprise customers set up audit log streaming or automated export to retain this critical security data beyond the default retention period.
@@ -428,7 +440,7 @@ Repositories host application source code and other files, and are the core cons
 
 ### Repository visibility
 
-GHEC supports [public, internal, and private repository visibility types](https://docs.github.com/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility). Choose your default visibility carefully. Internal visibility promotes innersource by making repositories read-accessible to all enterprise members. Private visibility restricts access to explicitly assigned teams and users. EMU enterprises cannot create public repositories.
+GHEC supports [public, internal, and private repository visibility types](https://docs.github.com/enterprise-cloud@latest/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility). Choose your default visibility carefully. Internal visibility promotes innersource by making repositories read-accessible to all enterprise members. Private visibility restricts access to explicitly assigned teams and users. Use private, not internal, visibility for code that shouldn't be readable by every enterprise member. EMU enterprises cannot create public repositories.
 
 Control who can change visibility after creation. Repository administrators cannot change a repository's visibility setting unless [allowed by explicit policy](https://docs.github.com/enterprise-cloud@latest/organizations/managing-organization-settings/restricting-repository-visibility-changes-in-your-organization). Restricting visibility changes to organization owners reduces the risk of accidental exposure.
 
@@ -473,10 +485,11 @@ Custom properties are most powerful when paired with enterprise-level rulesets. 
 - [ ] Choose an organization architecture model (single, red-green-sandbox, or portfolio company) that matches your collaboration needs and compliance requirements
 - [ ] Avoid mapping organizations to internal management hierarchy; use teams and repository permissions for collaboration boundaries instead
 - [ ] Review all enterprise policies with development, security, and operations stakeholders
-- [ ] Set intentional base permissions that balance innersource with security needs
+- [ ] Set base permissions to None or Read and elevate through teams; use Write only as a deliberate innersource choice backed by rulesets
 - [ ] Configure repository creation, forking, and visibility change policies
 - [ ] Set up a payment method and spending limits for consumption-based services before scaling
 - [ ] Use fine-grained PATs over classic PATs; prefer GitHub Apps for repeated API access
+- [ ] Require administrator approval and a maximum lifetime for fine-grained PATs
 - [ ] Sync teams with IdP groups for automated onboarding and offboarding
 - [ ] Limit the organization owner role; maintain at least two owners per organization for contingency
 - [ ] Use rulesets over legacy branch protection rules for mergeability controls
@@ -494,6 +507,10 @@ Custom properties are most powerful when paired with enterprise-level rulesets. 
 - [ ] Configure the unaffiliated users policy to control what happens when users lose all organization membership
 - [ ] Define cost centers early to align consumption spending with business unit budgets
 - [ ] Evaluate enterprise teams for cross-organization access management
+- [ ] Keep OAuth app access restrictions enabled, require owner approval for GitHub App installations, and review installed apps quarterly
+- [ ] Review the enterprise credential inventory regularly
+- [ ] Evaluate proof of presence (public preview) if you use EMU with Entra ID
+- [ ] Use private, not internal, visibility for code that shouldn't be readable enterprise-wide, and add contractors as outside or repository collaborators
 
 ## Anti-patterns to avoid
 
@@ -503,15 +520,18 @@ Custom properties are most powerful when paired with enterprise-level rulesets. 
 - **Relying solely on manual user provisioning**: Without SCIM automation, departed employees may retain access. Automate provisioning and deprovisioning through your IdP.
 - **Polling the GitHub API instead of using webhooks**: Polling wastes rate limit budget and creates unnecessary load. Use webhooks for event-driven integrations.
 - **Ignoring audit log retention**: Default retention is limited. Failing to set up streaming or export means losing critical security data.
-- **Granting Admin as a base permission**: This gives all members administrative access to all repositories, including destructive capabilities. Use Read or Write as a base and elevate through team assignment.
+- **Granting Admin as a base permission**: This gives all members administrative access to all repositories, including destructive capabilities. Use None or Read as a base and elevate through team assignment.
 - **Switching user access models after deployment**: Migrating between standard and EMU requires migration tools and process. Choose correctly up front.
 - **Installing GitHub Apps organization by organization for enterprise-wide tools**: When an app needs to operate across all organizations, use enterprise-level installation. Per-organization installation multiplies management overhead, scatters approval governance, and creates configuration drift between organizations.
 - **Granting full owner access when a custom role would suffice**: Enterprise owner and organization owner access are broadly permissive. Create a custom enterprise or organization role instead, scoped to the specific capabilities that persona needs, such as audit log access, runner group management, or Dependabot administration.
 - **Ignoring user offboarding**: Without a configured unaffiliated users policy and SCIM-based deprovisioning, departed users may retain dormant enterprise access or consume licenses indefinitely.
+- **Leaving third-party apps unreviewed**: Apps that members authorize or install can keep broad access long after anyone needs them. Keep OAuth app access restrictions enabled, require owner approval for GitHub App installations, and review installed apps and their permissions quarterly.
 
 ## Related guidance
 
 - [Governance policies best practices](./governance-policies-best-practices)
+- [Governing agents in GitHub Enterprise](./governing-agents)
+- [Securing GitHub Actions workflows](../../application-security/recommendations/actions-security)
 - [Repository rulesets best practices](./managing-repositories-at-scale/rulesets-best-practices)
 - [Custom properties best practices](./managing-repositories-at-scale/custom-properties-best-practices)
 
@@ -540,6 +560,8 @@ Custom properties are most powerful when paired with enterprise-level rulesets. 
 - [About programmatic access in your organization](https://docs.github.com/enterprise-cloud@latest/organizations/managing-programmatic-access-to-your-organization/about-programmatic-access-in-your-organization)
 - [Managing your personal access tokens](https://docs.github.com/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
 - [About SSH certificate authorities](https://docs.github.com/enterprise-cloud@latest/organizations/managing-git-access-to-your-organizations-repositories/about-ssh-certificate-authorities)
+- [Reviewing credentials in your enterprise](https://docs.github.com/enterprise-cloud@latest/admin/managing-iam/respond-to-incidents/reviewing-credentials-in-your-enterprise)
+- [Limiting OAuth app and GitHub App access requests and installations](https://docs.github.com/enterprise-cloud@latest/organizations/managing-programmatic-access-to-your-organization/limiting-oauth-app-and-github-app-access-requests-and-installations)
 - [About creating GitHub Apps](https://docs.github.com/enterprise-cloud@latest/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps)
 - [Enforcing policies for GitHub Actions in your enterprise](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-actions-in-your-enterprise)
 - [Audit log for an enterprise](https://docs.github.com/enterprise-cloud@latest/admin/concepts/security-and-compliance/audit-log-for-an-enterprise)
