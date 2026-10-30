@@ -198,11 +198,13 @@ To pin the version of an action to a commit SHA, specify the commit hash in the 
 
 Including the version number in a comment helps teams track versions and makes it easier to identify outdated actions.
 
-Security administrators can enforce policies requiring all GitHub Actions workflows and reusable workflow references to be pinned to full-length commit SHAs. This enforcement is available at the enterprise, organization, and repository levels and can be enabled via the [**Require actions to be pinned to a full-length commit SHA**](https://github.blog/changelog/2025-08-15-github-actions-policy-now-supports-blocking-and-sha-pinning-actions/) checkbox in the allowed actions and reusable workflows policy settings.
+Security administrators can require actions to be pinned to full-length commit SHAs at the enterprise, organization, and repository levels by enabling the [**Require actions to be pinned to a full-length commit SHA**](https://github.blog/changelog/2025-08-15-github-actions-policy-now-supports-blocking-and-sha-pinning-actions/) checkbox in the allowed actions and reusable workflows policy settings. This policy covers actions only. [Reusable workflows can still be referenced by tag](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-github-actions-in-your-enterprise#controlling-access-to-public-actions-and-reusable-workflows), so pin each reusable workflow call (`jobs.<job_id>.uses`) to a full-length commit SHA and check for unpinned calls in workflow reviews.
 
 #### Use workflow lockfiles
 
-[Workflow lockfiles](https://github.blog/changelog/2026-10-28-github-actions-workflow-lockfiles-are-generally-available/) (generally available in October 2026) keep readable tag references in workflows while running the exact commits you locked, including transitive actions. Generate the lockfile with the `gh actions-lock` GitHub CLI extension; Dependabot version updates regenerate matching entries. Once lockfiles are in place, enable the [**Require lockfile**](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/administer/control-workflow-execution#require-lockfile) protection and keep SHA pinning enforced, which an onboarded workflow's lockfile satisfies. [Lockfiles](https://docs.github.com/enterprise-cloud@latest/actions/concepts/security/workflow-dependency-lockfiles) don't cover reusable workflows called at the job level (`jobs.<job_id>.uses`), so pin those by SHA. Lockfiles also don't decide whether a dependency is safe; review each action before you lock it.
+[Workflow lockfiles](https://github.blog/changelog/2026-10-28-github-actions-workflow-lockfiles-are-generally-available/) (generally available in October 2026) keep readable tag references in workflows while running the exact commits you locked, including transitive actions. Generate the lockfile with the `gh actions-lock` GitHub CLI extension; Dependabot version updates regenerate matching entries. [Lockfiles](https://docs.github.com/enterprise-cloud@latest/actions/concepts/security/workflow-dependency-lockfiles) don't cover reusable workflows called at the job level (`jobs.<job_id>.uses`), so pin those by SHA. Lockfiles also don't decide whether a dependency is safe; review each action before you lock it.
+
+Before you enable the [**Require lockfile**](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/administer/control-workflow-execution#require-lockfile) protection, generate and verify lockfiles in each targeted repository and in the source repository of every reusable workflow those workflows call. The protection blocks a calling workflow when a called reusable workflow isn't onboarded to a lockfile in its own repository, even if the call is pinned to a SHA. Follow the [staged rollout](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/administer/enforce-workflow-lockfiles) and keep SHA pinning enforced, which an onboarded workflow's lockfile satisfies.
 
 ### Avoid actions with mutable dependencies
 
@@ -273,7 +275,7 @@ In public repositories on GitHub.com, GitHub Actions also [automatically holds p
 Even ephemeral self-hosted runners carry risks in public repository contexts, as attackers can exploit the window between job start and completion, or leverage shared resources like caches.
 
 {{< callout type="info" >}}
-Each GitHub-hosted runner is a clean, isolated virtual machine that is destroyed at the end of the job execution and does not have access to other runners. However, GitHub-hosted runners have unrestricted outbound network access by default. See [Secure runners](#secure-runners).
+Except for [single-CPU runners](https://docs.github.com/enterprise-cloud@latest/actions/reference/runners/github-hosted-runners#single-cpu-runners), each GitHub-hosted runner is a clean, isolated virtual machine that is destroyed at the end of the job execution and does not have access to other runners. Single-CPU runners (`ubuntu-slim`) run in a container on a shared virtual machine, so use a VM-based runner when a job needs VM-level isolation. However, GitHub-hosted runners have unrestricted outbound network access by default. See [Secure runners](#secure-runners).
 {{< /callout >}}
 
 ### Restrict allowed actions
@@ -305,7 +307,7 @@ Store deployment credentials as environment secrets rather than repository or or
 
 ### Secure runners
 
-- Prefer GitHub-hosted runners, which run each job in a fresh virtual machine.
+- Prefer GitHub-hosted runners, which run each job in a fresh virtual machine. The exception is [single-CPU runners](https://docs.github.com/enterprise-cloud@latest/actions/reference/runners/github-hosted-runners#single-cpu-runners), which run in a container on a shared virtual machine.
 - When you need self-hosted runners, use [ephemeral runners](https://docs.github.com/enterprise-cloud@latest/actions/reference/runners/self-hosted-runners#ephemeral-runners-for-autoscaling) that run a single job, and place them in [runner groups](https://docs.github.com/enterprise-cloud@latest/actions/concepts/runners/runner-groups) restricted to the organizations, repositories, and workflows that need them.
 - Never use self-hosted runners with [public repositories](#use-caution-with-public-repositories).
 - Keep self-hosted runners current. On GitHub Enterprise Cloud, [minimum version enforcement](https://github.blog/changelog/2026-09-28-self-hosted-runner-version-enforcement-date-has-moved/) began September 29, 2026. Runners below the minimum versions can't register or run jobs.
