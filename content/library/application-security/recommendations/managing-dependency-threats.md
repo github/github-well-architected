@@ -70,7 +70,7 @@ Modern software development relies heavily on dependencies - third-party package
 
 One example is [Shai-Hulud](https://socket.dev/blog/ongoing-supply-chain-attack-targets-crowdstrike-npm-packages), a self-replicating worm that infiltrated the npm ecosystem via compromised maintainer accounts, injecting malicious post-install scripts into popular JavaScript packages. The malware also stole credentials, injected backdoors, and attempted to destroy the user's home directory.
 
-Managing dependency threats requires a defense-in-depth strategy. No single control is perfect. Even registry-level protections like package cooldown periods (waiting periods after unpublishing before names can be re-registered) aren't sufficient against determined attackers. Layering multiple defenses creates a more robust security posture. This article provides opinionated guidance on implementing practical security measures that have been field-tested against real-world attacks like Shai-Hulud.
+Managing dependency threats requires a defense-in-depth strategy. No single control is perfect. Even registry-level protections like waiting periods before an unpublished package name can be re-registered aren't sufficient against determined attackers. Layering multiple defenses creates a more robust security posture. This article provides opinionated guidance on implementing practical security measures that have been field-tested against real-world attacks like Shai-Hulud.
 
 ## Key design strategies
 
@@ -80,8 +80,9 @@ Layered defenses reduce single points of failure by using multiple controls that
 2. **Use dev containers for isolation**: Development containers provide strong isolation between host machine and project environment. Even if malicious code executes, it can't access the actual home directory, SSH keys, or cloud credentials. GitHub Codespaces and Windows 365 provide managed environments with isolation built in.
 3. **Require signed commits with user interaction**: Cryptographic commit signing with biometric or password authentication prevents malicious scripts from creating commits without your knowledge. This blocks multi-stage attacks that modify your codebase.
 4. **Enforce repository rulesets**: Require pull requests and status checks for all changes to protected branches. This creates a checkpoint where automated security scans catch malicious code before it reaches your default branch.
-5. **Establish trusted publishing and verification**: Implement OIDC-based trusted publishing to eliminate long-lived tokens, and validate package attestations when consuming dependencies to verify they come from trusted sources.
-6. **Monitor and respond continuously**: Automate vulnerability detection with Dependabot, dependency review, code scanning, and secret scanning. Tune alerts to reduce fatigue and establish response runbooks.
+5. **Establish trusted publishing and verification**: Implement OIDC-based trusted publishing to eliminate long-lived tokens, make your releases tamper-evident, and validate package attestations when consuming dependencies to verify they come from trusted sources.
+6. **Monitor and respond continuously**: Automate vulnerability and malware detection with Dependabot, dependency review, code scanning, and secret scanning. Tune alerts to reduce fatigue and establish response runbooks.
+7. **Route dependencies through a governed proxy or mirror**: Send package requests from developers, CI runners, and coding agents through a managed registry proxy instead of public registries, so you can enforce policy, cooldowns, and malware blocking at install time.
 
 **Implementation checklist:**
 
@@ -90,13 +91,18 @@ Layered defenses reduce single points of failure by using multiple controls that
 - [ ] Use dev containers for development, especially for untrusted code
 - [ ] Enable commit signing with user interaction (passphrase, biometric, or hardware key)
 - [ ] Configure repository rulesets requiring pull requests and status checks
-- [ ] Enable Dependabot alerts and security updates for all repositories
+- [ ] Enable Dependabot alerts, malware alerts, and security updates for all repositories
+- [ ] Keep the default cooldown for Dependabot version updates, and review updates before merging instead of auto-merging them
+- [ ] Use reachability analysis (public preview, JavaScript/TypeScript) to prioritize Dependabot alerts
 - [ ] Configure dependency review action as a required status check on pull requests
 - [ ] Enable code scanning with CodeQL or third-party tools; block merges on high-severity findings using rulesets
 - [ ] Enable secret scanning with push protection; verify that partner patterns are enabled and custom patterns are defined for organization-specific secrets
-- [ ] Use trusted publishing with OIDC for any packages you maintain
+- [ ] Use trusted publishing with OIDC for any packages you maintain, and remove long-lived registry tokens
+- [ ] Use npm staged publishing so a maintainer approves each release with 2FA
 - [ ] Publish packages with provenance attestations (e.g., npm publish --provenance)
+- [ ] Enable immutable releases and generate artifact attestations; verify provenance before deploying
 - [ ] Verify package attestations for dependencies using npm audit signatures in CI/CD
+- [ ] Route package installs from developers, CI runners, and coding agents through a governed registry proxy or mirror
 - [ ] Configure Dependabot auto-triage rules to reduce alert fatigue
 - [ ] Create incident response runbooks for different alert severity levels
 - [ ] Document security exceptions and keep lockfiles current
@@ -107,7 +113,7 @@ This guidance assumes:
 
 - **Package ecosystem**: This guidance uses npm or Yarn for JavaScript/TypeScript projects as examples. Similar principles apply to other ecosystems (pip, Maven, NuGet), but specific configurations differ.
 - **GitHub repository**: You have administrative access to configure repository settings, rulesets, and GitHub Actions workflows.
-- **Dependabot and GitHub Advanced Security features**: This guidance uses Dependabot, dependency review, code scanning, and secret protection. Feature availability varies by GitHub plan.
+- **Dependabot and GitHub Advanced Security features**: This guidance uses Dependabot, dependency review, code scanning, and secret protection. Feature availability varies by GitHub plan, and features marked as preview may change.
 - **Development environment**: You can configure your local development environment or are using GitHub Codespaces/dev containers.
 - **CI/CD with GitHub Actions**: Your build and deployment pipelines use GitHub Actions. Adapt the workflow examples if using other CI/CD systems.
 
@@ -271,14 +277,24 @@ Build trust across the supply chain by establishing cryptographic provenance for
 
 #### For package publishers: Configure trusted publishing
 
-[Trusted publishing](https://docs.npmjs.com/trusted-publishers) removes the need to manage long-lived API tokens in your build systems. Instead, your CI/CD pipeline attests the build artifacts and uses OIDC to authenticate directly with package registries. This achieves [SLSA Build Level 3](https://slsa.dev/spec/v1.0/levels#build-l3) security and enables code-to-cloud traceability, and eliminates the risk of stolen tokens being used to publish malicious versions.
+[Trusted publishing](https://docs.npmjs.com/trusted-publishers) removes the need to manage long-lived API tokens in your build systems. Instead, your CI/CD pipeline uses OIDC to authenticate directly with package registries, which eliminates the risk of stolen tokens being used to publish malicious versions. Trusted publishing secures how you publish, not how you build: it doesn't achieve [SLSA Build Level 3](https://slsa.dev/spec/v1.0/levels#build-l3) on its own. To reach Build Level 3 and code-to-cloud traceability, [generate artifact attestations from a hardened build platform, such as a reusable workflow](https://docs.github.com/enterprise-cloud@latest/actions/how-tos/secure-your-work/use-artifact-attestations/increase-security-rating).
 
 For packages you maintain:
 
 1. Link your GitHub repository as a trusted publisher in your package registry settings (npm, PyPI, RubyGems, NuGet, crates.io, etc.)
-2. Update your release workflow to use [OIDC authentication](https://docs.github.com/actions/how-tos/secure-your-work/security-harden-deployments) instead of long-lived tokens
+2. Update your release workflow to use [OIDC authentication](https://docs.github.com/actions/how-tos/secure-your-work/security-harden-deployments) instead of long-lived tokens, then revoke the registry tokens it replaces and remove them from repository, organization, and environment secrets
 3. Publish with provenance attestations (e.g., `npm publish --provenance`) to create cryptographic proof on the specific commit of the source repository
 4. Create [linked artifact storage records](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/linked-artifacts) with the [`actions/attest`](https://github.com/actions/attest) action
+
+On npm, use [staged publishing](https://docs.npmjs.com/staged-publishing) (generally available since [May 2026](https://github.blog/changelog/2026-05-22-staged-publishing-and-new-install-time-controls-for-npm/)). Your workflow runs `npm stage publish`, and the version becomes installable only after a maintainer approves it with a 2FA challenge, so a compromised workflow can't release a version on its own. Limit your trusted publishing configuration to stage-only. If you can't adopt trusted publishing yet, replace publish tokens with [stage-only granular access tokens](https://github.blog/changelog/2026-09-18-stage-only-npm-tokens-for-safer-automation/), which npm rejects for direct `npm publish`.
+
+#### For release owners: Make releases tamper-evident
+
+Attackers who gain write access can swap release assets or move a tag to point at malicious code. Make what you ship verifiable:
+
+1. Enable [immutable releases](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/immutable-releases) (generally available since [October 2025](https://github.blog/changelog/2025-10-28-immutable-releases-are-now-generally-available/)) so published release assets and their tags can't be changed or deleted
+2. Generate [artifact attestations](https://docs.github.com/enterprise-cloud@latest/actions/concepts/security/artifact-attestations) for the binaries, packages, and container images you build
+3. Verify provenance, for example with `gh attestation verify`, before you deploy an artifact, and fail the deployment when verification fails
 
 #### For package consumers: Validate package attestations
 
@@ -302,9 +318,13 @@ Automate vulnerability detection and establish processes for responding to secur
 
 Build a comprehensive automated detection system that catches vulnerabilities at multiple stages:
 
-**Dependency vulnerabilities:**
+**Dependency vulnerabilities and malware:**
+
+Enable [Dependabot alerts](https://docs.github.com/enterprise-cloud@latest/code-security/tutorials/secure-your-dependencies/dependabot-quickstart) and [malware alerts](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/malware-alerts) on every repository. Since [July 2026](https://github.blog/changelog/2026-07-28-dependabot-alerts-on-malicious-packages-across-more-ecosystems/), the GitHub Advisory Database ingests malware advisories from the OpenSSF malicious-packages project, so malware alerts cover npm, PyPI, and other ecosystems. Act on malware alerts immediately and follow the remediation steps in each alert.
 
 Enable [Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-security-updates) to automatically detect vulnerabilities and create pull requests for updates. Consider grouping patch updates for expedited review, assigning security team reviewers, and scheduling daily scans. Use [auto-triage rules](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-auto-triage-rules) to reduce alert fatigue by automatically dismissing low-risk alerts or alerts for dependencies that don't affect your usage. For comprehensive guidance on managing security alerts at scale, see [Prioritizing security alert remediation](./prioritizing-alerts).
+
+Dependabot version updates now wait until a release has been available for at least three days before opening a pull request ([default cooldown](https://github.blog/changelog/2026-07-14-dependabot-version-updates-introduce-default-package-cooldown/)). The cooldown gives the community time to detect a compromised release. It applies only to version updates; security updates still open immediately. Keep the default or lengthen it with the [`cooldown` option](https://docs.github.com/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/dependabot-options-reference#cooldown-), and still [review each update before merging](#review-dependency-updates-systematically).
 
 Add the [dependency review action](https://github.com/actions/dependency-review-action) to your pull request workflows and require it as a status check to prevent potential vulnerabilities from being introduced. Configure it to fail on high-severity vulnerabilities, block problematic licenses, and warn on low [OpenSSF Scorecard](https://securityscorecards.dev/) scores.
 
@@ -312,11 +332,13 @@ Add the [dependency review action](https://github.com/actions/dependency-review-
 
 Enable [code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/code-scanning/code-scanning) to detect vulnerabilities and coding errors in your source code. Configure CodeQL or third-party tools to run on pull requests and block merges when issues are found.
 
-Enable [secret scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/secret-security/secret-scanning) to detect accidentally committed credentials. Configure push protection to prevent secrets from being pushed in the first place, and establish a response runbook for when alerts are triggered.
+Enable [secret scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/secret-security/secret-scanning) to detect accidentally committed credentials. Configure push protection to prevent secrets from being pushed in the first place, and establish a response runbook for when alerts are triggered. To enforce these controls across every repository, see [Enforce GitHub Advanced Security at scale](./enforce-ghas-at-scale).
 
 **Prioritize alerts with production context:**
 
 If you track your builds as [linked artifacts](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/linked-artifacts) with deployment records, you can filter Dependabot and code scanning alerts based on what's actually deployed in production. Use filters like `has:deployment` and `runtime-risk` alongside EPSS and CVSS scores to [focus remediation on vulnerabilities that pose real risk](https://docs.github.com/enterprise-cloud@latest/code-security/tutorials/secure-your-organization/prioritize-alerts-in-production-code) to your running systems.
+
+For JavaScript and TypeScript repositories, use [reachability analysis for Dependabot alerts](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/about-reachability-analysis-for-dependabot-alerts) (public preview since [October 2026](https://github.blog/changelog/2026-10-28-prioritize-dependabot-alerts-with-reachability-analysis/)). It labels each alert by whether your code has a call path to the vulnerable function. Fix reachable and potentially reachable alerts first; verdicts never dismiss an alert, so still triage unreachable ones.
 
 #### Review dependency updates systematically
 
@@ -333,6 +355,16 @@ Avoid auto-merging dependency updates without human review. Compromised maintain
 5. **Group updates for efficient review**: Instead of reviewing updates one-by-one, batch dependency updates into scheduled review sessions. This allows focused attention without creating bottlenecks.
 6. **Document decisions**: Record why specific versions were approved or rejected. This creates an audit trail and helps future reviewers.
 
+### Layer 7: Route dependencies through a governed proxy or mirror
+
+The previous layers depend on every developer machine, CI runner, and coding agent being configured correctly. A managed registry proxy or mirror (for example, Artifactory) gives you one enforcement point. Route all package requests through it instead of directly to public registries, so you can apply policy, enforce cooldowns, and block malware at install time. This matters most for CI runners and coding agents, which install dependencies without a human in the loop.
+
+1. Point package managers on developer machines, CI runners, and coding agent environments at your proxy, and block direct access to public registries where you can.
+2. Configure the proxy to block known malware and vulnerable versions, and to hold newly published versions for a minimum age.
+3. Provide an exception process for packages that are blocked in error.
+
+GitHub's [package firewall](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/protecting-endpoints-with-package-firewall) provides these controls as an enterprise policy. It blocks known malware, vulnerability advisories at a severity you choose, attestation downgrades, and newly introduced install scripts, and enforces a minimum package age. It's in [public preview](https://github.blog/changelog/2026-10-20-github-package-firewall-in-public-preview/) for GitHub Enterprise Cloud, including data residency, and supports npm only. If you already run Artifactory, you can [configure it to retrieve packages through the firewall](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/protecting-endpoints-with-package-firewall#configuring-artifactory) (experimental) so endpoints keep using Artifactory.
+
 ## Trade-offs and considerations
 
 ### Balancing security with development velocity
@@ -345,7 +377,7 @@ The most secure approach (reviewing every dependency change manually and disabli
 - Require manual review of all dependency updates
 - Validate package attestations and block on missing attestations
 - Use allow-lists of approved dependencies
-- Mirror packages through private registries (GitHub Packages, Artifactory, Nexus) for additional approval controls
+- Mirror packages through private registries (GitHub Packages, Artifactory, Nexus) for additional approval controls, and use longer cooldowns for critical systems (see [Layer 7](#layer-7-route-dependencies-through-a-governed-proxy-or-mirror))
 
 **For balanced security:**
 
@@ -353,6 +385,7 @@ The most secure approach (reviewing every dependency change manually and disabli
 - Require human review for all dependency updates (batch for efficiency, not reduced scrutiny)
 - Validate attestations when available but don't block on absence
 - Use dependency review action and code scanning as automated safety nets
+- Route all dependencies through a governed proxy or mirror
 
 ### Common challenges
 
@@ -362,7 +395,9 @@ The most secure approach (reviewing every dependency change manually and disabli
 - **Attestations not universally available**: Not all packages support attestations yet. Use attestation availability as one factor in dependency selection and gradually work toward full coverage.
 - **Keeping lockfiles current**: Lockfiles prevent unexpected updates but can become stale. Regularly update dependencies through Dependabot or scheduled audits to ensure security patches aren't missed while maintaining reproducible builds.
 - **Breaking changes in security updates**: Security updates sometimes include breaking changes that require code modifications. Establish separate processes for security updates (expedited) vs. feature updates (standard review), and allocate time for security debt remediation.
-- **Workflow security risks**: The `pull_request_target` trigger runs with elevated permissions and access to secrets, even for pull requests from forks. Prefer the regular `pull_request` trigger, define least-privilege workflow permissions, and enable [code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/code-scanning/code-scanning) to detect vulnerabilities. See the [GitHub Actions 2026 security roadmap](https://github.blog/news-insights/product-news/whats-coming-to-our-github-actions-2026-security-roadmap/) for upcoming capabilities addressing these risks.
+- **Workflow security risks**: The `pull_request_target` trigger runs with elevated permissions and access to secrets, even for pull requests from forks. Prefer the regular `pull_request` trigger, define least-privilege workflow permissions, and enable [code scanning](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/code-scanning/code-scanning) to detect vulnerabilities. For workflow execution protections, action pinning, and workflow lockfiles, see [Securing GitHub Actions workflows](./actions-security).
+- **Cooldowns can hold back needed releases**: Dependabot's default cooldown doesn't delay security updates, but a proxy's minimum package age can block a fix published today. Define an expedited, reviewed exception path, such as the package firewall's [exception requests](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/protecting-endpoints-with-package-firewall#managing-exceptions).
+- **Proxy as a single point of failure**: When all installs go through a proxy, an outage blocks builds. Run it with high availability and monitor it like other production dependencies.
 
 ## Seeking further assistance
 
@@ -376,12 +411,17 @@ Specifically, you may find the following links helpful:
 
 - [Dependabot security updates](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependabot-security-updates)
 - [Dependency review](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/dependency-review)
+- [Malware alerts](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/malware-alerts)
+- [Protecting endpoints with GitHub package firewall](https://docs.github.com/enterprise-cloud@latest/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/protecting-endpoints-with-package-firewall)
+- [Immutable releases](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/immutable-releases)
 - [Signing commits](https://docs.github.com/enterprise-cloud@latest/authentication/managing-commit-signature-verification/signing-commits)
 - [About rulesets](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets)
 - [npm trusted publishers](https://docs.npmjs.com/trusted-publishers)
+- [npm staged publishing](https://docs.npmjs.com/staged-publishing)
 - [Verifying npm package provenance](https://docs.npmjs.com/viewing-package-provenance)
 - [Using artifact attestations](https://docs.github.com/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations)
 - [Supply chain security](https://docs.github.com/enterprise-cloud@latest/code-security/concepts/supply-chain-security/supply-chain-security)
+- [Securing your end-to-end supply chain](https://docs.github.com/enterprise-cloud@latest/code-security/tutorials/implement-supply-chain-best-practices/end-to-end-supply-chain-overview)
 - [Our plan for a more secure npm supply chain](https://github.blog/security/supply-chain-security/our-plan-for-a-more-secure-npm-supply-chain/) - GitHub's response to the Shai-Hulud attack
 - [The second half of software supply chain security on GitHub](https://github.blog/security/supply-chain-security/the-second-half-of-software-supply-chain-security-on-github/) - Build provenance and artifact attestations
 - [Securing the open source supply chain: The essential role of CVEs](https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-the-essential-role-of-cves/) - Understanding vulnerability data and automation
