@@ -265,7 +265,7 @@ Evaluate:
 
 - All required front matter fields are present
 - Taxonomy values are valid and appropriate for the content
-- `publishDate` is set and `draft` status is intentional
+- `draft` status is intentional
 - Author information is complete (both `name` and `handle`)
 
 Flag issues such as:
