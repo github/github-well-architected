@@ -272,7 +272,7 @@ Flag issues such as:
 
 - Missing or incomplete front matter fields
 - Invalid taxonomy values not listed in `docs/taxonomies.md`
-- Missing `publishDate` or unintentional `draft` status
+- Unintentional `draft` status
 - Incomplete author attribution
 
 ### Step 9 — Produce the Review
