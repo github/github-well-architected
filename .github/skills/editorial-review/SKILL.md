@@ -110,7 +110,7 @@ Examine the diff (if review runs in pull request) or local content files to iden
 If not already done, read and internalize:
 
 1. `CONTRIBUTING.md` — for submission guidelines, writing style, and structural expectations
-2. `archetypes/default.md` — for required front matter fields and article structure
+2. `archetypes/default.md` — for front matter examples and article structure
 3. `docs/framework-overview.md` — for WAF mission, vision, and identity
 4. `docs/taxonomies.md` — for valid taxonomy values and their purpose
 
