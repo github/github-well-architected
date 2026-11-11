@@ -113,8 +113,6 @@ Before reviewing content, read and internalize these files to establish the qual
 3. `docs/framework-overview.md` — WAF mission, vision, and identity
 4. `docs/taxonomies.md` — valid taxonomy values and their purpose
 
-Do not proceed to diagnosis without loading these files first.
-
 ### Step 2 — Diagnose content substance issues
 
 Read the full article and classify it against these common problem patterns. An article may exhibit more than one. For each pattern found, assess the **decision risk** — what could go wrong if a reader follows this guidance as written?
