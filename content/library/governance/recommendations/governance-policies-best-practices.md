@@ -66,7 +66,7 @@ github:
 
 Adopting GitHub's general platform best practices is crucial for effectively managing software development projects. These practices provide a structured framework that ensures projects are secure, maintainable, and scalable. By fostering a collaborative and efficient environment, these guidelines help organizations avoid common pitfalls, maintain high-quality codebases, and streamline project workflows. Ultimately, adhering to these best practices leads to successful and sustainable software projects.
 
-Recent supply chain attacks, such as the [Shai-Hulud npm worm](/library/application-security/recommendations/managing-dependency-threats), "pwn requests" in GitHub Actions, and large-scale secret harvesting, targeted long-lived credentials, over-permissive automation, and unreviewed dependencies. The guardrails in this article reduce those risks.
+Recent supply chain attacks, such as the [Shai-Hulud npm worm](../../application-security/recommendations/managing-dependency-threats), "pwn requests" in GitHub Actions, and large-scale secret harvesting, targeted long-lived credentials, over-permissive automation, and unreviewed dependencies. The guardrails in this article reduce those risks.
 
 For enterprise governance architecture decisions — including structural components, user access models, organization strategies, enterprise policies, billing, repository governance, teams and roles, programmatic access, and audit logs — use the companion guide [Essentials of governance and administration with GitHub Enterprise](./governance-administration-essentials).
 This article remains focused on high-impact policy guardrails.
@@ -87,10 +87,10 @@ This baseline targets GitHub Enterprise Cloud. Some controls, such as Enterprise
 - **[Eliminate long-lived credentials](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-personal-access-tokens-in-your-enterprise):** restrict classic personal access tokens (PATs), approve fine-grained PATs and GitHub App installations, and prefer GitHub Apps and OIDC.
 - **[Limit exposure](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-repository-management-policies-in-your-enterprise):** block public repositories, visibility changes, forking of private and internal repositories, and outside collaborator invitations by non-owners.
 - **[Protect default branches with rulesets](./managing-repositories-at-scale/rulesets-best-practices):** pull requests, CODEOWNERS review, required checks, and audited bypass.
-- **[Apply least privilege to GitHub Actions](/library/application-security/recommendations/actions-security):** read-only `GITHUB_TOKEN`, approved actions pinned by SHA or [workflow lockfile](https://github.blog/changelog/2026-10-28-github-actions-workflow-lockfiles-are-generally-available/), and [workflow execution protections](https://github.blog/changelog/2026-09-17-workflow-execution-protections-in-github-actions-generally-available/) with `pull_request_target` disabled on public repositories.
-- **[Enforce security configurations](/library/application-security/recommendations/enforce-ghas-at-scale):** secret scanning, push protection, Dependabot, and CodeQL on every eligible repository, [enforced for owners](https://github.blog/changelog/2026-09-15-enforce-github-advanced-security-configurations/).
+- **[Apply least privilege to GitHub Actions](../../application-security/recommendations/actions-security):** read-only `GITHUB_TOKEN`, approved actions pinned by SHA or [workflow lockfile](https://github.blog/changelog/2026-10-28-github-actions-workflow-lockfiles-are-generally-available/), and [workflow execution protections](https://github.blog/changelog/2026-09-17-workflow-execution-protections-in-github-actions-generally-available/) with `pull_request_target` disabled on public repositories.
+- **[Enforce security configurations](../../application-security/recommendations/enforce-ghas-at-scale):** secret scanning, push protection, Dependabot, and CodeQL on every eligible repository, [enforced for owners](https://github.blog/changelog/2026-09-15-enforce-github-advanced-security-configurations/).
 - **[Govern Copilot and agents](./governing-agents):** the Copilot cloud agent firewall, managed permissions for agent operations, and an enterprise MCP allowlist.
-- **[Govern dependencies](/library/application-security/recommendations/managing-dependency-threats):** route installs through a governed proxy or mirror, not directly from public registries.
+- **[Govern dependencies](../../application-security/recommendations/managing-dependency-threats):** route installs through a governed proxy or mirror, not directly from public registries.
 - **[Monitor centrally](./governance-administration-essentials):** stream the audit log to your SIEM, and alert on policy changes and bypasses.
 
 ## Key design strategies and checklist
@@ -105,7 +105,7 @@ Use these key strategies as a baseline to implement GitHub's best practices for 
 
 4. Keep **Allow GitHub Actions to create and approve pull requests** disabled (the default). If enabled, workflows can approve pull requests, which might let attackers bypass code reviews and merge pull requests unintentionally. This can be set at either the **Enterprise** or **Organizational** level.
 
-5. For other GitHub Actions controls, such as SHA pinning, lockfiles, and workflow execution protections, see [Securing GitHub Actions Workflows](/library/application-security/recommendations/actions-security).
+5. For other GitHub Actions controls, such as SHA pinning, lockfiles, and workflow execution protections, see [Securing GitHub Actions Workflows](../../application-security/recommendations/actions-security).
 
 6. **Disable forking** if not absolutely needed: You can help prevent sensitive information from being exposed by [disabling the ability to fork](https://docs.github.com/enterprise-cloud@latest/admin/enforcing-policies/enforcing-policies-for-your-enterprise/enforcing-repository-management-policies-in-your-enterprise#enforcing-a-policy-for-forking-private-or-internal-repositories) private and internal repositories.
 

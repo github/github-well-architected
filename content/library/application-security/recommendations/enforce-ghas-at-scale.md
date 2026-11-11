@@ -212,13 +212,13 @@ jobs:
 ```
 
 {{< callout type="info" >}}
-This example references actions by version tag for readability. In production workflows, pin each action to a full-length commit SHA. For details, see [Securing GitHub Actions Workflows](/library/application-security/recommendations/actions-security).
+This example references actions by version tag for readability. In production workflows, pin each action to a full-length commit SHA. For details, see [Securing GitHub Actions Workflows](./actions-security).
 {{< /callout >}}
 
 4. Set the configuration parameters for Dependency Review (under the `with:` key) to meet your Organization's requirements. For a full list of configuration options, see the [Dependency Review Action documentation](https://github.com/actions/dependency-review-action#configuration-options).
 5. Ensure that your Repository Ruleset is configured to [require your newly defined workflow to pass before merging](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-workflows-to-pass-before-merging).
 
-For layered defenses against malicious and compromised packages, see [Defending against dependency supply chain attacks](/library/application-security/recommendations/managing-dependency-threats).
+For layered defenses against malicious and compromised packages, see [Defending against dependency supply chain attacks](./managing-dependency-threats).
 
 ### Enforcing Code Scanning
 
@@ -233,7 +233,7 @@ You can use utilities like [this GitHub CLI extension](https://github.com/CallMe
 
 To get the most from code scanning at scale:
 
-- **Include GitHub Actions workflows.** Default setup can [analyze workflow files with CodeQL](https://github.blog/security/application-security/how-to-secure-your-github-actions-workflows-with-codeql/) to find issues such as workflow injection. Repositories that adopted default setup before this support was added must enable GitHub Actions analysis explicitly in their default setup settings. For workflow hardening guidance, see [Securing GitHub Actions Workflows](/library/application-security/recommendations/actions-security).
+- **Include GitHub Actions workflows.** Default setup can [analyze workflow files with CodeQL](https://github.blog/security/application-security/how-to-secure-your-github-actions-workflows-with-codeql/) to find issues such as workflow injection. Repositories that adopted default setup before this support was added must enable GitHub Actions analysis explicitly in their default setup settings. For workflow hardening guidance, see [Securing GitHub Actions Workflows](./actions-security).
 - **Block merges on findings.** Add the [Require code scanning results](https://docs.github.com/enterprise-cloud@latest/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-code-scanning-results) rule to your Repository Rulesets so that pull requests that introduce alerts at or above your chosen severity can't merge.
 - **Cover languages that CodeQL doesn't support.** [AI Scan](https://docs.github.com/en/enterprise-cloud@latest/code-security/concepts/code-scanning/ai-scan) supplements CodeQL. [AI Scan for pull requests](https://github.blog/changelog/2026-10-15-ai-scan-for-pull-requests-generally-available/) is generally available and finds vulnerabilities in pull request changes for languages such as PHP, Shell, and Terraform (HCL); its findings are advisory and can't block merges through rulesets. [AI Scan for repositories](https://github.blog/changelog/2026-10-28-ai-scan-for-repositories-in-public-preview/) is in public preview and scans the default branch on demand. An enterprise AI Scan policy controls whether organizations can enable either feature, and both consume Code Security AI credits.
 - **Speed up remediation.** [Agentic Autofix](https://github.blog/changelog/2026-10-15-agentic-autofix-for-code-scanning-alerts-general-availability/) is generally available on GitHub Enterprise Cloud. Assign a default-branch alert to Copilot, and it validates its fix with CodeQL before opening a draft pull request. An enterprise administrator must first enable the Agentic Autofix policy, and a Copilot billing method must be defined.
