@@ -70,7 +70,7 @@ Do not duplicate the content of the above. Cross-reference whenever possible.
 
 ## Scope
 
-This skill reviews content files (Markdown under `content/`) proposed in a pull request. It evaluates the content against the criteria below and provides structured feedback with a score and actionable recommendations. It does **not** modify files directly — it produces a review comment.
+This skill reviews content files (Markdown under `content/`) proposed in a pull request. It evaluates the content against the criteria below and provides structured feedback with a score and actionable recommendations.
 
 ## Inputs and Outputs
 
