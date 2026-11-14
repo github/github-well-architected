@@ -61,7 +61,7 @@ Approach every passage with these questions:
 Respect these files as the source of truth for Markdown content alignment:
 
 - [CONTRIBUTING.md](../../../CONTRIBUTING.md)
-- [docs/contributing-learn.md](../../docs/contributing-learn.md)
+- [docs/contributing-learn.md](../../../docs/contributing-learn.md)
 - [archetypes/default.md](../../../archetypes/default.md)
 - [docs/framework-overview.md](../../../docs/framework-overview.md)
 - [docs/taxonomies.md](../../../docs/taxonomies.md)
@@ -70,7 +70,7 @@ Do not duplicate the content of the above. Cross-reference whenever possible.
 
 ## Scope
 
-This skill reviews content files (Markdown under `content/`) proposed in a pull request. It evaluates the content against the criteria below and provides structured feedback with a score and actionable recommendations. It does **not** modify files directly — it produces a review comment.
+This skill reviews content files (Markdown under `content/`) proposed in a pull request. It evaluates the content against the criteria below and provides structured feedback with a score and actionable recommendations.
 
 ## Inputs and Outputs
 
@@ -110,7 +110,7 @@ Examine the diff (if review runs in pull request) or local content files to iden
 If not already done, read and internalize:
 
 1. `CONTRIBUTING.md` — for submission guidelines, writing style, and structural expectations
-2. `archetypes/default.md` — for required front matter fields and article structure
+2. `archetypes/default.md` — for front matter examples and article structure
 3. `docs/framework-overview.md` — for WAF mission, vision, and identity
 4. `docs/taxonomies.md` — for valid taxonomy values and their purpose
 
@@ -265,14 +265,14 @@ Evaluate:
 
 - All required front matter fields are present
 - Taxonomy values are valid and appropriate for the content
-- `publishDate` is set and `draft` status is intentional
+- `draft` status is intentional
 - Author information is complete (both `name` and `handle`)
 
 Flag issues such as:
 
 - Missing or incomplete front matter fields
 - Invalid taxonomy values not listed in `docs/taxonomies.md`
-- Missing `publishDate` or unintentional `draft` status
+- Unintentional `draft` status
 - Incomplete author attribution
 
 ### Step 9 — Produce the Review

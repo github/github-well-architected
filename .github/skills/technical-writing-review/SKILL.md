@@ -109,11 +109,9 @@ Follow these steps in order when reviewing content for technical writing quality
 Before reviewing content, read and internalize these files to establish the quality baseline:
 
 1. `CONTRIBUTING.md` — submission guidelines, writing style, and structural expectations
-2. `archetypes/default.md` — required front matter fields and article structure
+2. `archetypes/default.md` — front matter examples and article structure
 3. `docs/framework-overview.md` — WAF mission, vision, and identity
 4. `docs/taxonomies.md` — valid taxonomy values and their purpose
-
-Do not proceed to diagnosis without loading these files first.
 
 ### Step 2 — Diagnose content substance issues
 
