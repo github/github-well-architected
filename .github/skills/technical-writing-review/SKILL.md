@@ -395,7 +395,6 @@ Include enough implementation detail to act on the recommendation, but link to G
 
 **Quality bar:**
 
-- Includes specific technical instructions
 - Provides configuration examples with actual values
 - Addresses common implementation challenges
 - Links to relevant GitHub Docs for details
