@@ -397,7 +397,6 @@ Include enough implementation detail to act on the recommendation, but link to G
 
 - Provides configuration examples with actual values
 - Addresses common implementation challenges
-- Links to relevant GitHub Docs for details
 - Suitable for a newer admin to follow and implement
 
 **Example enhancement:**
