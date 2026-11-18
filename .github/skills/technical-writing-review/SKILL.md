@@ -435,7 +435,6 @@ See [GitHub Docs: Rulesets](https://docs.github.com/enterprise-cloud@latest/repo
 **What it should include:**
 
 - Clear recommendation with reasoning
-- Benefits of recommended approach
 - Drawbacks or limitations
 - Alternative approaches with context
 - When NOT to use the recommendation
