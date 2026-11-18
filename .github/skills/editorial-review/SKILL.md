@@ -61,7 +61,7 @@ Approach every passage with these questions:
 Respect these files as the source of truth for Markdown content alignment:
 
 - [CONTRIBUTING.md](../../../CONTRIBUTING.md)
-- [docs/contributing-learn.md](../../docs/contributing-learn.md)
+- [docs/contributing-learn.md](../../../docs/contributing-learn.md)
 - [archetypes/default.md](../../../archetypes/default.md)
 - [docs/framework-overview.md](../../../docs/framework-overview.md)
 - [docs/taxonomies.md](../../../docs/taxonomies.md)
