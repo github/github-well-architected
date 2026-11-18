@@ -241,7 +241,6 @@ Evaluate:
 - Diagrams, charts, or code snippets **clarify the content** rather than decorate it
 - Layout is structured for **readability and comprehension**
 - Visuals are **accurate and not misleading**
-- Article follows the structure defined in `archetypes/default.md`
 
 Flag issues such as:
 
