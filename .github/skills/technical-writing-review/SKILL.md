@@ -436,7 +436,6 @@ See [GitHub Docs: Rulesets](https://docs.github.com/enterprise-cloud@latest/repo
 
 - Clear recommendation with reasoning
 - Drawbacks or limitations
-- Alternative approaches with context
 - When NOT to use the recommendation
 
 **Quality bar:**
