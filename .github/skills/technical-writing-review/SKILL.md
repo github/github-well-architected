@@ -109,11 +109,9 @@ Follow these steps in order when reviewing content for technical writing quality
 Before reviewing content, read and internalize these files to establish the quality baseline:
 
 1. `CONTRIBUTING.md` — submission guidelines, writing style, and structural expectations
-2. `archetypes/default.md` — required front matter fields and article structure
+2. `archetypes/default.md` — front matter examples and article structure
 3. `docs/framework-overview.md` — WAF mission, vision, and identity
 4. `docs/taxonomies.md` — valid taxonomy values and their purpose
-
-Do not proceed to diagnosis without loading these files first.
 
 ### Step 2 — Diagnose content substance issues
 
@@ -397,10 +395,8 @@ Include enough implementation detail to act on the recommendation, but link to G
 
 **Quality bar:**
 
-- Includes specific technical instructions
 - Provides configuration examples with actual values
 - Addresses common implementation challenges
-- Links to relevant GitHub Docs for details
 - Suitable for a newer admin to follow and implement
 
 **Example enhancement:**
@@ -439,15 +435,11 @@ See [GitHub Docs: Rulesets](https://docs.github.com/enterprise-cloud@latest/repo
 **What it should include:**
 
 - Clear recommendation with reasoning
-- Benefits of recommended approach
 - Drawbacks or limitations
-- Alternative approaches with context
 - When NOT to use the recommendation
 
 **Quality bar:**
 
-- States the recommendation explicitly
-- Explains WHY it's recommended (not just WHAT)
 - Discusses specific benefits with quantification if possible
 - Acknowledges limitations honestly
 - Presents alternatives fairly with context
