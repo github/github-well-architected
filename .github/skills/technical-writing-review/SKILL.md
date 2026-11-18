@@ -440,7 +440,6 @@ See [GitHub Docs: Rulesets](https://docs.github.com/enterprise-cloud@latest/repo
 
 **Quality bar:**
 
-- Explains WHY it's recommended (not just WHAT)
 - Discusses specific benefits with quantification if possible
 - Acknowledges limitations honestly
 - Presents alternatives fairly with context
