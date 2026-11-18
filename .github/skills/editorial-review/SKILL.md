@@ -182,7 +182,6 @@ Precision in WAF content is **editorial, not just technical**. Imprecise languag
 
 Evaluate:
 
-- Terminology is **used consistently** — the same concept uses the same term throughout; no unexplained synonyms
 - Claims are **fact-checked and sourced** with links to approved sources
 - Data, statistics, and product names are **current and correctly stated**
 - GitHub product references align with current documentation
