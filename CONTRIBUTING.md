@@ -121,7 +121,7 @@ Once you're ready to start, fork the repository and begin authoring. We **strong
 ##### Option 2: From your fork
 
 1. Click the green "Code" button and select "Create codespace on main"
-2. Wait for the environment to initialize (automatically runs `tools/setup` to install dependencies and build the site)
+2. Wait for the environment to initialize. Follow any setup instructions shown in the terminal if you want to preview the site.
 3. Start writing!
 
 ##### Option 3: From the repository
